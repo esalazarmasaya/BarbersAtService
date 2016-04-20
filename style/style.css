@@ -1,0 +1,141 @@
+<style>
+	
+	
+	body{
+		text-align:center;
+		justify-content: center;
+    	align-items: center;
+	}
+	
+	#header{
+		display: inline-block;
+		background:#131112;
+		width:100%;
+		height: 20%;
+		color: #51b475;
+	}
+	
+	#page_logo{
+		display: inline-block;
+		text-align:center;
+		width:100%;
+		height:10%;
+	}
+	
+	#logo{
+		width:150px;
+		height:150px;
+	}
+	
+	#menu{
+		text-align:center;
+		display: inline-block;
+		width:100%;
+		height: 10%;
+	}
+	
+	.menusbmt{
+		display: inline-block;
+		width:auto;
+		height: auto;
+		font-family: "freight-sans-pro";
+		font-size: 18px;
+		text-transform: uppercase;
+		letter-spacing: 2px;
+    	font-weight: 700;
+    	color: #51b475;
+    	background:transparent;
+    	border:none;
+	}
+	
+	#body{
+		display: inline-block;
+		width:100%;
+		height: 70%;
+		min-height: 300px;
+		/*min-height: 70%;
+		border: 1px solid #000000;*/
+		vertical-align:top;
+	}
+	
+	#leftside{
+		text-align:center;
+		display: inline-block;
+		width:30%;
+		min-width: 200px;
+		/*height: 70%;
+		min-height: 300px;
+		min-height: 70%;
+		border: 1px solid #000000;*/
+		overflow-y : auto;
+	}
+	
+	.leftbarsbmt{
+		display: inline-block;
+		width:98%;
+		min-width: 180px;
+		height:10%;
+		/*border: 1px solid #000000;*/
+		border:none;
+		margin:1px;
+		background:#51b475;
+		color: #000000;
+	}
+	
+	#content{
+		display: inline-block;
+		width:69%;
+		min-width: 300px;
+		max-height: 350px;
+		/*height: 70%;
+		min-height: 300px;
+		max-height: 70%;
+		border: 1px solid #000000;*/
+		vertical-align:top;
+		overflow:auto;
+	}
+	
+	td{
+		border: 1px solid #000000;
+	}
+	
+	#footer{
+		display:inline-block;
+		background:#050505;
+		width:100%;
+		min-width: 100%;
+		height: 10%;
+		min-height: 50px;
+		border: 1px solid #000000;
+	}
+	
+	#error{
+		position:absolute;
+		width:100%;
+		top:20%;
+		height: 70%;
+		/*border: 1px solid #000000;*/
+		vertical-align:top;
+		background:#0F0F0F;
+	}
+	
+	.tbl{
+		margin-left:auto;
+		margin-right: auto;
+	}
+	
+	.td{
+		margin-left: 1px;
+		margin-right: 1px;
+		border: 1px;
+		border-color:#5f5f5f;
+		border-style:solid;
+		color:#5f5f5f;
+	}
+	
+	.td-hdr{
+		background-color: #5f5f5f;
+		color:#f5f5f5;
+	}
+	
+</style>
