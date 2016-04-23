@@ -38,7 +38,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<!-- Custom and plugin javascript -->
 	<link href="css/custom.css" rel="stylesheet">
 	<script src="js/custom.js"></script>
-	
+	  <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 	<script src="js/screenfull.js"></script>
 			<script>
 			$(function () {
@@ -62,8 +63,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	</head>
 	<body>
 		<div id="wrapper">
-			<nav class="navbar-default navbar-static-top" role="navigation">
-				
+		
 				<?php
 					include('index_content/header.php');
 				?>
@@ -76,7 +76,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<div class="clearfix">
 						</div>
 		           </div>
-		           
+		           	<nav class="navbar-default navbar-static-top" role="navigation">
+
 		           <!-- Brand and toggle get grouped for better mobile display -->
 		           
 		           <!-- Collect the nav links, forms, and other content for toggling -->
@@ -99,7 +100,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							} else {
 								echo '
 									<form action="index.php" method="post" id="frm_login">
-										<input type="submit" class="btn btn-default" name="btn_login" value="Login" form="frm_login">
+										<input type="submit" class="btn btn-primary btn-lg" name="btn_login" data-target="#login-modal" value="Login" form="frm_login">
 									</form>';
 							}
 						?>
@@ -162,5 +163,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<script src="js/scripts.js"></script>
 		<!--//scrolling js-->
 		<script src="js/bootstrap.min.js"> </script>
-	</body> yo que se
+	</body>
 </html>
+

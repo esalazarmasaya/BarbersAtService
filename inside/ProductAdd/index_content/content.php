@@ -42,48 +42,49 @@
 	 		<h3 id="forms-example" class="">Producto</h3>
 	 		
 			<?php 
-				$value = '<form action="index.php" method="post" id="frm_add_new_product">
+				$value = '<form action="index.php" method="post" id="frm_add_new_item">
 					<div class="form-group">
 						<label for="exampleInputEmail1">Nuevo producto:</label>
-						<input type="text" class="form-contbrand" id="exampleInputEmail1" name="txt_new_name" placeholder="Nuevo producto" form="frm_add_new_product">
+						<input type="text" class="form-contbrand" id="exampleInputEmail1" name="txt_new_name" placeholder="Nuevo producto" form="frm_add_new_item">
 					</div>
 					
 					<div class="form-group">
 						<label for="exampleInputEmail1">Descripcion:</label>
-						<input type="text" class="form-contbrand" id="exampleInputEmail1" name="txt_new_sale_description" placeholder="Descripcion" form="frm_add_new_product">
+						<input type="text" class="form-contbrand" id="exampleInputEmail1" name="txt_new_description" placeholder="Descripcion" form="frm_add_new_item">
 					</div>
 					
 					<div class="form-group">
 						<label for="exampleInputEmail1">Presentacion:</label>
-						<input type="text" class="form-contbrand" id="exampleInputEmail1" name="txt_new_presentation" placeholder="Presentacion" form="frm_add_new_product">
+						<input type="text" class="form-contbrand" id="exampleInputEmail1" name="txt_new_presentation" placeholder="Presentacion" form="frm_add_new_item">
 					</div>
 					
 					<!--div class="form-group">
 						<label for="exampleInputEmail1">Codigo de barras:</label>
-						<input type="text" class="form-contbrand" id="exampleInputEmail1" name="txt_new_barcode" placeholder="Codigo de barras" form="frm_add_new_product">
+						<input type="text" class="form-contbrand" id="exampleInputEmail1" name="txt_new_barcode" placeholder="Codigo de barras" form="frm_add_new_item">
 					</div-->
 					
 					<div class="form-group">
 						<label for="exampleInputEmail1">Precio de costo:</label>
-						<input type="text" class="form-contbrand" id="exampleInputEmail1" name="txt_new_cost_price" placeholder="Precio de costo" form="frm_add_new_product">
+						<input type="text" class="form-contbrand" id="exampleInputEmail1" name="txt_new_cost_price" placeholder="Precio de costo" form="frm_add_new_item">
 					</div>
 					
 					<div class="form-group">
 						<label for="exampleInputEmail1">Precio de venta:</label>
-						<input type="text" class="form-contbrand" id="exampleInputEmail1" name="txt_new_sales_price" placeholder="Precio de venta" form="frm_add_new_product">
+						<input type="text" class="form-contbrand" id="exampleInputEmail1" name="txt_new_sales_price" placeholder="Precio de venta" form="frm_add_new_item">
 					</div>
 					
 					<div class="form-group">
 						<label for="exampleInputEmail1">Tipo:</label>
 						' . /*fnDeplegarTiposDeProducto()*/ " " . '
+						<input type="text" class="form-contbrand" id="exampleInputEmail1" name="txt_new_type" placeholder="Tipo" form="frm_add_new_item">
 					</div>
 					
 					<div class="form-group">
 						<label for="exampleInputEmail1">Marca:</label>
-						<input type="text" class="form-contbrand" id="exampleInputEmail1" name="txt_new_brand" placeholder="Marca" form="frm_add_new_product">
+						<input type="text" class="form-contbrand" id="exampleInputEmail1" name="txt_new_brand" placeholder="Marca" form="frm_add_new_item">
 					</div>
 					
-					<button type="submit" class="btn btn-default" name="btn_add_new_product" form="frm_add_new_product">Agregar nuevo producto</button>
+					<button type="submit" class="btn btn-default" name="btn_add_new_item" form="frm_add_new_item">Agregar nuevo producto</button>
 				</form>';
 				
 				echo $value;
@@ -92,8 +93,7 @@
 			</br>
 			
 			<?php 
-				fnDeplegarProductos(); 
-				echo $_SESSION['html'];
+				//echo $_SESSION['html'];
 			?>
 			
 		</div>

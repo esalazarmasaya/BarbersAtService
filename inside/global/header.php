@@ -16,7 +16,8 @@
 	if (!isset($_SESSION['usermail']) && empty($_SESSION['usermail'])){
 		session_destroy();
 		$_SESSION = array();
-		session_start();
+		setcookie();
+		//session_start();
 		echo '
 			<meta http-equiv="refresh" content="0; url=../../index.php" />
 			<script type="text/javascript">window.location.href = "../../index.php";</script>';

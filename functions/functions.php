@@ -43,11 +43,11 @@
 		} else {
 			$query = $query . "'', ";
 		}
-		
+		$newpass = md5($_POST['txt_password']);
 		if (isset($_POST['txt_password']) && !empty($_POST['txt_password']) && isset($_POST['txt_retype_password']) && !empty($_POST['txt_retype_password'])){
 			if ($_POST['txt_password'] == $_POST['txt_retype_password']){
-				$query = $query . "'" . $_POST['txt_password'] . "');";
-				$msg = $msg . fn_InsertQuery(Conexion(), $query);
+				$query = $query . "'" . $newpass . "');";
+				$_SESSION['msg'] = $_SESSION['msg'] . fn_InsertQuery(Conexion(), $query);
 			} else {
 				$query = $query . "'');";
 			}
@@ -58,7 +58,7 @@
 	
 	if (isset($_POST['btn_login_page'])){
 		
-		$tabla = fnSelectAnyQuery(Conexion(), "CALL `sp_user_login`('".$_POST['txt_email']."', '".$_POST['txt_password']."');", 10);
+		$tabla = fnSelectAnyQuery(Conexion(), "CALL `sp_user_login`('".$_POST['txt_email']."', '".md5($_POST['txt_password'])."');", 10);
 		/*fnCrearTablaHtmlDeTabla($tabla, 0);*/
 		if (isset($tabla[2][7]) && !empty($tabla[2][7])){
 			$_SESSION['usermail'] = $tabla[2][7];

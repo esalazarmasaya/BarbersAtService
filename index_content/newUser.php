@@ -26,7 +26,7 @@
 				
 				<div class="form-group">
 					<label for="exampleInputEmail1">Born date:</label>
-					<input type="text" class="form-control" id="txt_born_date" name="txt_born_date" placeholder="Born date">
+					<input type="date" class="form-control" id="txt_born_date" name="txt_born_date" placeholder="Born date">
 				</div>
 				
 				<div class="form-group">

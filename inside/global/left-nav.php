@@ -102,8 +102,8 @@
 					$left_nav = $left_nav . '
 						<ul class="nav nav-second-level">
 							<li>
-								<a href="../Product/index.php" class=" hvr-bounce-to-right">
-									<i class="fa fa-sign-in nav_icon"></i>Producto
+								<a href="../Products/index.php" class=" hvr-bounce-to-right">
+									<i class="fa fa-sign-in nav_icon"></i>Productos
 								</a>
 							</li>
 						</ul>
