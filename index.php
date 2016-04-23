@@ -162,5 +162,5 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<script src="js/scripts.js"></script>
 		<!--//scrolling js-->
 		<script src="js/bootstrap.min.js"> </script>
-	</body>
+	</body> yo que se
 </html>
