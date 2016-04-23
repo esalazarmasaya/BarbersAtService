@@ -164,5 +164,3 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<script src="js/bootstrap.min.js"> </script>
 	</body>
 </html>
-
-Hola mundo
