@@ -7,12 +7,12 @@
 	 		
 			<form action="index.php" method="post" id="frm_login_page">
 				<div class="form-group">
-					<label for="exampleInputEmail1">Email address</label>
+					<label for="exampleInputEmail1">Email: </label>
 					<input type="email" class="form-control" id="exampleInputEmail1" name="txt_email" placeholder="Email address">
 				</div>
 					
 				<div class="form-group">
-					<label for="exampleInputPassword1">Password</label>
+					<label for="exampleInputPassword1">Password: </label>
 					<input type="password" class="form-control" id="exampleInputPassword1" name="txt_password" placeholder="Password">
 					</div>
 				

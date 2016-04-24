@@ -15,7 +15,6 @@
 			</div>
 			
 			<div class=" border-bottom">
-				
 				<div class="full-left">
 					<div class="clearfix"> 
 					</div>
@@ -26,9 +25,9 @@
 				<div class="drop-men" >
 					<?php 
 						echo '
-								<span class=" name-caret">'.$_SESSION['usermail'].'</span>
+								<!--<span class=" name-caret">'.$_SESSION['usermail'].'</span>-->
 								<form action="index.php" method="post" id="frm_logout">
-									<input type="submit" class="btn btn-default" name="btn_logout" value="Logout" form="frm_logout">
+									<input type="submit" class="btn btn-danger btn-lg" name="btn_logout" value="Logout" form="frm_logout">
 								</form>
 								
 							';

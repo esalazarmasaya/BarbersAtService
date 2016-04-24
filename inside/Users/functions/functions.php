@@ -13,9 +13,8 @@
 		$colNameId[6] = "txt_phone";
 		$colNameId[7] = "txt_email";
 		$colNameId[8] = "txt_creation_date";
-		$colNameId[9] = "txt_password";
-		$colNameId[10] = "txt_user_state";
-		$colNameId[11] = "txt_role";
+		$colNameId[9] = "txt_user_state";
+		$colNameId[10] = "txt_role";
 		
 		$value = '
 			<div class="tab-pane active text-style" id="tab1">
@@ -34,9 +33,8 @@
 								$value = $value . '<td class="table-text"><h6>' . $tabla[1][6] . '</h6></td>';
 								$value = $value . '<td class="table-text"><h6>' . $tabla[1][7] . '</h6></td>';
 								$value = $value . '<td class="table-text"><h6>' . $tabla[1][8] . '</h6></td>';
-								//$value = $value . '<td class="table-text"><h6>' . $tabla[1][9] . '</h6></td>';
+								$value = $value . '<td class="table-text"><h6>' . $tabla[1][9] . '</h6></td>';
 								$value = $value . '<td class="table-text"><h6>' . $tabla[1][10] . '</h6></td>';
-								$value = $value . '<td class="table-text"><h6>' . $tabla[1][11] . '</h6></td>';
 								$value = $value . '<td class="march"></td>';
 								$value = $value . '
 								</tr>
@@ -59,10 +57,9 @@
 									$value = $value . '<td class="march"><input type="text" class="form-control" id="exampleInputEmail1" name="' . $colNameId[6] . '" placeholder="' . $tabla[$filas][6] . '" value="' . $tabla[$filas][6] . '" form="frm_edit_user_' . $filas . '"></td>';
 									$value = $value . '<td class="march"><input type="text" class="form-control" id="exampleInputEmail1" name="' . $colNameId[7] . '" placeholder="' . $tabla[$filas][7] . '" value="' . $tabla[$filas][7] . '" form="frm_edit_user_' . $filas . '"></td>';
 									$value = $value . '<td class="march"><input type="text" class="form-control" id="exampleInputEmail1" name="' . $colNameId[8] . '" placeholder="' . $tabla[$filas][8] . '" value="' . $tabla[$filas][8] . '" form="frm_edit_user_' . $filas . '" readonly></td></tr><tr>';
-									//$value = $value . '<td class="march"><input type="text" class="form-control" id="exampleInputEmail1" name="' . $colNameId[9] . '" placeholder="' . $tabla[$filas][9] . '" value="' . $tabla[$filas][9] . '" form="frm_edit_user_' . $filas . '"></td>';
-									//$value = $value . '<td class="march"><input type="text" class="form-control" id="exampleInputEmail1" name="' . $colNameId[10] . '" placeholder="' . $tabla[$filas][10] . '" value="' . $tabla[$filas][10] . '" form="frm_edit_user_' . $filas . '"></td>';
-									$value = $value . '<td class="march"><select name="' . $colNameId[10] . '">';
-									if ($tabla[$filas][10]==0){
+									
+									$value = $value . '<td class="march"><select name="' . $colNameId[9] . '">';
+									if ($tabla[$filas][9]==0){
 										$value = $value . '<option value="0" selected>Inactive</option>';
 										$value = $value . '<option value="1">Active</option>';
 									}else{
@@ -72,18 +69,18 @@
 									$value = $value . '</select>';
 									
 									
-									/*$value = $value . '<td class="march"><input type="text" class="form-control" id="exampleInputEmail1" name="' . $colNameId[11] . '" placeholder="' . $tabla[$filas][11] . '" value="' . $tabla[$filas][11] . '" form="frm_edit_user_' . $filas . '"></td>';*/
+									/*$value = $value . '<td class="march"><input type="text" class="form-control" id="exampleInputEmail1" name="' . $colNameId[10] . '" placeholder="' . $tabla[$filas][10] . '" value="' . $tabla[$filas][10] . '" form="frm_edit_user_' . $filas . '"></td>';*/
 									
 									
 									$roles_html ='<td class="march"><select name="txt_role" form="frm_edit_user_' . $filas . '">';
 									for($filas_roles = 2; $filas_roles <= $tabla_roles[0][0] ; $filas_roles++){
-										if($tabla[$filas][11] == $tabla_roles[$filas_roles][0]){
+										if($tabla[$filas][10] == $tabla_roles[$filas_roles][0]){
 											$roles_html = $roles_html . '<option value="' .$tabla_roles[$filas_roles][0] . '" selected>' .$tabla_roles[$filas_roles][2] . '</option>';
 										}else{
 											$roles_html = $roles_html . '<option value="' .$tabla_roles[$filas_roles][0] . '">' .$tabla_roles[$filas_roles][2] . '</option>';
 										}
-										
 									}
+									
 									$roles_html = $roles_html . '</select></td>';
 									
 									$value = $value . $roles_html;
@@ -122,7 +119,7 @@
 		$query = "CALL `sp_user_show_all`();";
 		
 		
-		$tabla = fnSelectAnyQuery(Conexion(), $query, 12);
+		$tabla = fnSelectAnyQuery(Conexion(), $query, 11);
 		
 		$tabla[1][0] = "User Code";
 		$tabla[1][1] = "First Name";
@@ -133,9 +130,8 @@
 		$tabla[1][6] = "Phone";
 		$tabla[1][7] = "Email";
 		$tabla[1][8] = "Creation date";
-		$tabla[1][9] = "Password";
-		$tabla[1][10] = "User state";
-		$tabla[1][11] = "Role";
+		$tabla[1][9] = "User state";
+		$tabla[1][10] = "Role";
 		
 		$_SESSION['html'] =  fnCrearTablaHtmlDeTablaUser($tabla, 1);
 		
@@ -273,12 +269,6 @@
 		
 		if (isset($_POST['txt_email']) && !empty($_POST['txt_email'])){
 			$query = $query . "'" . $_POST['txt_email'] . "', ";
-		} else {
-			$query = $query . "'', ";
-		}
-		
-		if (isset($_POST['txt_password']) && !empty($_POST['txt_password'])){
-			$query = $query . "'" . $_POST['txt_password'] . "', ";
 		} else {
 			$query = $query . "'', ";
 		}

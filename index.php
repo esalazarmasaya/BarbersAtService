@@ -93,15 +93,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								echo '
 										<span class=" name-caret">'.$_SESSION['usermail'].'</span>
 										<form action="index.php" method="post" id="frm_logout">
-											<input type="submit" class="btn btn-default" name="btn_logout" value="Logout" form="frm_logout">
+											<input type="submit" class="btn btn-danger btn-lg" name="btn_logout" value="Logout" form="frm_logout">
 										</form>
 										
 									';
 							} else {
-								echo '
+								echo 
+								'
 									<form action="index.php" method="post" id="frm_login">
 										<input type="submit" class="btn btn-primary btn-lg" name="btn_login" data-target="#login-modal" value="Login" form="frm_login">
-									</form>';
+									</form>
+								';
 							}
 						?>
 				    </div><!-- /.navbar-collapse -->
@@ -120,7 +122,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	        <div id="page-wrapper" class="gray-bg dashbard-1">
 	        	
 	        		<?php
-	        			if (isset($_SESSION['msg']) && !empty($_SESSION['msg'])) {
+						if (isset($_SESSION['msg']) && !empty($_SESSION['msg'])) {
 							echo '
 								<div class="banner">
 									<h2>
@@ -128,7 +130,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 									</h2>
 								</div>
 								';
-							//$_SESSION['msg'] = "";
+							$_SESSION['msg'] = "";
 						}
 						//$_SESSION['msg'] = "";
 						if (isset($_SESSION['usermail']) && !empty($_SESSION['usermail'])){

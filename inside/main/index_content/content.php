@@ -27,13 +27,35 @@
 	</div>
 	
 	<!--//banner-->
-	
+	 
 	<!--content-->
 	
 	<div class="grid-form">
  		<div class="grid-form1">
 	 		<h3 id="forms-example" class="">Home</h3>
 	 		
+	 		
+			<!--<div class="">
+				<div class="mailbox-content">
+					<table class="table">
+						<tbody>
+							<tr class="table-row">
+								<td class="table-text"><h6>Queue Code</h6></td>
+								<td class="table-text"><h6>Generated Token</h6></td>
+								<td class="table-text"><h6>Time</h6></td>
+								<td class="table-text"><h6>Waitin Que State</h6></td>
+								<td class="table-text"><h6>Initial Hour</h6></td>
+								<td class="table-text"><h6>Final Hour</h6></td>
+								<td class="table-text"><h6>Combo</h6></td>
+								<td class="table-text"><h6>User</h6></td>
+								<td class="table-text"><h6>Employee Code</h6></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>-->
+			
+			
 		</div>
 	</div>
 	
