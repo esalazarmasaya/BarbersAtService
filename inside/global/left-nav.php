@@ -19,7 +19,7 @@
 					<li>
 						<a href="../Cellar/index.php" class=" hvr-bounce-to-right">
 								<i class="fa fa-dashboard nav_icon "></i>
-								<span class="nav-label">Cellar</span> 
+								<span class="nav-label">Bodega</span> 
 						</a>
 					</li>
 				';
@@ -94,7 +94,7 @@
 			<li>
 				<a href="#" class=" hvr-bounce-to-right">
 					<i class="fa fa-cog nav_icon"></i> 
-					<span class="nav-label">Products</span>
+					<span class="nav-label">Productos</span>
 					<span class="fa arrow"></span>
 				</a>';
 				
@@ -161,6 +161,48 @@
 						
 			$left_nav = $left_nav . '
 			</li>';
+			
+			$left_nav = $left_nav . '
+			<li>
+				<a href="#" class=" hvr-bounce-to-right">
+					<i class="fa fa-cog nav_icon"></i> 
+					<span class="nav-label">Servicios</span>
+					<span class="fa arrow"></span>
+				</a>';
+				
+				if (isset($_SESSION['PageCode11']) && !empty($_SESSION['PageCode11'])) {
+					$left_nav = $left_nav . '
+						<ul class="nav nav-second-level">
+							<li>
+								<a href="../ServiceAdd/index.php" class=" hvr-bounce-to-right">
+									<i class="fa fa-sign-in nav_icon"></i>Servicio nuevo
+								</a>
+							</li>
+						</ul>
+					';
+				}
+				
+				if (isset($_SESSION['PageCode12']) && !empty($_SESSION['PageCode12'])) {
+					$left_nav = $left_nav . '
+						<ul class="nav nav-second-level">
+							<li>
+								<a href="../Services/index.php" class=" hvr-bounce-to-right">
+									<i class="fa fa-sign-in nav_icon"></i>Servicios
+								</a>
+							</li>
+						</ul>
+					';
+				}
+				
+				
+						
+			$left_nav = $left_nav . '
+			</li>';
+			
+			
+			
+			
+			
 			
 			echo $left_nav;
 			
