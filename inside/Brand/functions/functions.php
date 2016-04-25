@@ -124,7 +124,7 @@
 		$query = $query . "1";
 		
 		$query = $query . ");";
-		$_SESSION['msg'] = $_SESSION['msg'] . $query;
+		//$_SESSION['msg'] = $_SESSION['msg'] . $query;
 		
 		fn_InsertQuery(Conexion(), $query);
 		
