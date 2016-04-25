@@ -162,6 +162,9 @@
 			$left_nav = $left_nav . '
 			</li>';
 			
+			
+			
+			
 			$left_nav = $left_nav . '
 			<li>
 				<a href="#" class=" hvr-bounce-to-right">
@@ -194,11 +197,46 @@
 					';
 				}
 				
-				
-						
 			$left_nav = $left_nav . '
 			</li>';
 			
+			
+			
+			
+			$left_nav = $left_nav . '
+			<li>
+				<a href="#" class=" hvr-bounce-to-right">
+					<i class="fa fa-cog nav_icon"></i> 
+					<span class="nav-label">Empleados</span>
+					<span class="fa arrow"></span>
+				</a>';
+				
+				if (isset($_SESSION['PageCode13']) && !empty($_SESSION['PageCode13'])) {
+					$left_nav = $left_nav . '
+						<ul class="nav nav-second-level">
+							<li>
+								<a href="../EmployeeAdd/index.php" class=" hvr-bounce-to-right">
+									<i class="fa fa-sign-in nav_icon"></i>Empleado nuevo
+								</a>
+							</li>
+						</ul>
+					';
+				}
+				
+				if (isset($_SESSION['PageCode14']) && !empty($_SESSION['PageCode14'])) {
+					$left_nav = $left_nav . '
+						<ul class="nav nav-second-level">
+							<li>
+								<a href="../Employees/index.php" class=" hvr-bounce-to-right">
+									<i class="fa fa-sign-in nav_icon"></i>Empleados
+								</a>
+							</li>
+						</ul>
+					';
+				}
+				
+			$left_nav = $left_nav . '
+			</li>';
 			
 			
 			
