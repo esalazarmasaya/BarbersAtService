@@ -1,0 +1,3 @@
+Notas de como restituir la BD
+
+Primero se trabaja con el archivo barbers_at_service Merck 7-4-2016, que borra la base de datos barbers_at_service y crea todas las tablas, luego la que termina en PK-FK que instaura las llaves y por ultimo la que dice SPsA que son los sp que funcionan para lo programado. 
