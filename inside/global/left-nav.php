@@ -31,7 +31,7 @@
 				<li>
 					<a href="#" class=" hvr-bounce-to-right">
 						<i class="fa fa-cog nav_icon"></i> 
-						<span class="nav-label">User</span>
+						<span class="nav-label">Usuario</span>
 						<span class="fa arrow"></span>
 					</a>
 					';
@@ -41,7 +41,7 @@
 						<ul class="nav nav-second-level">
 							<li>
 								<a href="../Permission/index.php" class=" hvr-bounce-to-right">
-									<i class="fa fa-sign-in nav_icon"></i>Permission
+									<i class="fa fa-sign-in nav_icon"></i>Permisos
 								</a>
 							</li>
 						</ul>
@@ -68,7 +68,7 @@
 							<ul class="nav nav-second-level">
 								<li>
 									<a href="../Users/index.php" class=" hvr-bounce-to-right">
-										<i class="fa fa-sign-in nav_icon"></i>Users
+										<i class="fa fa-sign-in nav_icon"></i>Usuarios
 									</a>
 								</li>
 							</ul>
@@ -80,7 +80,7 @@
 						<ul class="nav nav-second-level">
 							<li>
 								<a href="../Webpages/index.php" class=" hvr-bounce-to-right">
-									<i class="fa fa-sign-in nav_icon"></i>Webpages
+									<i class="fa fa-sign-in nav_icon"></i>Paginas
 								</a>
 							</li>
 						</ul>
@@ -191,6 +191,30 @@
 							<li>
 								<a href="../Services/index.php" class=" hvr-bounce-to-right">
 									<i class="fa fa-sign-in nav_icon"></i>Servicios
+								</a>
+							</li>
+						</ul>
+					';
+				}
+				
+				if (isset($_SESSION['PageCode17']) && !empty($_SESSION['PageCode17'])) {
+					$left_nav = $left_nav . '
+						<ul class="nav nav-second-level">
+							<li>
+								<a href="../AverageTimeAdd/index.php" class=" hvr-bounce-to-right">
+									<i class="fa fa-sign-in nav_icon"></i>Nuevo Tiempo
+								</a>
+							</li>
+						</ul>
+					';
+				}
+				
+				if (isset($_SESSION['PageCode18']) && !empty($_SESSION['PageCode18'])) {
+					$left_nav = $left_nav . '
+						<ul class="nav nav-second-level">
+							<li>
+								<a href="../AverageTime/index.php" class=" hvr-bounce-to-right">
+									<i class="fa fa-sign-in nav_icon"></i>Tiempo servicio
 								</a>
 							</li>
 						</ul>

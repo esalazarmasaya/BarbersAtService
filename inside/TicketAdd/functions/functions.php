@@ -1,5 +1,5 @@
 <?php
-	$data_relation = "serviceadd";
+	$data_relation = "ticketadd";
 	
 	$_SESSION['data_relation'] = $data_relation;
 	
@@ -7,16 +7,23 @@
 	
 	
 	if (isset($_POST['btn_add_new_item'])){
-		$query = "CALL `sp_service_add`(";
+		$query = "CALL `sp_testColas_insert`(";
 		
-		if (isset($_POST['txt_new_name']) && !empty($_POST['txt_new_name'])){
-			$query = $query . "'" . $_POST['txt_new_name'] . "', ";
+		if (isset($_POST['slct_service']) && !empty($_POST['slct_service'])){
+			$query = $query . "" . $_POST['slct_service'] . ", ";
 		} else {
 			$query = $query . "'', ";
 		}
 		
-		if (isset($_POST['txt_new_price']) && !empty($_POST['txt_new_price'])){
-			$query = $query . "" . $_POST['txt_new_price'] . "";
+		if (isset($_SESSION['usermail']) && !empty($_SESSION['usermail'])){
+			$idusuario = fnTraerCodigoUsusario();
+			$query = $query . "" . $idusuario[2][0] . ", ";
+		} else {
+			$query = $query . "'', ";
+		}
+		
+		if (isset($_POST['slct_employee']) && !empty($_POST['slct_employee'])){
+			$query = $query . "" . $_POST['slct_employee'] . "";
 		} else {
 			$query = $query . "NULL ";
 		}
@@ -76,5 +83,31 @@
 		//$_SESSION['msg'] = $_SESSION['msg'] . "";
 		return $tabla;
 	}
+	
+	function fnTraerCodigoUsusario(){
+		$query = "CALL `sp_user_get_id_where_email`('" . $_SESSION['usermail'] . "');";
+		
+		$tabla = fnSelectAnyQuery(Conexion(), $query, 6);
+		
+		$tabla[1][0] = "Codigo";
+		$tabla[1][1] = "Email";
+		$tabla[1][2] = "Primer Nombre";
+		$tabla[1][3] = "Segundo Nombre";
+		$tabla[1][4] = "Primer Apellido";
+		$tabla[1][5] = "Segundo Apellido";
+		
+		echo $tabla[2][0];
+		
+		//$_SESSION['html'] =  fnCrearTablaHtmlDeTablaBrand($tabla, 1);
+		//$data_relation = $_SESSION['data_relation'];
+		//$_SESSION["page_table"] = $tabla;
+		//$_SESSION['html'] = fnCrearTablaHtmlDeTablaProduct();
+		
+		//$_SESSION['msg'] = $_SESSION['msg'] . "";
+		return $tabla;
+	}
+	
+	
+	
 	
 ?>
