@@ -41,8 +41,19 @@
  		<div class="grid-form1">
 	 		<h3 id="forms-example" class="">Tiempo promedio por servicio</h3>
 	 		
-			<?php 
+	 		<?php 
 				$value = '<form action="index.php" method="post" id="frm_add_new_item">
+					<div class="form-group">
+						<label for="exampleInputEmail1">Servicio:</label>
+						<select name="slct_service" id="slct_service">';
+						$tabla_servicios = fnTraerDatosServicios();
+						for ($filas = 2; $filas <= $tabla_servicios[0][0]; $filas++){
+							$value = $value . '<option value="' . $tabla_servicios[$filas][0] . '">' . $tabla_servicios[$filas][1] . '</option>';
+						}
+					
+						$value = $value . '
+						</select>
+					</div>
 					
 					<div class="form-group">
 						<label for="exampleInputEmail1">Empleado:</label>
@@ -57,34 +68,21 @@
 					</div>
 					
 					<div class="form-group">
-						<label for="exampleInputEmail1">Servicio:</label>
-						<select name="slct_service">
-						';
-						$tabla = fnTraerDatosServicios();
-						 for ($fila = 2; $fila <= $tabla[0][0]; $fila++){
-						 	$value = $value . '<option value="' . $tabla[$fila][0] . '">' . $tabla[$fila][1] . '</option>';
-						 }
-						
-						$value = $value . '
-						</select>
+						<label for="exampleInputEmail1">Tiempo minimo:</label>
+						<input type="time" class="form-contbrand" id="exampleInputEmail1" name="txt_new_time_min" placeholder="Tiempo minimo" form="frm_add_new_item">
 					</div>
 					
 					<div class="form-group">
 						<label for="exampleInputEmail1">Tiempo maximo:</label>
-						<input type="time" class="form-contbrand" id="exampleInputEmail1" name="txt_new_time_max" placeholder="Tiempo maximo para el servicio seleccionado" form="frm_add_new_item">
-					</div>
-					
-					<div class="form-group">
-						<label for="exampleInputEmail1">Tiempo minimo:</label>
-						<input type="time" class="form-contbrand" id="exampleInputEmail1" name="txt_new_time_min" placeholder="Tiempo minimo para el servicio seleccionado" form="frm_add_new_item">
+						<input type="time" class="form-contbrand" id="exampleInputEmail1" name="txt_new_time_max" placeholder="Tiempo maximo" form="frm_add_new_item">
 					</div>
 					
 					<div class="form-group">
 						<label for="exampleInputEmail1">Tiempo promedio:</label>
-						<input type="time" class="form-contbrand" id="exampleInputEmail1" name="txt_new_time_average" placeholder="Tiempo promedio para el servicio seleccionado" form="frm_add_new_item">
+						<input type="time" class="form-contbrand" id="exampleInputEmail1" name="txt_new_time_average" placeholder="Tiempo promedio" form="frm_add_new_item">
 					</div>
 					
-					<button type="submit" class="btn btn-default" name="btn_add_new_item" form="frm_add_new_item">Agregar nuevo tiempo</button>
+					<button type="submit" class="btn btn-default" name="btn_add_new_item" form="frm_add_new_item">Agregar tiempo</button>
 				</form>';
 				
 				echo $value;

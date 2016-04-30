@@ -25,7 +25,25 @@
 	
 	
 	if (isset($_POST['btn_edit_data_of_table'])){
-		$query = "CALL `sp_service_edit`(";
+		$query = "CALL `sp_AverageTimeByBarber_Update`(";
+		
+		if (isset($_POST['txt_min_time']) && !empty($_POST['txt_min_time'])){
+			$query = $query . "'" . $_POST['txt_min_time'] . "', ";
+		} else {
+			$query = $query . "NULL , ";
+		}
+		
+		if (isset($_POST['txt_max_time']) && !empty($_POST['txt_max_time'])){
+			$query = $query . "'" . $_POST['txt_max_time'] . "', ";
+		} else {
+			$query = $query . "NULL , ";
+		}
+		
+		if (isset($_POST['txt_best_time']) && !empty($_POST['txt_best_time'])){
+			$query = $query . "'" . $_POST['txt_best_time'] . "', ";
+		} else {
+			$query = $query . "NULL , ";
+		}
 		
 		if (isset($_POST['lbl_code']) && !empty($_POST['lbl_code'])){
 			$query = $query . "" . $_POST['lbl_code'] . ", ";
@@ -33,25 +51,11 @@
 			$query = $query . "NULL , ";
 		}
 		
-		if (isset($_POST['txt_new_name']) && !empty($_POST['txt_new_name'])){
-			$query = $query . "'" . $_POST['txt_new_name'] . "', ";
-		} else {
-			$query = $query . "NULL , ";
-		}
-		
-		if (isset($_POST['txt_new_price']) && !empty($_POST['txt_new_price'])){
-			$query = $query . "" . $_POST['txt_new_price'] . ",";
-		} else {
-			$query = $query . "NULL , ";
-		}
-		
-		if (isset($_POST['txt_new_state']) && !empty($_POST['txt_new_state'])){
-			$query = $query . "" . $_POST['txt_new_state'] . "";
+		if (isset($_POST['txt_state']) && !empty($_POST['txt_state'])){
+			$query = $query . "" . $_POST['txt_state'] . "";
 		} else {
 			$query = $query . "NULL";
 		}
-		
-		
 		
 		$query = $query . ");";
 		
@@ -74,15 +78,25 @@
 	
 	
 	function fnTraerDatos(){
-		$query = "CALL `sp_service_show`();";
+		$query = "CALL `sp_ServiceTimeByBarber_show`();";
 		
 		
 		$tabla = fnSelectAnyQuery(Conexion(), $query, 4);
 		
+		
 		$tabla[1][0] = "Codigo";
-		$tabla[1][1] = "Nombre";
-		$tabla[1][2] = "Precio";
-		$tabla[1][3] = "Estado";
+		$tabla[1][1] = "Tiempo minimo";
+		$tabla[1][2] = "Tiempo maximo";
+		$tabla[1][3] = "Mejor tiempo";
+		$tabla[1][4] = "Tiempo promedio";
+		$tabla[1][5] = "Estado";
+		$tabla[1][6] = "Código de servicio";
+		$tabla[1][7] = "Nombre del servicio";
+		$tabla[1][8] = "Código de empleado";
+		$tabla[1][9] = "Primer nombre";
+		$tabla[1][10] = "Segundo nombre";
+		$tabla[1][11] = "Primer apellido";
+		$tabla[1][12] = "Segundo Apellido";
 		
 		//$_SESSION['html'] =  fnCrearTablaHtmlDeTablaBrand($tabla, 1);
 		//$data_relation = $_SESSION['data_relation'];
@@ -93,15 +107,24 @@
 	}
 	
 	function fnTraerDatosWhere($where){
-		$query = "CALL `sp_service_show_where`('%" . $where . "%');";
+		$query = "CALL `sp_ServiceTimeByBarber_show_where`('%" . $where . "%');";
 		
 		
-		$tabla = fnSelectAnyQuery(Conexion(), $query, 4);
+		$tabla = fnSelectAnyQuery(Conexion(), $query, 13);
 		
 		$tabla[1][0] = "Codigo";
-		$tabla[1][1] = "Nombre";
-		$tabla[1][2] = "Precio";
-		$tabla[1][3] = "Estado";
+		$tabla[1][1] = "Tiempo minimo";
+		$tabla[1][2] = "Tiempo maximo";
+		$tabla[1][3] = "Mejor tiempo";
+		$tabla[1][4] = "Tiempo promedio";
+		$tabla[1][5] = "Estado";
+		$tabla[1][6] = "Código de servicio";
+		$tabla[1][7] = "Nombre del servicio";
+		$tabla[1][8] = "Código de empleado";
+		$tabla[1][9] = "Primer nombre";
+		$tabla[1][10] = "Segundo nombre";
+		$tabla[1][11] = "Primer apellido";
+		$tabla[1][12] = "Segundo Apellido";
 		
 		//$_SESSION['html'] =  fnCrearTablaHtmlDeTablaBrand($tabla, 1);
 		//$data_relation = $_SESSION['data_relation'];
@@ -351,9 +374,19 @@
 		
 		
 		$colNameId[0] = "lbl_code";
-		$colNameId[1] = "txt_new_name";
-		$colNameId[2] = "txt_new_price";
-		$colNameId[3] = "txt_new_state";
+		$colNameId[1] = "txt_min_time";
+		$colNameId[2] = "txt_max_time";
+		$colNameId[3] = "txt_best_time";
+		$colNameId[4] = "txt_average_time";
+		$colNameId[5] = "txt_state";
+		$colNameId[6] = "txt_service_code";
+		$colNameId[7] = "txt_service_name";
+		$colNameId[8] = "txt_employee_code";
+		$colNameId[9] = "txt_first_name";
+		$colNameId[10] = "txt_second_name";
+		$colNameId[11] = "txt_first_last_name";
+		$colNameId[12] = "txt_second_last_name";
+		
 		
 		$value = $value . '
 					<div class="mailbox-content">
@@ -362,9 +395,10 @@
 								<tr class="table-row">
 									';
 								//$value = $value . '<td class="table-text"><h6>' . $tabla[1][0] . '</h6></td>';
-								$value = $value . '<td class="table-text"><h6>' . $tabla[1][1] . '</h6></td>';
-								$value = $value . '<td class="table-text"><h6>' . $tabla[1][2] . '</h6></td>';
-								$value = $value . '<td class="table-text"><h6>' . $tabla[1][3] . '</h6></td>';
+								$value = $value . '<td class="table-text"><h6>Nombre</h6></td>';
+								$value = $value . '<td class="table-text"><h6>' . $tabla[1][7] . '</h6></td>';
+								$value = $value . '<td class="table-text"><h6>' . $tabla[1][4] . '</h6></td>';
+								$value = $value . '<td class="table-text"><h6>' . $tabla[1][5] . '</h6></td>';
 								
 								
 								$value = $value . '<td class="march"></td>';
@@ -377,9 +411,10 @@
 							$value = $value . '
 									<tr class="table-row">';
 									
-									$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][1] . '</h6></td>';
-									$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][2] . '</h6></td>';
-									if ($tabla[$filas][3] == 0)
+									$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][9] . " " . $tabla[$filas][11] . '</h6></td>';
+									$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][7] . '</h6></td>';
+									$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][4] . '</h6></td>';
+									if ($tabla[$filas][5] == 0)
 									{
 										$value = $value . '<td class="table-text"><h6>Inactivo</h6></td>';
 									}else{
@@ -425,9 +460,18 @@
 		$tabla = $_SESSION["page_table"];
 		
 		$colNameId[0] = "lbl_code";
-		$colNameId[1] = "txt_new_name";
-		$colNameId[2] = "txt_new_price";
-		$colNameId[3] = "txt_new_state";
+		$colNameId[1] = "txt_min_time";
+		$colNameId[2] = "txt_max_time";
+		$colNameId[3] = "txt_best_time";
+		$colNameId[4] = "txt_average_time";
+		$colNameId[5] = "txt_state";
+		$colNameId[6] = "txt_service_code";
+		$colNameId[7] = "txt_service_name";
+		$colNameId[8] = "txt_employee_code";
+		$colNameId[9] = "txt_first_name";
+		$colNameId[10] = "txt_second_name";
+		$colNameId[11] = "txt_first_last_name";
+		$colNameId[12] = "txt_second_last_name";
 		
 		$value = '
 			<div class="tab-pane active text-style" id="tab1">
@@ -439,6 +483,7 @@
 								<tr class="table-row">
 									';
 								//$value = $value . '<td class="table-text"><h6>' . $tabla[1][0] . '</h6></td>';
+								
 								$value = $value . '
 									<tr>
 										<td class="table-text">
@@ -452,10 +497,32 @@
 								$value = $value . '
 									<tr>
 										<td class="table-text">
+											<h6>Nombre:</h6>
+										</td>
+										<td class="march">
+											<input type="hidden" class="form-control" id="exampleInputEmail1" name="' . $colNameId[8] . '" placeholder="' . $tabla[$fila][8] . '" value="' . $tabla[$fila][8] . '" form="frm_edit_data_row_' . $fila . '" readonly>
+											<input type="text" class="form-control" id="exampleInputEmail1" name="" placeholder="" value="' . $tabla[$fila][9] ." " . $tabla[$fila][10] ." " . $tabla[$fila][11] ." " . $tabla[$fila][12] ." " . '" form="frm_edit_data_row_' . $fila . '" readonly>
+										</td>
+									</tr>';
+								
+								$value = $value . '
+									<tr>
+										<td class="table-text">
+											<h6>' . $tabla[1][7] . ':</h6>
+										</td>
+										<td class="march">
+											<input type="hidden" class="form-control" id="exampleInputEmail1" name="' . $colNameId[6] . '" placeholder="' . $tabla[$fila][6] . '" value="' . $tabla[$fila][6] . '" form="frm_edit_data_row_' . $fila . '" readonly>
+											<input type="text" class="form-control" id="exampleInputEmail1" name="' . $colNameId[7] . '" placeholder="' . $tabla[$fila][7] . '" value="' . $tabla[$fila][7] . '" form="frm_edit_data_row_' . $fila . '" readonly>
+										</td>
+									</tr>';
+								
+								$value = $value . '
+									<tr>
+										<td class="table-text">
 											<h6>' . $tabla[1][1] . ':</h6>
 										</td>
 										<td class="march">
-											<input type="text" class="form-control" id="exampleInputEmail1" name="' . $colNameId[1] . '" placeholder="' . $tabla[$fila][1] . '" value="' . $tabla[$fila][1] . '" form="frm_edit_data_row_' . $fila . '">
+											<input type="time" class="form-control" id="exampleInputEmail1" name="' . $colNameId[1] . '" placeholder="' . $tabla[$fila][1] . '" value="' . $tabla[$fila][1] . '" form="frm_edit_data_row_' . $fila . '">
 										</td>
 									</tr>';
 								
@@ -465,18 +532,28 @@
 											<h6>' . $tabla[1][2] . ':</h6>
 										</td>
 										<td class="march">
-											<input type="number" class="form-control" id="exampleInputEmail1" name="' . $colNameId[2] . '" placeholder="' . $tabla[$fila][2] . '" value="' . $tabla[$fila][2] . '" form="frm_edit_data_row_' . $fila . '">
+											<input type="time" class="form-control" id="exampleInputEmail1" name="' . $colNameId[2] . '" placeholder="' . $tabla[$fila][2] . '" value="' . $tabla[$fila][2] . '" form="frm_edit_data_row_' . $fila . '">
+										</td>
+									</tr>';
+									
+								$value = $value . '
+									<tr>
+										<td class="table-text">
+											<h6>' . $tabla[1][3] . ':</h6>
+										</td>
+										<td class="march">
+											<input type="time" class="form-control" id="exampleInputEmail1" name="' . $colNameId[3] . '" placeholder="' . $tabla[$fila][3] . '" value="' . $tabla[$fila][3] . '" form="frm_edit_data_row_' . $fila . '">
 										</td>
 									</tr>';
 								
 								$value = $value . '
 									<tr>
 										<td class="table-text">
-											<h6>' . $tabla[1][3] . ':</h6>
+											<h6>' . $tabla[1][5] . ':</h6>
 										</td>
 										<td class="march">';
-											$value = $value . '<select name="' . $colNameId[3] . '">';
-												if ($tabla[$fila][3]==0){
+											$value = $value . '<select name="' . $colNameId[5] . '">';
+												if ($tabla[$fila][5]==0){
 													$value = $value . '<option value="0" selected>Inactive</option>';
 													$value = $value . '<option value="1">Active</option>';
 												}else{

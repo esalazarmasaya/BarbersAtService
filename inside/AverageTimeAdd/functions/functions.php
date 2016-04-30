@@ -7,7 +7,7 @@
 	
 	
 	if (isset($_POST['btn_add_new_item'])){
-		$query = "CALL `sp_service_add`(";
+		$query = "CALL `sp_ServiceTimeByBarber_Insert`(";
 		
 		if (isset($_POST['txt_new_time_min']) && !empty($_POST['txt_new_time_min'])){
 			$query = $query . "'" . $_POST['txt_new_time_min'] . "', ";
@@ -28,9 +28,9 @@
 		}
 		
 		if (isset($_POST['slct_service']) && !empty($_POST['slct_service'])){
-			$query = $query . "" . $_POST['slct_service'] . "";
+			$query = $query . "" . $_POST['slct_service'] . ",";
 		} else {
-			$query = $query . "NULL ";
+			$query = $query . "NULL, ";
 		}
 		
 		if (isset($_POST['slct_employee']) && !empty($_POST['slct_employee'])){
@@ -56,7 +56,7 @@
 		$query = "CALL `sp_employee_get_info_from_user_by_id`();";
 		
 		
-		$tabla = fnSelectAnyQuery(Conexion(), $query, 4);
+		$tabla = fnSelectAnyQuery(Conexion(), $query, 7);
 		
 		$tabla[1][0] = "Code";
 		$tabla[1][1] = "Tienda";

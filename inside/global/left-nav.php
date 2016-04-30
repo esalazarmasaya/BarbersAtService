@@ -53,7 +53,7 @@
 						$left_nav = $left_nav . '
 							<ul class="nav nav-second-level">
 								<li>
-									<a href="../Add_roles/index.php" class=" hvr-bounce-to-right">
+									<a href="../Roles/index.php" class=" hvr-bounce-to-right">
 										<i class="fa fa-sign-in nav_icon"></i>Roles
 									</a>
 								</li>
@@ -292,6 +292,18 @@
 							<li>
 								<a href="../Tickets/index.php" class=" hvr-bounce-to-right">
 									<i class="fa fa-sign-in nav_icon"></i>Tickets
+								</a>
+							</li>
+						</ul>
+					';
+				}
+				
+				if (isset($_SESSION['PageCode19']) && !empty($_SESSION['PageCode19'])) {
+					$left_nav = $left_nav . '
+						<ul class="nav nav-second-level">
+							<li>
+								<a href="../MyTicket/index.php" class=" hvr-bounce-to-right">
+									<i class="fa fa-sign-in nav_icon"></i>Mi Ticket
 								</a>
 							</li>
 						</ul>
