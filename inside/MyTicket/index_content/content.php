@@ -45,7 +45,7 @@
 			
 			<link href='http://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'/>
 			<form name="form_reloj"> 
-				<input type="text" name="reloj" style="background-color:#333333; font-family:'Orbitron', sans-serif; font-size:60px; text-shadow:0px; 0px 1px #fff; color:#FFFFFF; text-align: center;"> 
+				<input type="text" name="reloj" style="background-color:#333333; font-family:'Orbitron', sans-serif; font-size:40px; text-shadow:0px; 0px 1px #fff; color:#FFFFFF; text-align: center; width:100%;"> 
 			</form>
 			<script language="JavaScript"> 
 				momentoActual = "";

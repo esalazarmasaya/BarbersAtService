@@ -1,59 +1,75 @@
 <?php
 	if (isset($_POST['sbmt_add_new_user'])){
-		$query = "CALL `sp_user_add`(";
-		 
-		if (isset($_POST['txt_firstname']) && !empty($_POST['txt_firstname'])){
-			$query = $query . "'" . addslashes(htmlspecialchars(htmlentities($_POST['txt_firstname']))) . "', ";
-		} else {
-			$query = $query . "'', ";
-		}
-		
-		if (isset($_POST['txt_secondname']) && !empty($_POST['txt_secondname'])){
-			$query = $query . "'" . $_POST['txt_secondname'] . "', ";
-		} else {
-			$query = $query . "'', ";
-		}
-		
-		if (isset($_POST['txt_first_last_name']) && !empty($_POST['txt_first_last_name'])){
-			$query = $query . "'" . $_POST['txt_first_last_name'] . "', ";
-		} else {
-			$query = $query . "'', ";
-		}
-		
-		if (isset($_POST['txt_second_last_name']) && !empty($_POST['txt_second_last_name'])){
-			$query = $query . "'" . $_POST['txt_second_last_name'] . "', ";
-		} else {
-			$query = $query . "'', ";
-		}
-		
-		if (isset($_POST['txt_born_date']) && !empty($_POST['txt_born_date'])){
-			$query = $query . "'" . $_POST['txt_born_date'] . "', ";
-		} else {
-			$query = $query . "'', ";
-		}
-		
-		if (isset($_POST['txt_phone']) && !empty($_POST['txt_phone'])){
-			$query = $query . "'" . $_POST['txt_phone'] . "', ";
-		} else {
-			$query = $query . "'', ";
-		}
 		
 		if (isset($_POST['txt_email']) && !empty($_POST['txt_email'])){
-			$query = $query . "'" . $_POST['txt_email'] . "', ";
-		} else {
-			$query = $query . "'', ";
-		}
-		$newpass = md5($_POST['txt_password']);
-		if (isset($_POST['txt_password']) && !empty($_POST['txt_password']) && isset($_POST['txt_retype_password']) && !empty($_POST['txt_retype_password'])){
-			if ($_POST['txt_password'] == $_POST['txt_retype_password']){
-				$query = $query . "'" . $newpass . "');";
-				$_SESSION['msg'] = $_SESSION['msg'] . fn_InsertQuery(Conexion(), $query);
+			$query = "CALL `sp_user_email_verification`('" .$_POST['txt_email'] . "');";
+			$tabla = fnSelectAnyQuery(Conexion(), $query, 1);
+			if ($tabla[2][0] == 0){
+				$query = "CALL `sp_user_add`(";
+				
+				if (isset($_POST['txt_firstname']) && !empty($_POST['txt_firstname'])){
+					$query = $query . "'" . addslashes(htmlspecialchars(htmlentities($_POST['txt_firstname']))) . "', ";
+				} else {
+					$query = $query . "'', ";
+				}
+				
+				if (isset($_POST['txt_secondname']) && !empty($_POST['txt_secondname'])){
+					$query = $query . "'" . $_POST['txt_secondname'] . "', ";
+				} else {
+					$query = $query . "'', ";
+				}
+				
+				if (isset($_POST['txt_first_last_name']) && !empty($_POST['txt_first_last_name'])){
+					$query = $query . "'" . $_POST['txt_first_last_name'] . "', ";
+				} else {
+					$query = $query . "'', ";
+				}
+				
+				if (isset($_POST['txt_second_last_name']) && !empty($_POST['txt_second_last_name'])){
+					$query = $query . "'" . $_POST['txt_second_last_name'] . "', ";
+				} else {
+					$query = $query . "'', ";
+				}
+				
+				if (isset($_POST['txt_born_date']) && !empty($_POST['txt_born_date'])){
+					$query = $query . "'" . $_POST['txt_born_date'] . "', ";
+				} else {
+					$query = $query . "'', ";
+				}
+				
+				if (isset($_POST['txt_phone']) && !empty($_POST['txt_phone'])){
+					$query = $query . "'" . $_POST['txt_phone'] . "', ";
+				} else {
+					$query = $query . "'', ";
+				}
+				
+				if (isset($_POST['txt_email']) && !empty($_POST['txt_email'])){
+					$query = $query . "'" . $_POST['txt_email'] . "', ";
+				} else {
+					$query = $query . "'', ";
+				}
+				$newpass = md5($_POST['txt_password']);
+				if (isset($_POST['txt_password']) && !empty($_POST['txt_password']) && isset($_POST['txt_retype_password']) && !empty($_POST['txt_retype_password'])){
+					if ($_POST['txt_password'] == $_POST['txt_retype_password']){
+						$query = $query . "'" . $newpass . "');";
+						$_SESSION['msg'] = $_SESSION['msg'] . fn_InsertQuery(Conexion(), $query);
+					} else {
+						$query = $query . "'');";
+						$_SESSION['msg'] = $_SESSION['msg'] . "Los password ingresados no coinciden. ";
+					}
+				} else {
+					$query = $query . "'');";
+					$_SESSION['msg'] = $_SESSION['msg'] . "Los campos ingresados no estan completos. ";
+				}
 			} else {
-				$query = $query . "'');";
+				$_SESSION['msg'] = $_SESSION['msg'] . "El correo electrónico ingresado no es valido. ";
 			}
 		} else {
-			$query = $query . "'');";
+			$_SESSION['msg'] = $_SESSION['msg'] . "El correo electrónico ingresado no es valido. ";
 		}
+		
+		
+		
 	}
 	
 	if (isset($_POST['btn_login_page'])){

@@ -27,6 +27,38 @@ DELIMITER $$
 --
 -- Procedimientos
 --
+CREATE PROCEDURE `sp_waitingqueuebybarber_update_from_initialized_to_finalize`(
+	IN val_QueueCode bigint(20)
+)
+MODIFIES SQL DATA
+COMMENT 'Actualiza el ticket de estado Iniciado a Finalizado y actualiza la hora de inicio del servicio. '
+UPDATE `waitingqueuebybarber` 
+SET `waitingqueueState`= 3,`FinalHour`=CURRENT_TIME
+WHERE `QueueCode`= val_QueueCode
+;$$
+
+CREATE PROCEDURE `sp_waitingqueuebybarber_update_from_finalize_proved`(
+	IN val_QueueCode bigint(20)
+)
+MODIFIES SQL DATA
+COMMENT 'Actualiza el ticket de estado Iniciado a Finalizado y actualiza la hora de inicio del servicio. '
+UPDATE `waitingqueuebybarber` 
+SET `waitingqueueState`= 4
+WHERE `QueueCode`= val_QueueCode
+;$$
+
+CREATE PROCEDURE `sp_waitingqueuebybarber_update_from_waiting_to_initialize`(
+	IN val_QueueCode bigint(20)
+)
+MODIFIES SQL DATA
+COMMENT 'Actualiza el ticket de estado En Espera a Iniciado y actualiza la hora de inicio del servicio. '
+UPDATE `waitingqueuebybarber` 
+SET `waitingqueueState`= 2,`InitialHour`=CURRENT_TIME
+WHERE `QueueCode`= val_QueueCode
+;$$
+
+
+
 CREATE PROCEDURE `sp_waitingqueuebybarber_show_employee_user_where_state_another`(
 	IN val_value varchar(50),
 	IN val_waitingqueueState bigint(20),

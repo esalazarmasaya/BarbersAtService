@@ -310,6 +310,42 @@
 					';
 				}
 				
+				if (isset($_SESSION['PageCode20']) && !empty($_SESSION['PageCode20'])) {
+					$left_nav = $left_nav . '
+						<ul class="nav nav-second-level">
+							<li>
+								<a href="../TicketsPendant/index.php" class=" hvr-bounce-to-right">
+									<i class="fa fa-sign-in nav_icon"></i>En Espera
+								</a>
+							</li>
+						</ul>
+					';
+				}
+				
+				if (isset($_SESSION['PageCode21']) && !empty($_SESSION['PageCode21'])) {
+					$left_nav = $left_nav . '
+						<ul class="nav nav-second-level">
+							<li>
+								<a href="../TicketsInitialized/index.php" class=" hvr-bounce-to-right">
+									<i class="fa fa-sign-in nav_icon"></i>Iniciados
+								</a>
+							</li>
+						</ul>
+					';
+				}
+				
+				if (isset($_SESSION['PageCode22']) && !empty($_SESSION['PageCode22'])) {
+					$left_nav = $left_nav . '
+						<ul class="nav nav-second-level">
+							<li>
+								<a href="../TicketsFinished/index.php" class=" hvr-bounce-to-right">
+									<i class="fa fa-sign-in nav_icon"></i>Finalizados
+								</a>
+							</li>
+						</ul>
+					';
+				}
+				
 			$left_nav = $left_nav . '
 			</li>';
 			
