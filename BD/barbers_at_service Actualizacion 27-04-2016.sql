@@ -27,6 +27,147 @@ DELIMITER $$
 --
 -- Procedimientos
 --
+CREATE PROCEDURE `sp_waitingqueuebybarber_show_employee_user_where_state_another`(
+	IN val_value varchar(50),
+	IN val_waitingqueueState bigint(20),
+	IN val_EmployeeCode bigint(20)
+)
+MODIFIES SQL DATA
+COMMENT 'Muestra todos los tickets con decripcion de usuario y empleado por estado y por los valores encontrados en el texto ingresado. '
+SELECT 
+	`waitingqueuebybarberEmployee`.`QueueCode`, 
+	`waitingqueuebybarberEmployee`.`QueueDate`, 
+	`waitingqueuebybarberEmployee`.`waitingqueueState`, 
+	`waitingqueuebybarberEmployee`.`StateName`,
+	`waitingqueuebybarberEmployee`.`InitialHour`, 
+	`waitingqueuebybarberEmployee`.`FinalHour`, 
+	`waitingqueuebybarberEmployee`.`Service`, 
+	`waitingqueuebybarberEmployee`.`ServiceName`,
+	`waitingqueuebybarberEmployee`.`User`,
+	`user`.`UserFirstName` UserFirstName, 
+	`user`.`UserSecondName` UserSecondName, 
+	`user`.`UserFirstLastName` UserFirstLastName, 
+	`user`.`UserSecondLastName` UserSecondFirstLastName,
+	`user`.`UserEmail` UserEmail,  
+	`user`.`RoleCode` UserRoleCode,
+	`waitingqueuebybarberEmployee`.`EmployeeCode`,
+	`waitingqueuebybarberEmployee`.EmployeeFirstName, 
+	`waitingqueuebybarberEmployee`.EmployeeSecondName, 
+	`waitingqueuebybarberEmployee`.EmployeeFirstLastName, 
+	`waitingqueuebybarberEmployee`.EmployeeSecondFirstLastName,
+	`waitingqueuebybarberEmployee`.EmployeeEmail,  
+	`waitingqueuebybarberEmployee`.EmployeeRoleCode
+FROM 
+	(SELECT 
+		`waitingqueuebybarber`.`QueueCode`, 
+		`waitingqueuebybarber`.`QueueDate`, 
+		`waitingqueuebybarber`.`waitingqueueState`, 
+		`states`.`StateName`,
+		`waitingqueuebybarber`.`InitialHour`, 
+		`waitingqueuebybarber`.`FinalHour`, 
+		`waitingqueuebybarber`.`Service`, 
+		`Service`.`Name` ServiceName,
+		`waitingqueuebybarber`.`User`, 
+		`waitingqueuebybarber`.`EmployeeCode`,
+		`user`.`UserFirstName` EmployeeFirstName, 
+		`user`.`UserSecondName` EmployeeSecondName, 
+		`user`.`UserFirstLastName` EmployeeFirstLastName, 
+		`user`.`UserSecondLastName` EmployeeSecondFirstLastName,
+		`user`.`UserEmail` EmployeeEmail,  
+		`user`.`RoleCode` EmployeeRoleCode
+	FROM `waitingqueuebybarber` left join `user` on `waitingqueuebybarber`.`EmployeeCode`  = `user`.`usercode`
+			left join `Service` on `waitingqueuebybarber`.`Service` = `Service`.`ServiceCode`
+			left join states on `waitingqueuebybarber`.`waitingqueueState` = `states`.`StateCode`
+			WHERE `waitingqueuebybarber`.`waitingqueueState` = val_waitingqueueState and 
+				`waitingqueuebybarber`.`EmployeeCode` = val_EmployeeCode) as waitingqueuebybarberEmployee 
+	left join `user` on `waitingqueuebybarberEmployee`.`User`  = `user`.`usercode`
+WHERE 
+	`waitingqueuebybarberEmployee`.`StateName` like val_value OR 
+	`waitingqueuebybarberEmployee`.`ServiceName` like val_value OR 
+	`user`.`UserFirstName` like val_value OR 
+	`user`.`UserSecondName` like val_value OR 
+	`user`.`UserFirstLastName` like val_value OR 
+	`user`.`UserSecondLastName` like val_value OR 
+	`user`.`UserEmail` like val_value OR 
+	`waitingqueuebybarberEmployee`.EmployeeFirstName like val_value OR 
+	`waitingqueuebybarberEmployee`.EmployeeSecondName like val_value OR 
+	`waitingqueuebybarberEmployee`.EmployeeFirstLastName like val_value OR 
+	`waitingqueuebybarberEmployee`.EmployeeSecondFirstLastName like val_value OR 
+	`waitingqueuebybarberEmployee`.EmployeeEmail like val_value
+ORDER BY `waitingqueuebybarberEmployee`.`QueueDate` DESC
+;$$
+
+
+
+CREATE PROCEDURE `sp_waitingqueuebybarber_show_employee_user_where_state`(
+	IN val_waitingqueueState bigint(20),
+	IN val_EmployeeCode bigint(20)
+)
+MODIFIES SQL DATA
+COMMENT 'Muestra todos los tickets con decripcion de usuario y empleado por estado. '
+SELECT 
+	`waitingqueuebybarberEmployee`.`QueueCode`, 
+	`waitingqueuebybarberEmployee`.`QueueDate`, 
+	`waitingqueuebybarberEmployee`.`waitingqueueState`, 
+	`waitingqueuebybarberEmployee`.`StateName`,
+	`waitingqueuebybarberEmployee`.`InitialHour`, 
+	`waitingqueuebybarberEmployee`.`FinalHour`, 
+	`waitingqueuebybarberEmployee`.`Service`, 
+	`waitingqueuebybarberEmployee`.`ServiceName`,
+	`waitingqueuebybarberEmployee`.`User`,
+	`user`.`UserFirstName` UserFirstName, 
+	`user`.`UserSecondName` UserSecondName, 
+	`user`.`UserFirstLastName` UserFirstLastName, 
+	`user`.`UserSecondLastName` UserSecondFirstLastName,
+	`user`.`UserEmail` UserEmail,  
+	`user`.`RoleCode` UserRoleCode,
+	`waitingqueuebybarberEmployee`.`EmployeeCode`,
+	`waitingqueuebybarberEmployee`.EmployeeFirstName, 
+	`waitingqueuebybarberEmployee`.EmployeeSecondName, 
+	`waitingqueuebybarberEmployee`.EmployeeFirstLastName, 
+	`waitingqueuebybarberEmployee`.EmployeeSecondFirstLastName,
+	`waitingqueuebybarberEmployee`.EmployeeEmail,  
+	`waitingqueuebybarberEmployee`.EmployeeRoleCode
+FROM 
+	(SELECT 
+		`waitingqueuebybarber`.`QueueCode`, 
+		`waitingqueuebybarber`.`QueueDate`, 
+		`waitingqueuebybarber`.`waitingqueueState`, 
+		`states`.`StateName`,
+		`waitingqueuebybarber`.`InitialHour`, 
+		`waitingqueuebybarber`.`FinalHour`, 
+		`waitingqueuebybarber`.`Service`, 
+		`Service`.`Name` ServiceName,
+		`waitingqueuebybarber`.`User`, 
+		`waitingqueuebybarber`.`EmployeeCode`,
+		`user`.`UserFirstName` EmployeeFirstName, 
+		`user`.`UserSecondName` EmployeeSecondName, 
+		`user`.`UserFirstLastName` EmployeeFirstLastName, 
+		`user`.`UserSecondLastName` EmployeeSecondFirstLastName,
+		`user`.`UserEmail` EmployeeEmail,  
+		`user`.`RoleCode` EmployeeRoleCode
+	FROM `waitingqueuebybarber` left join `user` on `waitingqueuebybarber`.`EmployeeCode`  = `user`.`usercode`
+			left join `Service` on `waitingqueuebybarber`.`Service` = `Service`.`ServiceCode`
+			left join states on `waitingqueuebybarber`.`waitingqueueState` = `states`.`StateCode`
+			WHERE `waitingqueuebybarber`.`waitingqueueState` = val_waitingqueueState and `waitingqueuebybarber`.`EmployeeCode` = val_EmployeeCode) as waitingqueuebybarberEmployee 
+		left join `user` on `waitingqueuebybarberEmployee`.`User`  = `user`.`usercode`
+ORDER BY `waitingqueuebybarberEmployee`.`QueueDate` DESC
+;$$
+
+
+CREATE PROCEDURE `sp_user_email_verification`(
+	`val_UserEmail` varchar(100)
+) 
+MODIFIES SQL DATA
+COMMENT 'Devuelve un valor mayor a cero en caso exista un email igual. '
+BEGIN
+SELECT count(1) 
+FROM `user` 
+WHERE `UserEmail` = `val_UserEmail`
+;
+END $$
+
+
 CREATE PROCEDURE `sp_waitingqueuebybarber_update`(
 	`val_QueueCode` bigint(20),
 	`val_waitingqueueState` bigint(20),
@@ -52,7 +193,7 @@ END $$
 
 CREATE PROCEDURE `sp_states_show`() 
 MODIFIES SQL DATA
-COMMENT 'Presenta los estados. '
+COMMENT 'Presenta los estados de los tickets. '
 BEGIN
 SELECT `StateCode`, `StateName` FROM `states`;
 END $$
@@ -67,6 +208,8 @@ END $$
 
 CREATE PROCEDURE `sp_waitingqueuebybarber_show_employee_user`(
 )
+MODIFIES SQL DATA
+COMMENT 'Muestra todos los tickets no importando el estado con decripcion de usuario y empleado. '
 SELECT 
 	`waitingqueuebybarberEmployee`.`QueueCode`, 
 	`waitingqueuebybarberEmployee`.`QueueDate`, 
@@ -118,6 +261,8 @@ ORDER BY `waitingqueuebybarberEmployee`.`QueueDate` DESC
 CREATE PROCEDURE `sp_waitingqueuebybarber_show_employee_user_where`(
 	IN val_value varchar(50)
 )
+MODIFIES SQL DATA
+COMMENT 'Muestra todos los tickets que contengan el valor ingresado en campos que sean texto. '
 SELECT 
 	`waitingqueuebybarberEmployee`.`QueueCode`, 
 	`waitingqueuebybarberEmployee`.`QueueDate`, 
@@ -181,6 +326,8 @@ ORDER BY `waitingqueuebybarberEmployee`.`QueueDate` DESC
 
 
 CREATE PROCEDURE `sp_ServiceTimeByBarber_show`()
+MODIFIES SQL DATA
+COMMENT 'Muestra todos los tiempos de los barberos por de servicio. '
 SELECT 
 	`servicetimebybarber`.`ServiceTimeBarberCode`, 
 	`servicetimebybarber`.`MinTime`, 
@@ -203,6 +350,8 @@ ORDER BY `user`.`UserFirstName`, `user`.`UserFirstLastName`, `servicetimebybarbe
 CREATE PROCEDURE `sp_ServiceTimeByBarber_show_where`(
 	IN `val_value` varchar(50)
 )
+MODIFIES SQL DATA
+COMMENT 'Muestra todos los tiempos de los barberos por de servicio que contengan el valor ingresado en campos que sean texto. '
 SELECT 
 	`servicetimebybarber`.`ServiceTimeBarberCode`, 
 	`servicetimebybarber`.`MinTime`, 
@@ -230,6 +379,8 @@ ORDER BY `user`.`UserFirstName`, `user`.`UserFirstLastName`, `servicetimebybarbe
 CREATE PROCEDURE `sp_waitingqueuebybarber_get_my_ticket`(
 	IN `val_useridcode` bigint(20)
 )
+MODIFIES SQL DATA
+COMMENT 'Devuelve los datos, si existen, para el usuario que solicito un ticket. '
 SELECT 
 	`QueueCode`, 
 	`QueueDate`, 
@@ -249,6 +400,8 @@ WHERE `User` = val_useridcode AND waitingqueueState = 1 AND InitialHour > CURREN
 CREATE PROCEDURE `sp_waitingqueuebybarber_my_actual_tickets`(
 	IN `val_useridcode` bigint(20)
 )
+MODIFIES SQL DATA
+COMMENT 'Devuelve cuantos ticket activos hay para un usuario. '
 SELECT 
 	count(1) 
 FROM `waitingqueuebybarber` 
@@ -1484,7 +1637,7 @@ CREATE TABLE IF NOT EXISTS `webpage` (
   `UrlWebPage` varchar(500) COLLATE utf8_spanish2_ci NOT NULL,
   `WebPageDescription` varchar(500) COLLATE utf8_spanish2_ci NOT NULL,
   `WebState` bigint(20) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `webpage`
@@ -1509,7 +1662,12 @@ INSERT INTO `webpage` (`WebPageCode`, `WebPageName`, `UrlWebPage`, `WebPageDescr
 (16, 'Tickets', '', 'Tickets.', 1),
 (17, 'Tiempo promedio nuevo', '', 'Tiempo promedio nuevo.', 1),
 (18, 'Tiempos promedio', '', 'Tiempos promedio.', 1),
-(19, 'Mi Ticket', '', 'Mi Ticket.', 1);
+(19, 'Mi Ticket', '', 'Mi Ticket.', 1),
+(20, 'Tickets en Espera', '', 'Tickets en Espera.', 1),
+(21, 'Tickets Iniciados', '', 'Tickets Iniciados.', 1),
+(22, 'Tickets Finalizados', '', 'Tickets Finalizados.', 1),
+(23, 'Tickets Comprobados', '', 'Tickets Comprobados.', 1)
+;
 
 --
 -- Índices para tablas volcadas
