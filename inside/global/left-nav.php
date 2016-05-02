@@ -19,7 +19,7 @@
 					<li>
 						<a href="../Cellar/index.php" class=" hvr-bounce-to-right">
 								<i class="fa fa-dashboard nav_icon "></i>
-								<span class="nav-label">Bodega</span> 
+								<span class="nav-label">Tienda</span> 
 						</a>
 					</li>
 				';
@@ -274,7 +274,7 @@
 					<span class="fa arrow"></span>
 				</a>';
 				
-				if (isset($_SESSION['PageCode13']) && !empty($_SESSION['PageCode13'])) {
+				if (isset($_SESSION['PageCode15']) && !empty($_SESSION['PageCode15'])) {
 					$left_nav = $left_nav . '
 						<ul class="nav nav-second-level">
 							<li>

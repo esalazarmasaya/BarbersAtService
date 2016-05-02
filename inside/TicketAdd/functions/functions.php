@@ -7,36 +7,48 @@
 	
 	
 	if (isset($_POST['btn_add_new_item'])){
-		$query = "CALL `sp_testColas_insert`(";
 		
-		if (isset($_POST['slct_service']) && !empty($_POST['slct_service'])){
-			$query = $query . "" . $_POST['slct_service'] . ", ";
-		} else {
-			$query = $query . "'', ";
+		$tabla = fnVerificarCuantosTicketsPendientesHayParaElCliente();
+		
+		if ($tabla[2][0] > 0){
+			$_SESSION['msg'] = $_SESSION['msg'] . "Ya posee un ticket en espera. En el área de Mi Ticket puede ver el tiempo aproximado de espera. ";
+		}
+		else 
+		{
+			$query = "CALL `sp_testColas_insert`(";
+		
+			if (isset($_POST['slct_service']) && !empty($_POST['slct_service'])){
+				$query = $query . "" . $_POST['slct_service'] . ", ";
+			} else {
+				$query = $query . "'', ";
+			}
+			
+			if (isset($_SESSION['usermail']) && !empty($_SESSION['usermail'])){
+				$idusuario = fnTraerCodigoUsusario();
+				$query = $query . "" . $idusuario[2][0] . ", ";
+			} else {
+				$query = $query . "'', ";
+			}
+			
+			if (isset($_POST['slct_employee']) && !empty($_POST['slct_employee'])){
+				$query = $query . "" . $_POST['slct_employee'] . "";
+			} else {
+				$query = $query . "NULL ";
+			}
+					
+			$query = $query . ");";
+			
+			
+			//$_SESSION['msg'] = $_SESSION['msg'] . $query;
+			//echo $query;
+			
+			//$tabla = fn_InsertQuery(Conexion(), $query);
+			$tabla = fnSelectAnyQuery(Conexion(), $query, 1);
+			
+			$_SESSION['msg'] = $_SESSION['msg'] . $tabla[2][0];
 		}
 		
-		if (isset($_SESSION['usermail']) && !empty($_SESSION['usermail'])){
-			$idusuario = fnTraerCodigoUsusario();
-			$query = $query . "" . $idusuario[2][0] . ", ";
-		} else {
-			$query = $query . "'', ";
-		}
 		
-		if (isset($_POST['slct_employee']) && !empty($_POST['slct_employee'])){
-			$query = $query . "" . $_POST['slct_employee'] . "";
-		} else {
-			$query = $query . "NULL ";
-		}
-				
-		$query = $query . ");";
-		
-		
-		//$_SESSION['msg'] = $_SESSION['msg'] . $query;
-		//echo $query;
-		
-		fn_InsertQuery(Conexion(), $query);
-		
-		$_SESSION['msg'] = $_SESSION['msg'] . "Información agregada. ";
 		
 		
 	}
@@ -96,7 +108,7 @@
 		$tabla[1][4] = "Primer Apellido";
 		$tabla[1][5] = "Segundo Apellido";
 		
-		echo $tabla[2][0];
+		//echo $tabla[2][0];
 		
 		//$_SESSION['html'] =  fnCrearTablaHtmlDeTablaBrand($tabla, 1);
 		//$data_relation = $_SESSION['data_relation'];
@@ -106,6 +118,27 @@
 		//$_SESSION['msg'] = $_SESSION['msg'] . "";
 		return $tabla;
 	}
+	
+	function fnVerificarCuantosTicketsPendientesHayParaElCliente(){
+		$tabla = fnTraerCodigoUsusario();
+		$query = "CALL `sp_waitingqueuebybarber_my_actual_tickets`('" . $tabla[2][0] . "');";
+		
+		$tabla = fnSelectAnyQuery(Conexion(), $query, 1);
+		
+		$tabla[1][0] = "Cantidad de tickets pendientes";
+		
+		//echo $tabla[2][0];
+		
+		//$_SESSION['html'] =  fnCrearTablaHtmlDeTablaBrand($tabla, 1);
+		//$data_relation = $_SESSION['data_relation'];
+		//$_SESSION["page_table"] = $tabla;
+		//$_SESSION['html'] = fnCrearTablaHtmlDeTablaProduct();
+		
+		//$_SESSION['msg'] = $_SESSION['msg'] . "";
+		return $tabla;
+	}
+	
+	
 	
 	
 	

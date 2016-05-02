@@ -16,7 +16,7 @@
 		
 		$_SESSION['msg'] = "";
 		
-		if (!isset($_SESSION['PageCode11']) && empty($_SESSION['PageCode11'])) {
+		if (!isset($_SESSION['PageCode15']) && empty($_SESSION['PageCode15'])) {
 			$_SESSION['msg'] = "No tiene permiso para ingresar a esta pagina. ";
 			echo '
 			<meta http-equiv="refresh" content="0; url=../../index.php" />

@@ -1,5 +1,5 @@
 <?php
-	$data_relation = "ticketadd";
+	$data_relation = "myticket";
 	
 	$_SESSION['data_relation'] = $data_relation;
 	
@@ -63,7 +63,7 @@
 	
 	function fnTraerDatosInicioTicket(){
 		$usercode = fnTraerCodigoUsusario();
-		$query = "CALL `sp_ServiceTimeByBarber_get_my_ticket`(" . $usercode[2][0] . ");";
+		$query = "CALL `sp_waitingqueuebybarber_get_my_ticket`(" . $usercode[2][0] . ");";
 		
 		
 		$tabla = fnSelectAnyQuery(Conexion(), $query, 11);
@@ -110,7 +110,24 @@
 		return $tabla;
 	}
 	
-	
+	function fnVerificarCuantosTicketsPendientesHayParaElCliente(){
+		$tabla = fnTraerCodigoUsusario();
+		$query = "CALL `sp_waitingqueuebybarber_my_actual_tickets`('" . $tabla[2][0] . "');";
+		
+		$tabla = fnSelectAnyQuery(Conexion(), $query, 1);
+		
+		$tabla[1][0] = "Cantidad de tickets pendientes";
+		
+		//echo $tabla[2][0];
+		
+		//$_SESSION['html'] =  fnCrearTablaHtmlDeTablaBrand($tabla, 1);
+		//$data_relation = $_SESSION['data_relation'];
+		//$_SESSION["page_table"] = $tabla;
+		//$_SESSION['html'] = fnCrearTablaHtmlDeTablaProduct();
+		
+		//$_SESSION['msg'] = $_SESSION['msg'] . "";
+		return $tabla;
+	}
 	
 	
 ?>

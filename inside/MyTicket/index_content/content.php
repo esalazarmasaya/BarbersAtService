@@ -1,4 +1,4 @@
-<?php $pageid = "../Product/index.php"; ?>
+<?php $pageid = "../TicketAdd/index.php"; ?>
 
 <div class="content-main">
 	
@@ -39,7 +39,7 @@
 	<!--content-->
 	<div class="grid-form">
  		<div class="grid-form1">
-	 		<h3 id="forms-example" class="">Mi ticket</h3>
+	 		<h3 id="forms-example" class="">Tiempo aproximado de espera: </h3>
 	 		
 	 		</br>
 			
@@ -115,13 +115,31 @@
 			
 	 		
 			<?php 
-				$tiempo_espera_servicio = fnTraerDatosInicioTicket();
-				echo $tiempo_espera_servicio[2][8];
-				echo $tiempo_espera_servicio[2][9];
-				echo $tiempo_espera_servicio[2][10];
-				$value = '
-					<body onload="mueveReloj(' . $tiempo_espera_servicio[2][8] . ',' . $tiempo_espera_servicio[2][9] . ',' . $tiempo_espera_servicio[2][10] . ')"> 
-				';
+				$tabla = fnVerificarCuantosTicketsPendientesHayParaElCliente();
+				
+				if ($tabla[2][0] == 0){
+					$value = '
+						<body onload="mueveReloj(0,0,0)"> 
+						</br>
+						<div class="banner">
+							<h2>
+								No hay un ticket creado. Seleccione ticket nuevo si desea agregar uno.
+							</h2>
+						</div>
+					';
+					
+				}
+				else {
+					$tiempo_espera_servicio = fnTraerDatosInicioTicket();
+					//echo $tiempo_espera_servicio[2][8];
+					//echo $tiempo_espera_servicio[2][9];
+					//echo $tiempo_espera_servicio[2][10];
+					$value = '
+						<body onload="mueveReloj(' . $tiempo_espera_servicio[2][8] . ',' . $tiempo_espera_servicio[2][9] . ',' . $tiempo_espera_servicio[2][10] . ')"> 
+					';
+					
+				}
+				
 				
 				echo $value;
 			?>
