@@ -1698,7 +1698,8 @@ INSERT INTO `webpage` (`WebPageCode`, `WebPageName`, `UrlWebPage`, `WebPageDescr
 (20, 'Tickets en Espera', '', 'Tickets en Espera.', 1),
 (21, 'Tickets Iniciados', '', 'Tickets Iniciados.', 1),
 (22, 'Tickets Finalizados', '', 'Tickets Finalizados.', 1),
-(23, 'Tickets Comprobados', '', 'Tickets Comprobados.', 1)
+(23, 'Tickets Comprobados', '', 'Tickets Comprobados.', 1),
+(24, 'Tickets por comprobar (pagados)', '', 'Tickets por comprobar (pagados).', 1)
 ;
 
 --
@@ -2017,6 +2018,58 @@ call `sp_permission_add_by_rol`('Administrador');
 UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1;
 call `sp_permission_add_by_rol`('Cliente');
 call `sp_permission_add_by_rol`('Barbero');
+
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 1;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 2;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 3;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 4;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 5;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 6;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 7;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 8;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 9;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 10;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 11;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 12;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 13;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 14;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 2 AND `WebPageCode` = 15;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 16;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 17;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 18;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 2 AND `WebPageCode` = 19;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 20;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 21;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 22;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 23;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 24;
+
+
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 1;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 2;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 3;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 4;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 5;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 6;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 7;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 8;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 9;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 10;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 11;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 12;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 13;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 14;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 3 AND `WebPageCode` = 15;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 16;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 17;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 18;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 3 AND `WebPageCode` = 19;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 3 AND `WebPageCode` = 20;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 3 AND `WebPageCode` = 21;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 3 AND `WebPageCode` = 22;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 3 AND `WebPageCode` = 23;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 24;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

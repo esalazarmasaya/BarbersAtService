@@ -1,4 +1,4 @@
-<?php $pageid = "../TicketsPendant/index.php"; ?>
+<?php $pageid = "../TicketsFinished/index.php"; ?>
 
 <div class="content-main">
 	

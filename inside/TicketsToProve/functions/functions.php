@@ -25,7 +25,7 @@
 	
 	
 	if (isset($_POST['btn_edit_data_of_table'])){
-		$query = "CALL `sp_waitingqueuebybarber_update_from_waiting_to_initialize`(";
+		$query = "CALL `sp_waitingqueuebybarber_update_from_finalize_proved`(";
 		
 		if (isset($_POST['lbl_code']) && !empty($_POST['lbl_code'])){
 			$query = $query . "" . $_POST['lbl_code'] . "";
@@ -143,7 +143,7 @@
 	function fnTraerDatos(){
 		
 		$tabla = fnTraerCodigoUsusario();
-		$query = "CALL `sp_waitingqueuebybarber_show_employee_user_where_state`(1, " . $tabla[2][0] . " );";
+		$query = "CALL `sp_waitingqueuebybarber_admin_show_employee_user_where_state`(3);";
 		
 		
 		$tabla = fnSelectAnyQuery(Conexion(), $query, 22);
@@ -184,7 +184,7 @@
 	
 	function fnTraerDatosWhere($where){
 		$tabla = fnTraerCodigoUsusario();
-		$query = "CALL `sp_waitingqueuebybarber_show_employee_user_where_state_another`('%" . $where . "%', 1, " . $tabla[2][0] . ");";
+		$query = "CALL `sp_waitingqueuebybarber_admin_show_emp_user_where_state_another`('%" . $where . "%', 3);";
 		
 		
 		$tabla = fnSelectAnyQuery(Conexion(), $query, 4);

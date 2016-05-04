@@ -16,7 +16,7 @@
 		
 		$_SESSION['msg'] = "";
 		
-		if (!isset($_SESSION['PageCode20']) && empty($_SESSION['PageCode20'])) {
+		if (!isset($_SESSION['PageCode24']) && empty($_SESSION['PageCode24'])) {
 			$_SESSION['msg'] = "No tiene permiso para ingresar a esta pagina. ";
 			echo '
 			<meta http-equiv="refresh" content="0; url=../../index.php" />
@@ -30,7 +30,7 @@
 		<h2>
 			<a href="../main/index.html">Home</a>
 			<i class="fa fa-angle-right"></i>
-			<a href="<?php echo $pageid; ?>">Tickets pendientes</a>
+			<a href="<?php echo $pageid; ?>">Tickets finalizados por comprobar</a>
 		</h2>
 	</div>
 	
@@ -39,7 +39,7 @@
 	<!--content-->
 	<div class="grid-form">
  		<div class="grid-form1">
-	 		<h3 id="forms-example" class="">Tickets pendientes</h3>
+	 		<h3 id="forms-example" class="">Tickets finalizados por comprobar</h3>
 	 		
 			<?php 
 				/*$value = '<form action="index.php" method="post" id="frm_add_new_product">

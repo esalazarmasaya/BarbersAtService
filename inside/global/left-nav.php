@@ -36,7 +36,7 @@
 					</a>
 					';
 				
-				if (isset($_SESSION['PageCode5']) && !empty($_SESSION['PageCode5'])) {
+				/*if (isset($_SESSION['PageCode5']) && !empty($_SESSION['PageCode5'])) {
 					$left_nav = $left_nav . '
 						<ul class="nav nav-second-level">
 							<li>
@@ -46,10 +46,10 @@
 							</li>
 						</ul>
 					';
-				}
+				}*/
 				 
 				
-					if (isset($_SESSION['PageCode2']) && !empty($_SESSION['PageCode2'])) {
+					/*if (isset($_SESSION['PageCode2']) && !empty($_SESSION['PageCode2'])) {
 						$left_nav = $left_nav . '
 							<ul class="nav nav-second-level">
 								<li>
@@ -59,7 +59,7 @@
 								</li>
 							</ul>
 						';
-					}
+					}*/
 				
 						
 				
@@ -286,17 +286,7 @@
 					';
 				}
 				
-				if (isset($_SESSION['PageCode14']) && !empty($_SESSION['PageCode14'])) {
-					$left_nav = $left_nav . '
-						<ul class="nav nav-second-level">
-							<li>
-								<a href="../Tickets/index.php" class=" hvr-bounce-to-right">
-									<i class="fa fa-sign-in nav_icon"></i>Tickets
-								</a>
-							</li>
-						</ul>
-					';
-				}
+				
 				
 				if (isset($_SESSION['PageCode19']) && !empty($_SESSION['PageCode19'])) {
 					$left_nav = $left_nav . '
@@ -309,6 +299,65 @@
 						</ul>
 					';
 				}
+				
+				
+				
+			$left_nav = $left_nav . '
+			</li>';
+			
+			
+			
+			
+			
+			
+			
+			$left_nav = $left_nav . '
+			<li>
+				<a href="#" class=" hvr-bounce-to-right">
+					<i class="fa fa-cog nav_icon"></i> 
+					<span class="nav-label">Ticket Admin</span>
+					<span class="fa arrow"></span>
+				</a>';
+				
+				if (isset($_SESSION['PageCode14']) && !empty($_SESSION['PageCode14'])) {
+					$left_nav = $left_nav . '
+						<ul class="nav nav-second-level">
+							<li>
+								<a href="../Tickets/index.php" class=" hvr-bounce-to-right">
+									<i class="fa fa-sign-in nav_icon"></i>Tickets
+								</a>
+							</li>
+						</ul>
+					';
+				}
+				
+				if (isset($_SESSION['PageCode22']) && !empty($_SESSION['PageCode24'])) {
+					$left_nav = $left_nav . '
+						<ul class="nav nav-second-level">
+							<li>
+								<a href="../TicketsToProve/index.php" class=" hvr-bounce-to-right">
+									<i class="fa fa-sign-in nav_icon"></i>Por comprobar
+								</a>
+							</li>
+						</ul>
+					';
+				}
+			
+			$left_nav = $left_nav . '
+			</li>';
+			
+			
+			
+			
+			
+			$left_nav = $left_nav . '
+			<li>
+				<a href="#" class=" hvr-bounce-to-right">
+					<i class="fa fa-cog nav_icon"></i> 
+					<span class="nav-label">Ver Tickets</span>
+					<span class="fa arrow"></span>
+				</a>';
+				
 				
 				if (isset($_SESSION['PageCode20']) && !empty($_SESSION['PageCode20'])) {
 					$left_nav = $left_nav . '
@@ -346,9 +395,24 @@
 					';
 				}
 				
+			
+			
+			
+			if (isset($_SESSION['PageCode22']) && !empty($_SESSION['PageCode23'])) {
+					$left_nav = $left_nav . '
+						<ul class="nav nav-second-level">
+							<li>
+								<a href="../TicketsProved/index.php" class=" hvr-bounce-to-right">
+									<i class="fa fa-sign-in nav_icon"></i>Comprobados
+								</a>
+							</li>
+						</ul>
+					';
+				}
+				
+			
 			$left_nav = $left_nav . '
 			</li>';
-			
 			
 			
 			
