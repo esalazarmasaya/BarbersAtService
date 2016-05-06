@@ -1,5 +1,5 @@
 <?php
-	$data_relation = "ticketsPendientes";
+	$data_relation = "transacciones";
 	
 	if (!isset($_SESSION['data_relation']) || empty($_SESSION['data_relation'])){
 		//echo "entro no. ";
@@ -21,19 +21,44 @@
 	$_SESSION['data_relation'] = $data_relation;
 	
 	
-	
-	
-	
 	if (isset($_POST['btn_edit_data_of_table'])){
-		$query = "CALL `sp_waitingqueuebybarber_update_from_waiting_to_initialize`(";
+		$query = "CALL `sp_waitingqueuebybarber_update`(";
 		
 		if (isset($_POST['lbl_code']) && !empty($_POST['lbl_code'])){
-			$query = $query . "" . $_POST['lbl_code'] . "";
+			$query = $query . "" . $_POST['lbl_code'] . ", ";
 		} else {
-			$query = $query . "NULL ";
+			$query = $query . "NULL , ";
 		}
 		
-		header("Location: ../TicketsInitialized/index.php ",TRUE,301);
+		if (isset($_POST['txt_state_code']) && !empty($_POST['txt_state_code'])){
+			$query = $query . "" . $_POST['txt_state_code'] . ", ";
+		} else {
+			$query = $query . "NULL , ";
+		}
+		
+		if (isset($_POST['txt_initial_hour']) && !empty($_POST['txt_initial_hour'])){
+			$query = $query . "'" . $_POST['txt_initial_hour'] . "',";
+		} else {
+			$query = $query . "NULL , ";
+		}
+		
+		if (isset($_POST['txt_final_hour']) && !empty($_POST['txt_final_hour'])){
+			$query = $query . "'" . $_POST['txt_final_hour'] . "',";
+		} else {
+			$query = $query . "NULL , ";
+		}
+		
+		if (isset($_POST['txt_service_code']) && !empty($_POST['txt_service_code'])){
+			$query = $query . "" . $_POST['txt_service_code'] . ", ";
+		} else {
+			$query = $query . "NULL , ";
+		}
+		
+		if (isset($_POST['txt_employee_code']) && !empty($_POST['txt_employee_code'])){
+			$query = $query . "" . $_POST['txt_employee_code'] . "";
+		} else {
+			$query = $query . "NULL";
+		}
 		
 		
 		
@@ -116,61 +141,39 @@
 		return $tabla;
 	}
 	
-	function fnTraerCodigoUsusario(){
-		$query = "CALL `sp_user_get_id_where_email`('" . $_SESSION['usermail'] . "');";
-		
-		$tabla = fnSelectAnyQuery(Conexion(), $query, 6);
-		
-		$tabla[1][0] = "Codigo";
-		$tabla[1][1] = "Email";
-		$tabla[1][2] = "Primer Nombre";
-		$tabla[1][3] = "Segundo Nombre";
-		$tabla[1][4] = "Primer Apellido";
-		$tabla[1][5] = "Segundo Apellido";
-		
-		//echo $tabla[2][0];
-		
-		//$_SESSION['html'] =  fnCrearTablaHtmlDeTablaBrand($tabla, 1);
-		//$data_relation = $_SESSION['data_relation'];
-		//$_SESSION["page_table"] = $tabla;
-		//$_SESSION['html'] = fnCrearTablaHtmlDeTablaProduct();
-		
-		//$_SESSION['msg'] = $_SESSION['msg'] . "";
-		return $tabla;
-	}
-	
 	
 	function fnTraerDatos(){
-		
-		$tabla = fnTraerCodigoUsusario();
-		$query = "CALL `sp_waitingqueuebybarber_show_employee_user_where_state`(1, " . $tabla[2][0] . " );";
+		$query = "CALL `sp_transactionheader_admin_show`();";
 		
 		
-		$tabla = fnSelectAnyQuery(Conexion(), $query, 22);
+		
+		$tabla = fnSelectAnyQuery(Conexion(), $query, 24);
 		
 		
-		$tabla[1][0] = "Código de ticket";
+		$tabla[1][0] = "Código de transacción";
 		$tabla[1][1] = "Fecha";
-		$tabla[1][2] = "Código de estado";
-		$tabla[1][3] = "Estado";
-		$tabla[1][4] = "Hora inicial";
-		$tabla[1][5] = "Hora Final";
-		$tabla[1][6] = "Código de servicio";
-		$tabla[1][7] = "Servicio";
-		$tabla[1][8] = "Código de usuario";
-		$tabla[1][9] = "Primer nombre de usuario";
-		$tabla[1][10] = "Segundo nombre de usuario";
-		$tabla[1][11] = "Primer apellido de usuario";
-		$tabla[1][12] = "Segundo apellido de usuario";
-		$tabla[1][13] = "Email de usuario";
-		$tabla[1][14] = "Código de rol de usuario";
-		$tabla[1][15] = "Código de empleado";
-		$tabla[1][16] = "Primer nombre de empleado";
-		$tabla[1][17] = "Segundo nombre de empleado";
-		$tabla[1][18] = "Primer apellido de empleado";
-		$tabla[1][19] = "Segundo apellido de empleado";
-		$tabla[1][20] = "Email de empleado";
-		$tabla[1][21] = "Código de rol de empleado";
+		$tabla[1][2] = "Código de cliente";
+		$tabla[1][3] = "Primer nombre del cliente";
+		$tabla[1][4] = "Segundo nombre del cliente";
+		$tabla[1][5] = "Primer apellido del cliente";
+		$tabla[1][6] = "Segundo apellido del cliente";
+		$tabla[1][7] = "Email del cliente";
+		$tabla[1][8] = "Rol del cliente";
+		$tabla[1][9] = "Código de empleado";
+		$tabla[1][10] = "Primer nombre de empleado";
+		$tabla[1][11] = "Segundo nombre de empleado";
+		$tabla[1][12] = "Primer apellido de empleado";
+		$tabla[1][13] = "Segundo apellido de empleado";
+		$tabla[1][14] = "Email de empleado";
+		$tabla[1][15] = "Rol de empleado";
+		$tabla[1][16] = "Codigo de ticket";
+		$tabla[1][17] = "Código de estado de transaccion";
+		$tabla[1][18] = "Nombre de estado";
+		$tabla[1][19] = "Codigo de tienda";
+		$tabla[1][20] = "Tienda";
+		$tabla[1][21] = "Efectivo";
+		$tabla[1][22] = "Tarjeta";
+		$tabla[1][23] = "Total";
 		
 		
 		
@@ -183,34 +186,35 @@
 	}
 	
 	function fnTraerDatosWhere($where){
-		$tabla = fnTraerCodigoUsusario();
-		$query = "CALL `sp_waitingqueuebybarber_show_employee_user_where_state_another`('%" . $where . "%', 1, " . $tabla[2][0] . ");";
+		$query = "CALL `sp_waitingqueuebybarber_show_employee_user_where`('%" . $where . "%');";
 		
 		
 		$tabla = fnSelectAnyQuery(Conexion(), $query, 4);
 		
-		$tabla[1][0] = "Código de ticket";
+		$tabla[1][0] = "Código de transacción";
 		$tabla[1][1] = "Fecha";
-		$tabla[1][2] = "Código de estado";
-		$tabla[1][3] = "Estado";
-		$tabla[1][4] = "Hora inicial";
-		$tabla[1][5] = "Hora Final";
-		$tabla[1][6] = "Código de servicio";
-		$tabla[1][7] = "Servicio";
-		$tabla[1][8] = "Código de usuario";
-		$tabla[1][9] = "Primer nombre de usuario";
-		$tabla[1][10] = "Segundo nombre de usuario";
-		$tabla[1][11] = "Primer apellido de usuario";
-		$tabla[1][12] = "Segundo apellido de usuario";
-		$tabla[1][13] = "Email de usuario";
-		$tabla[1][14] = "Código de rol de usuario";
-		$tabla[1][15] = "Código de empleado";
-		$tabla[1][16] = "Primer nombre de empleado";
-		$tabla[1][17] = "Segundo nombre de empleado";
-		$tabla[1][18] = "Primer apellido de empleado";
-		$tabla[1][19] = "Segundo apellido de empleado";
-		$tabla[1][20] = "Email de empleado";
-		$tabla[1][21] = "Código de rol de empleado";
+		$tabla[1][2] = "Código de cliente";
+		$tabla[1][3] = "Primer nombre del cliente";
+		$tabla[1][4] = "Segundo nombre del cliente";
+		$tabla[1][5] = "Primer apellido del cliente";
+		$tabla[1][6] = "Segundo apellido del cliente";
+		$tabla[1][7] = "Email del cliente";
+		$tabla[1][8] = "Rol del cliente";
+		$tabla[1][9] = "Código de empleado";
+		$tabla[1][10] = "Primer nombre de empleado";
+		$tabla[1][11] = "Segundo nombre de empleado";
+		$tabla[1][12] = "Primer apellido de empleado";
+		$tabla[1][13] = "Segundo apellido de empleado";
+		$tabla[1][14] = "Email de empleado";
+		$tabla[1][15] = "Rol de empleado";
+		$tabla[1][16] = "Codigo de ticket";
+		$tabla[1][17] = "Código de estado de transaccion";
+		$tabla[1][18] = "Nombre de estado";
+		$tabla[1][19] = "Codigo de tienda";
+		$tabla[1][20] = "Tienda";
+		$tabla[1][21] = "Efectivo";
+		$tabla[1][22] = "Tarjeta";
+		$tabla[1][23] = "Total";
 		
 		//$_SESSION['html'] =  fnCrearTablaHtmlDeTablaBrand($tabla, 1);
 		//$data_relation = $_SESSION['data_relation'];
@@ -457,28 +461,30 @@
 		';
 		
 		
-		$colNameId[0] = "lbl_code";
-		$colNameId[1] = "txt_date";
-		$colNameId[2] = "txt_state_code";
-		$colNameId[3] = "txt_state_name";
-		$colNameId[4] = "txt_initial_hour";
-		$colNameId[5] = "txt_final_hour";
-		$colNameId[6] = "txt_service_code";
-		$colNameId[7] = "txt_service_name";
-		$colNameId[8] = "txt_user_code";
-		$colNameId[9] = "txt_user_first_name";
-		$colNameId[10] = "txt_user_second_name";
-		$colNameId[11] = "txt_user_first_lastname";
-		$colNameId[12] = "txt_user_second_lastname";
-		$colNameId[13] = "txt_user_email";
-		$colNameId[14] = "txt_user_role_code";
-		$colNameId[15] = "txt_employee_code";
-		$colNameId[16] = "txt_employee_first_name";
-		$colNameId[17] = "txt_employee_second_name";
-		$colNameId[18] = "txt_employee_first_lastname";
-		$colNameId[19] = "txt_employee_second_lastname";
-		$colNameId[20] = "txt_employee_email";
-		$colNameId[21] = "txt_employee_role_code";
+		$tabla[1][0] = "Código de transacción";
+		$tabla[1][1] = "Fecha";
+		$tabla[1][2] = "Código de cliente";
+		$tabla[1][3] = "Primer nombre del cliente";
+		$tabla[1][4] = "Segundo nombre del cliente";
+		$tabla[1][5] = "Primer apellido del cliente";
+		$tabla[1][6] = "Segundo apellido del cliente";
+		$tabla[1][7] = "Email del cliente";
+		$tabla[1][8] = "Rol del cliente";
+		$tabla[1][9] = "Código de empleado";
+		$tabla[1][10] = "Primer nombre de empleado";
+		$tabla[1][11] = "Segundo nombre de empleado";
+		$tabla[1][12] = "Primer apellido de empleado";
+		$tabla[1][13] = "Segundo apellido de empleado";
+		$tabla[1][14] = "Email de empleado";
+		$tabla[1][15] = "Rol de empleado";
+		$tabla[1][16] = "Ticket";
+		$tabla[1][17] = "Código de estado de transaccion";
+		$tabla[1][18] = "Nombre de estado";
+		$tabla[1][19] = "Codigo de tienda";
+		$tabla[1][20] = "Tienda";
+		$tabla[1][21] = "Efectivo";
+		$tabla[1][22] = "Tarjeta";
+		$tabla[1][23] = "Total";
 		
 		
 		
@@ -491,31 +497,32 @@
 								//$value = $value . '<td class="table-text"><h6>' . $tabla[1][0] . '</h6></td>';
 								$value = $value . '<td class="table-text"><h6>' . $tabla[1][1] . '</h6></td>';
 								//$value = $value . '<td class="table-text"><h6>' . $tabla[1][2] . '</h6></td>';
-								$value = $value . '<td class="table-text"><h6>' . $tabla[1][3] . '</h6></td>';
-								$value = $value . '<td class="table-text"><h6>Tiempo</h6></td>';
+								//$value = $value . '<td class="table-text"><h6>' . $tabla[1][3] . '</h6></td>';
+								$value = $value . '<td class="table-text"><h6>Cliente</h6></td>';
 								//$value = $value . '<td class="table-text"><h6>' . $tabla[1][4] . '</h6></td>';
 								//$value = $value . '<td class="table-text"><h6>' . $tabla[1][5] . '</h6></td>';
 								//$value = $value . '<td class="table-text"><h6>' . $tabla[1][6] . '</h6></td>';
-								$value = $value . '<td class="table-text"><h6>' . $tabla[1][7] . '</h6></td>';
+								//$value = $value . '<td class="table-text"><h6>' . $tabla[1][7] . '</h6></td>';
 								//$value = $value . '<td class="table-text"><h6>' . $tabla[1][8] . '</h6></td>';
-								$value = $value . '<td class="table-text"><h6>Nombre de usuario</h6></td>';
 								//$value = $value . '<td class="table-text"><h6>' . $tabla[1][9] . '</h6></td>';
 								//$value = $value . '<td class="table-text"><h6>' . $tabla[1][10] . '</h6></td>';
+								$value = $value . '<td class="table-text"><h6>Empleado</h6></td>';
 								//$value = $value . '<td class="table-text"><h6>' . $tabla[1][11] . '</h6></td>';
 								//$value = $value . '<td class="table-text"><h6>' . $tabla[1][12] . '</h6></td>';
 								//$value = $value . '<td class="table-text"><h6>' . $tabla[1][13] . '</h6></td>';
 								//$value = $value . '<td class="table-text"><h6>' . $tabla[1][14] . '</h6></td>';
 								//$value = $value . '<td class="table-text"><h6>' . $tabla[1][15] . '</h6></td>';
-								$value = $value . '<td class="table-text"><h6>Nombre de empleado</h6></td>';
-								//$value = $value . '<td class="table-text"><h6>' . $tabla[1][16] . '</h6></td>';
+								$value = $value . '<td class="table-text"><h6>' . $tabla[1][16] . '</h6></td>';
 								//$value = $value . '<td class="table-text"><h6>' . $tabla[1][17] . '</h6></td>';
-								//$value = $value . '<td class="table-text"><h6>' . $tabla[1][18] . '</h6></td>';
+								$value = $value . '<td class="table-text"><h6>' . $tabla[1][18] . '</h6></td>';
 								//$value = $value . '<td class="table-text"><h6>' . $tabla[1][19] . '</h6></td>';
 								//$value = $value . '<td class="table-text"><h6>' . $tabla[1][20] . '</h6></td>';
 								//$value = $value . '<td class="table-text"><h6>' . $tabla[1][21] . '</h6></td>';
+								//$value = $value . '<td class="table-text"><h6>' . $tabla[1][22] . '</h6></td>';
+								$value = $value . '<td class="table-text"><h6>' . $tabla[1][23] . '</h6></td>';
 								
 								
-								$value = $value . '<td class="march"></td>';
+								//$value = $value . '<td class="march"></td>';
 								$value = $value . '
 								</tr>
 							';
@@ -526,33 +533,21 @@
 									<tr class="table-row">';
 									
 									$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][1] . '</h6></td>';
-									$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][3] . '</h6></td>';
-									
-									/*if ($tabla[$filas][3] == 0)
-									{
-										$value = $value . '<td class="table-text"><h6>Inactivo</h6></td>';
-									}else{
-										$value = $value . '<td class="table-text"><h6>Activo</h6></td>';
-									}*/
-									
-									//$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][4] . '</h6></td>';
-									//$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][5] . '</h6></td>';
-									$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][4] . ' ' . $tabla[$filas][5] . '</h6></td>';
-									$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][7] . '</h6></td>';
-									$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][9] . ' ' . $tabla[$filas][11] . ' (' . $tabla[$filas][13] . ')' .  '</h6></td>';
-									//$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][13] . '</h6></td>';
-									$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][16] . ' ' . $tabla[$filas][18] . ' (' . $tabla[$filas][20] . ')' .  '</h6></td>';
-									//$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][20] . '</h6></td>';
+									$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][3] . ' ' . $tabla[$filas][5] . ' (' . $tabla[$filas][7] . ')' . '</h6></td>';
+									$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][10] . ' ' . $tabla[$filas][12] . ' (' . $tabla[$filas][14] . ')' . '</h6></td>';
+									$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][16] . '</h6></td>';
+									$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][18] . '</h6></td>';
+									$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][23] . '</h6></td>';
 									
 									
 									
-									$value = $value . '
+									/*$value = $value . '
 										<td class="march">
 											<form action="index.php" method="post" id="frm_edit_row_' . $filas . '">
 												<input type="hidden" class="form-control" id="exampleInputEmail1" name="txt_edit_row" value="' . $filas . '" form="frm_edit_row_' . $filas . '" readonly>
 												<button type="submit" class="btn btn-default" name="btn_edit_display_row" form="frm_edit_row_' . $filas . '">Editar</button>
 											</form>
-										</td>';
+										</td>';*/
 							
 							$value = $value . '
 											</tr>
@@ -644,10 +639,20 @@
 								$value = $value . '
 									<tr>
 										<td class="table-text">
-											<h6>' . $tabla[1][3] . ':</h6>
+											<h6>' . $tabla[1][2] . ':</h6>
 										</td>
-										<td class="march">
-											<input type="text" class="form-control" id="exampleInputEmail1" name="' . $colNameId[3] . '" placeholder="' . $tabla[$fila][3] . '" value="' . $tabla[$fila][3] . '" form="frm_edit_data_row_' . $fila . '" readonly>
+										<td class="march">';
+											$value = $value . '<select name="' . $colNameId[2] . '">';
+												for($filaEstados = 2; $filaEstados <= $estados[0][0] ; $filaEstados++){
+													if ($tabla[$fila][2]==$estados[$filaEstados][0]){
+														$value = $value . '<option value="' . $estados[$filaEstados][0] . '" selected>' . $estados[$filaEstados][1] . '</option>';
+													} else {
+														$value = $value . '<option value="' . $estados[$filaEstados][0] . '">' . $estados[$filaEstados][1] . '</option>';
+													}
+												}
+												$value = $value . '</select>';
+										
+										$value = $value . '
 										</td>
 									</tr>';
 								
@@ -657,27 +662,37 @@
 											<h6>' . $tabla[1][4] . ':</h6>
 										</td>
 										<td class="march">
-											<input type="text" class="form-control" id="exampleInputEmail1" name="' . $colNameId[4] . '" placeholder="' . $tabla[$fila][4] . '" value="' . $tabla[$fila][4] . '" form="frm_edit_data_row_' . $fila . '" readonly>
-										</td>
-									</tr>';
-									
-								$value = $value . '
-									<tr>
-										<td class="table-text">
-											<h6>' . $tabla[1][5] . ':</h6>
-										</td>
-										<td class="march">
-											<input type="text" class="form-control" id="exampleInputEmail1" name="' . $colNameId[5] . '" placeholder="' . $tabla[$fila][5] . '" value="' . $tabla[$fila][5] . '" form="frm_edit_data_row_' . $fila . '" readonly>
+											<input type="time" class="form-control" id="exampleInputEmail1" name="' . $colNameId[4] . '" placeholder="' . $tabla[$fila][4] . '" value="' . $tabla[$fila][4] . '" form="frm_edit_data_row_' . $fila . '">
 										</td>
 									</tr>';
 								
 								$value = $value . '
 									<tr>
 										<td class="table-text">
-											<h6>' . $tabla[1][7] . ':</h6>
+											<h6>' . $tabla[1][5] . ':</h6>
 										</td>
 										<td class="march">
-											<input type="text" class="form-control" id="exampleInputEmail1" name="' . $colNameId[7] . '" placeholder="' . $tabla[$fila][7] . '" value="' . $tabla[$fila][7] . '" form="frm_edit_data_row_' . $fila . '" readonly>
+											<input type="time" class="form-control" id="exampleInputEmail1" name="' . $colNameId[5] . '" placeholder="' . $tabla[$fila][5] . '" value="' . $tabla[$fila][5] . '" form="frm_edit_data_row_' . $fila . '">
+										</td>
+									</tr>';
+								
+								$value = $value . '
+									<tr>
+										<td class="table-text">
+											<h6>' . $tabla[1][6] . ':</h6>
+										</td>
+										<td class="march">';
+											$value = $value . '<select name="' . $colNameId[6] . '">';
+												for($filaEstados = 2; $filaEstados <= $servicios[0][0] ; $filaEstados++){
+													if ($tabla[$fila][6]==$servicios[$filaEstados][0]){
+														$value = $value . '<option value="' . $servicios[$filaEstados][0] . '" selected>' . $servicios[$filaEstados][1] . '</option>';
+													} else {
+														$value = $value . '<option value="' . $servicios[$filaEstados][0] . '">' . $servicios[$filaEstados][1] . '</option>';
+													}
+												}
+												$value = $value . '</select>';
+										
+										$value = $value . '
 										</td>
 									</tr>';
 								
@@ -687,20 +702,30 @@
 											<h6>Cliente: </h6>
 										</td>
 										<td class="march">
+											<input type="hidden" class="form-control" id="exampleInputEmail1" name="' . $colNameId[8] . '" placeholder="' . $tabla[$fila][8] . '" value="' . $tabla[$fila][8] . '" form="frm_edit_data_row_' . $fila . '" readonly>
 											<input type="text" class="form-control" id="exampleInputEmail1" name="" placeholder="Nombre" value="' . $tabla[$fila][9] . ' ' . $tabla[$fila][11] . ' (' . $tabla[$fila][13] . ')' .  '" form="frm_edit_data_row_' . $fila . '" readonly>
 										</td>
 									</tr>';
-									
+								
 								$value = $value . '
 									<tr>
 										<td class="table-text">
-											<h6>Empleado: </h6>
+											<h6>Empleado:</h6>
 										</td>
-										<td class="march">
-											<input type="text" class="form-control" id="exampleInputEmail1" name="" placeholder="Nombre" value="' . $tabla[$fila][16] . ' ' . $tabla[$fila][18] . ' (' . $tabla[$fila][20] . ')' .  '" form="frm_edit_data_row_' . $fila . '" readonly>
+										<td class="march">';
+											$value = $value . '<select name="' . $colNameId[15] . '">';
+												for($filaEstados = 2; $filaEstados <= $tabla_empleados[0][0] ; $filaEstados++){
+													if ($tabla[$fila][15]==$tabla_empleados[$filaEstados][0]){
+														$value = $value . '<option value="' . $tabla_empleados[$filaEstados][0] . '" selected>' . $tabla_empleados[$filaEstados][3] . ' ' . $tabla_empleados[$filaEstados][5] . ' (' . $tabla_empleados[$filaEstados][2] .')' . '</option>';
+													} else {
+														$value = $value . '<option value="' . $tabla_empleados[$filaEstados][0] . '">' . $tabla_empleados[$filaEstados][3] . ' ' . $tabla_empleados[$filaEstados][5] . ' (' . $tabla_empleados[$filaEstados][2] .')' . '</option>';
+													}
+												}
+												$value = $value . '</select>';
+										
+										$value = $value . '
 										</td>
 									</tr>';
-								
 								
 								
 								

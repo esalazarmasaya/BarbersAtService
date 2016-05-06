@@ -417,6 +417,60 @@
 			
 			
 			
+			$left_nav = $left_nav . '
+			<li>
+				<a href="#" class=" hvr-bounce-to-right">
+					<i class="fa fa-cog nav_icon"></i> 
+					<span class="nav-label">Transaccion Admin</span>
+					<span class="fa arrow"></span>
+				</a>';
+				
+				if (isset($_SESSION['PageCode14']) && !empty($_SESSION['PageCode14'])) {
+					$left_nav = $left_nav . '
+						<ul class="nav nav-second-level">
+							<li>
+								<a href="../Transactions/index.php" class=" hvr-bounce-to-right">
+									<i class="fa fa-sign-in nav_icon"></i>Transacciones
+								</a>
+							</li>
+						</ul>
+					';
+				}
+			
+			$left_nav = $left_nav . '
+			</li>';
+			
+			
+			
+			
+			
+			
+			
+			$left_nav = $left_nav . '
+			<li>
+				<a href="#" class=" hvr-bounce-to-right">
+					<i class="fa fa-cog nav_icon"></i> 
+					<span class="nav-label">Transaccion</span>
+					<span class="fa arrow"></span>
+				</a>';
+				
+				if (isset($_SESSION['PageCode25']) && !empty($_SESSION['PageCode25'])) {
+					$left_nav = $left_nav . '
+						<ul class="nav nav-second-level">
+							<li>
+								<a href="../TransactionAdd/index.php" class=" hvr-bounce-to-right">
+									<i class="fa fa-sign-in nav_icon"></i>Tensaccion nueva
+								</a>
+							</li>
+						</ul>
+					';
+				}
+			$left_nav = $left_nav . '
+			</li>';
+			
+			
+			
+			
 			echo $left_nav;
 			
 			

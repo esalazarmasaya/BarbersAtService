@@ -33,10 +33,6 @@
 			$query = $query . "NULL ";
 		}
 		
-		
-		
-		
-		
 		$query = $query . ");";
 		
 		
@@ -546,13 +542,13 @@
 									
 									
 									
-									$value = $value . '
+									/*$value = $value . '
 										<td class="march">
 											<form action="index.php" method="post" id="frm_edit_row_' . $filas . '">
 												<input type="hidden" class="form-control" id="exampleInputEmail1" name="txt_edit_row" value="' . $filas . '" form="frm_edit_row_' . $filas . '" readonly>
 												<button type="submit" class="btn btn-default" name="btn_edit_display_row" form="frm_edit_row_' . $filas . '">Editar</button>
 											</form>
-										</td>';
+										</td>';*/
 							
 							$value = $value . '
 											</tr>

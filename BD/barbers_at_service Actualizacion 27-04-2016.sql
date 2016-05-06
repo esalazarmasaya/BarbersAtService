@@ -27,6 +27,133 @@ DELIMITER $$
 --
 -- Procedimientos
 --
+
+
+
+CREATE PROCEDURE `sp_waitingqueuebybarber_admin_show_emp_user_where_state_another`(
+	IN val_value varchar(50),
+	IN val_waitingqueueState bigint(20)
+)
+MODIFIES SQL DATA
+COMMENT 'Muestra todos los tickets con decripcion de usuario y empleado por estado y por los valores encontrados en el texto ingresado. '
+SELECT 
+	`waitingqueuebybarberEmployee`.`QueueCode`, 
+	`waitingqueuebybarberEmployee`.`QueueDate`, 
+	`waitingqueuebybarberEmployee`.`waitingqueueState`, 
+	`waitingqueuebybarberEmployee`.`StateName`,
+	`waitingqueuebybarberEmployee`.`InitialHour`, 
+	`waitingqueuebybarberEmployee`.`FinalHour`, 
+	`waitingqueuebybarberEmployee`.`Service`, 
+	`waitingqueuebybarberEmployee`.`ServiceName`,
+	`waitingqueuebybarberEmployee`.`User`,
+	`user`.`UserFirstName` UserFirstName, 
+	`user`.`UserSecondName` UserSecondName, 
+	`user`.`UserFirstLastName` UserFirstLastName, 
+	`user`.`UserSecondLastName` UserSecondFirstLastName,
+	`user`.`UserEmail` UserEmail,  
+	`user`.`RoleCode` UserRoleCode,
+	`waitingqueuebybarberEmployee`.`EmployeeCode`,
+	`waitingqueuebybarberEmployee`.EmployeeFirstName, 
+	`waitingqueuebybarberEmployee`.EmployeeSecondName, 
+	`waitingqueuebybarberEmployee`.EmployeeFirstLastName, 
+	`waitingqueuebybarberEmployee`.EmployeeSecondFirstLastName,
+	`waitingqueuebybarberEmployee`.EmployeeEmail,  
+	`waitingqueuebybarberEmployee`.EmployeeRoleCode
+FROM 
+	(SELECT 
+		`waitingqueuebybarber`.`QueueCode`, 
+		`waitingqueuebybarber`.`QueueDate`, 
+		`waitingqueuebybarber`.`waitingqueueState`, 
+		`states`.`StateName`,
+		`waitingqueuebybarber`.`InitialHour`, 
+		`waitingqueuebybarber`.`FinalHour`, 
+		`waitingqueuebybarber`.`Service`, 
+		`Service`.`Name` ServiceName,
+		`waitingqueuebybarber`.`User`, 
+		`waitingqueuebybarber`.`EmployeeCode`,
+		`user`.`UserFirstName` EmployeeFirstName, 
+		`user`.`UserSecondName` EmployeeSecondName, 
+		`user`.`UserFirstLastName` EmployeeFirstLastName, 
+		`user`.`UserSecondLastName` EmployeeSecondFirstLastName,
+		`user`.`UserEmail` EmployeeEmail,  
+		`user`.`RoleCode` EmployeeRoleCode
+	FROM `waitingqueuebybarber` left join `user` on `waitingqueuebybarber`.`EmployeeCode`  = `user`.`usercode`
+			left join `Service` on `waitingqueuebybarber`.`Service` = `Service`.`ServiceCode`
+			left join states on `waitingqueuebybarber`.`waitingqueueState` = `states`.`StateCode`
+			WHERE `waitingqueuebybarber`.`waitingqueueState` = val_waitingqueueState) as waitingqueuebybarberEmployee 
+	left join `user` on `waitingqueuebybarberEmployee`.`User`  = `user`.`usercode`
+WHERE 
+	`waitingqueuebybarberEmployee`.`StateName` like val_value OR 
+	`waitingqueuebybarberEmployee`.`ServiceName` like val_value OR 
+	`user`.`UserFirstName` like val_value OR 
+	`user`.`UserSecondName` like val_value OR 
+	`user`.`UserFirstLastName` like val_value OR 
+	`user`.`UserSecondLastName` like val_value OR 
+	`user`.`UserEmail` like val_value OR 
+	`waitingqueuebybarberEmployee`.EmployeeFirstName like val_value OR 
+	`waitingqueuebybarberEmployee`.EmployeeSecondName like val_value OR 
+	`waitingqueuebybarberEmployee`.EmployeeFirstLastName like val_value OR 
+	`waitingqueuebybarberEmployee`.EmployeeSecondFirstLastName like val_value OR 
+	`waitingqueuebybarberEmployee`.EmployeeEmail like val_value
+ORDER BY `waitingqueuebybarberEmployee`.`QueueDate` DESC
+;$$
+
+CREATE PROCEDURE `sp_waitingqueuebybarber_admin_show_employee_user_where_state`(
+	IN val_waitingqueueState bigint(20)
+)
+MODIFIES SQL DATA
+COMMENT 'Muestra todos los tickets con decripcion de usuario y empleado por estado. '
+SELECT 
+	`waitingqueuebybarberEmployee`.`QueueCode`, 
+	`waitingqueuebybarberEmployee`.`QueueDate`, 
+	`waitingqueuebybarberEmployee`.`waitingqueueState`, 
+	`waitingqueuebybarberEmployee`.`StateName`,
+	`waitingqueuebybarberEmployee`.`InitialHour`, 
+	`waitingqueuebybarberEmployee`.`FinalHour`, 
+	`waitingqueuebybarberEmployee`.`Service`, 
+	`waitingqueuebybarberEmployee`.`ServiceName`,
+	`waitingqueuebybarberEmployee`.`User`,
+	`user`.`UserFirstName` UserFirstName, 
+	`user`.`UserSecondName` UserSecondName, 
+	`user`.`UserFirstLastName` UserFirstLastName, 
+	`user`.`UserSecondLastName` UserSecondFirstLastName,
+	`user`.`UserEmail` UserEmail,  
+	`user`.`RoleCode` UserRoleCode,
+	`waitingqueuebybarberEmployee`.`EmployeeCode`,
+	`waitingqueuebybarberEmployee`.EmployeeFirstName, 
+	`waitingqueuebybarberEmployee`.EmployeeSecondName, 
+	`waitingqueuebybarberEmployee`.EmployeeFirstLastName, 
+	`waitingqueuebybarberEmployee`.EmployeeSecondFirstLastName,
+	`waitingqueuebybarberEmployee`.EmployeeEmail,  
+	`waitingqueuebybarberEmployee`.EmployeeRoleCode
+FROM 
+	(SELECT 
+		`waitingqueuebybarber`.`QueueCode`, 
+		`waitingqueuebybarber`.`QueueDate`, 
+		`waitingqueuebybarber`.`waitingqueueState`, 
+		`states`.`StateName`,
+		`waitingqueuebybarber`.`InitialHour`, 
+		`waitingqueuebybarber`.`FinalHour`, 
+		`waitingqueuebybarber`.`Service`, 
+		`Service`.`Name` ServiceName,
+		`waitingqueuebybarber`.`User`, 
+		`waitingqueuebybarber`.`EmployeeCode`,
+		`user`.`UserFirstName` EmployeeFirstName, 
+		`user`.`UserSecondName` EmployeeSecondName, 
+		`user`.`UserFirstLastName` EmployeeFirstLastName, 
+		`user`.`UserSecondLastName` EmployeeSecondFirstLastName,
+		`user`.`UserEmail` EmployeeEmail,  
+		`user`.`RoleCode` EmployeeRoleCode
+	FROM `waitingqueuebybarber` left join `user` on `waitingqueuebybarber`.`EmployeeCode`  = `user`.`usercode`
+			left join `Service` on `waitingqueuebybarber`.`Service` = `Service`.`ServiceCode`
+			left join states on `waitingqueuebybarber`.`waitingqueueState` = `states`.`StateCode`
+			WHERE `waitingqueuebybarber`.`waitingqueueState` = val_waitingqueueState) as waitingqueuebybarberEmployee 
+		left join `user` on `waitingqueuebybarberEmployee`.`User`  = `user`.`usercode`
+ORDER BY `waitingqueuebybarberEmployee`.`QueueDate` DESC
+;$$
+
+
+
 CREATE PROCEDURE `sp_waitingqueuebybarber_update_from_initialized_to_finalize`(
 	IN val_QueueCode bigint(20)
 )
@@ -656,7 +783,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_employees_add`(
 	IN `val_CellarCode` bigint(20) 
 )
     MODIFIES SQL DATA
-    COMMENT 'Agrega un Servicio'
+    COMMENT 'Agrega un Empleado'
 INSERT INTO `employees`(
 	`UserCode`,
 	`InicialLunchTime`, 
@@ -1603,8 +1730,15 @@ CREATE TABLE IF NOT EXISTS `transactiondetail` (
 
 CREATE TABLE IF NOT EXISTS `transactionheader` (
   `TransactionCode` bigint(20) NOT NULL,
+  `TransactionDate` datetime NOT NULL,
   `UserCode` bigint(20) NOT NULL,
-  `EmployeeCode` bigint(20) NOT NULL
+  `EmployeeCode` bigint(20) NOT NULL,
+  `TransactionTicket` bigint(20),
+  `TransactionState` bigint(20),
+  `CellarCode` bigint(20),
+  `Efectivo` decimal(10,2),
+  `Tarjeta` decimal(10,2),
+  `Total` decimal(10,2)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -1634,11 +1768,12 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 INSERT INTO `user` (`UserCode`, `UserFirstName`, `UserSecondName`, `UserFirstLastName`, `UserSecondLastName`, `UserBornDate`, `Phone`, `UserEmail`, `CreationDate`, `Password`, `UserState`, `RoleCode`) VALUES
 (1, 'Administrador', 'Administrador', 'Administrador', 'Administrador', '0000-00-00', '12345678', 'admin@galileo.edu', '2016-04-27', '202cb962ac59075b964b07152d234b70', 1, 1),
-(2, 'Edwin', '', 'Salazar', 'masaya', '0000-00-00', '12345678', 'esalazarmasaya@galileo.edu', '2016-04-27', '202cb962ac59075b964b07152d234b70', 1, 2),
-(3, 'Enrique', 'José', 'Merck', 'Cifuentes', '0000-00-00', '12345678', 'enriquemerck@galileo.edu', '2016-04-27', '202cb962ac59075b964b07152d234b70', 1, 2),
-(4, 'Alejandro', 'José', 'Echeverría', 'Valls', '0000-00-00', '12345678', 'ajeche@galileo.edu', '2016-04-27', '202cb962ac59075b964b07152d234b70', 1, 2),
-(5, 'Melvin', 'Daniel', 'Garcia', 'Garcia', '0000-00-00', '12345678', 'melvingar@galileo.edu', '2016-04-27', '202cb962ac59075b964b07152d234b70', 1, 2),
-(6, 'Pablo', 'Francisco', 'Callejas', 'Cifuentes', '0000-00-00', '12345678', 'pabcc@galileo.edu', '2016-04-27', '202cb962ac59075b964b07152d234b70', 1, 2);
+(2, 'Barbero', 'Barbero', 'Barbero', 'Barbero', '0000-00-00', '12345678', 'barb@galileo.edu', '2016-04-27', '202cb962ac59075b964b07152d234b70', 1, 3),
+(3, 'Edwin', '', 'Salazar', 'masaya', '0000-00-00', '12345678', 'esalazarmasaya@galileo.edu', '2016-04-27', '202cb962ac59075b964b07152d234b70', 1, 2),
+(4, 'Enrique', 'José', 'Merck', 'Cifuentes', '0000-00-00', '12345678', 'enriquemerck@galileo.edu', '2016-04-27', '202cb962ac59075b964b07152d234b70', 1, 2),
+(5, 'Alejandro', 'José', 'Echeverría', 'Valls', '0000-00-00', '12345678', 'ajeche@galileo.edu', '2016-04-27', '202cb962ac59075b964b07152d234b70', 1, 2),
+(6, 'Melvin', 'Daniel', 'Garcia', 'Garcia', '0000-00-00', '12345678', 'melvingar@galileo.edu', '2016-04-27', '202cb962ac59075b964b07152d234b70', 1, 2),
+(7, 'Pablo', 'Francisco', 'Callejas', 'Cifuentes', '0000-00-00', '12345678', 'pabcc@galileo.edu', '2016-04-27', '202cb962ac59075b964b07152d234b70', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -1699,7 +1834,14 @@ INSERT INTO `webpage` (`WebPageCode`, `WebPageName`, `UrlWebPage`, `WebPageDescr
 (21, 'Tickets Iniciados', '', 'Tickets Iniciados.', 1),
 (22, 'Tickets Finalizados', '', 'Tickets Finalizados.', 1),
 (23, 'Tickets Comprobados', '', 'Tickets Comprobados.', 1),
-(24, 'Tickets por comprobar (pagados)', '', 'Tickets por comprobar (pagados).', 1)
+(24, 'Tickets por comprobar (pagados)', '', 'Tickets por comprobar (pagados).', 1),
+(25, 'Transaccion nueva', '', 'Transaccion nueva.', 1),
+(26, 'Transacciones', '', 'Transacciones.', 1),
+(27, 'Transacciones en Espera', '', 'Transacciones en Espera.', 1),
+(28, 'Transacciones Iniciados', '', 'Transacciones Iniciados.', 1),
+(29, 'Transacciones Finalizados', '', 'Transacciones Finalizados.', 1),
+(30, 'Transacciones Comprobados', '', 'Transacciones Comprobados.', 1),
+(31, 'Transacciones por comprobar (pagados)', '', 'Transacciones por comprobar (pagados).', 1)
 ;
 
 --
@@ -1821,7 +1963,8 @@ ALTER TABLE `transactiondetail`
 --
 ALTER TABLE `transactionheader`
   ADD PRIMARY KEY (`TransactionCode`),
-  ADD KEY `fk_transactionheader_employees` (`EmployeeCode`);
+  ADD KEY `fk_transactionheader_employees` (`EmployeeCode`),
+  ADD KEY `fk_transactionheader_state` (`TransactionState`);
 
 --
 -- Indices de la tabla `user`
@@ -1992,7 +2135,8 @@ ALTER TABLE `transactiondetail`
 -- Filtros para la tabla `transactionheader`
 --
 ALTER TABLE `transactionheader`
-  ADD CONSTRAINT `fk_transactionheader_employees` FOREIGN KEY (`EmployeeCode`) REFERENCES `employees` (`UserCode`);
+  ADD CONSTRAINT `fk_transactionheader_employees` FOREIGN KEY (`EmployeeCode`) REFERENCES `employees` (`UserCode`),
+  ADD CONSTRAINT `fk_transactionheader_state` FOREIGN KEY (`TransactionState`) REFERENCES `states` (`StateCode`);
 
 --
 -- Filtros para la tabla `user`
@@ -2013,11 +2157,50 @@ INSERT INTO `states`(`StateName`) VALUES ('En Espera');
 INSERT INTO `states`(`StateName`) VALUES ('Iniciado');
 INSERT INTO `states`(`StateName`) VALUES ('Finalizado');
 INSERT INTO `states`(`StateName`) VALUES ('Cobrado');
+INSERT INTO `states`(`StateName`) VALUES ('Eliminado');
 
 call `sp_permission_add_by_rol`('Administrador');
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1;
 call `sp_permission_add_by_rol`('Cliente');
 call `sp_permission_add_by_rol`('Barbero');
+
+
+call `sp_employees_add`(2,'13:00:00','14:00:00','2015-01-31',1); 
+
+call `sp_service_add`('Corte de pelo',15);
+call `sp_service_add`('Corte de barba',10); 
+call `sp_service_add`('Corte de pelo y barba',20); 
+
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 1;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 2;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 3;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 4;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 5;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 6;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 7;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 8;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 9;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 10;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 11;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 12;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 13;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 14;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 15;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 16;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 17;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 18;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 19;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 20;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 21;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 22;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 23;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 24;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 1 AND `WebPageCode` = 25;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 26;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 27;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 28;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 29;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 30;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 31;
 
 UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 1;
 UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 2;
@@ -2043,6 +2226,13 @@ UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCo
 UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 22;
 UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 23;
 UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 24;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 25;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 26;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 27;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 28;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 29;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 30;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 31;
 
 
 UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 1;
@@ -2069,6 +2259,13 @@ UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 3 AND `WebPageCo
 UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 3 AND `WebPageCode` = 22;
 UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 3 AND `WebPageCode` = 23;
 UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 24;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 25;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 26;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 27;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 3 AND `WebPageCode` = 28;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 3 AND `WebPageCode` = 29;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 3 AND `WebPageCode` = 30;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 3 AND `WebPageCode` = 31;
 
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

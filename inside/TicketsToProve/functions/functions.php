@@ -33,10 +33,6 @@
 			$query = $query . "NULL ";
 		}
 		
-		
-		
-		
-		
 		$query = $query . ");";
 		
 		
@@ -46,6 +42,8 @@
 		fn_InsertQuery(Conexion(), $query);
 		
 		$_SESSION['msg'] = $_SESSION['msg'] . "Información editada. ";
+		
+		
 		
 		fnTraerDatos(); 
 	}
