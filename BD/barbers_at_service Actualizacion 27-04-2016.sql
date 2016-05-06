@@ -30,6 +30,76 @@ DELIMITER $$
 
 
 
+
+CREATE PROCEDURE `sp_transactionheader_admin_show`()
+MODIFIES SQL DATA
+COMMENT 'Ingresa el encabezado de una transaccion. '
+SELECT 
+	`transactionheader`.`TransactionCode`, 
+	`transactionheader`.`TransactionDate`,
+	`transactionheader`.`UserCode`, 
+	`user`.`UserFirstName`, 
+	`user`.`UserSecondName`, 
+	`user`.`UserFirstLastName`, 
+	`user`.`UserSecondLastName`,
+	`user`.`UserEmail`,
+	`user`.`RoleCode`,
+	`transactionheader`.`EmployeeCode`, 
+	`EmployeeUser`.`UserFirstName`, 
+	`EmployeeUser`.`UserSecondName`, 
+	`EmployeeUser`.`UserFirstLastName`, 
+	`EmployeeUser`.`UserSecondLastName`,
+	`EmployeeUser`.`UserEmail`,
+	`EmployeeUser`.`RoleCode`,
+	`transactionheader`.`TransactionTicket`, 
+	`transactionheader`.`TransactionState`, 
+	`states`.`StateName`,
+	`transactionheader`.`CellarCode`,
+	`cellar`.`CellarName`,
+	`transactionheader`.`Efectivo`,
+	`transactionheader`.`Tarjeta`,
+	`transactionheader`.`Total`
+FROM `transactionheader` left join `user` User on `transactionheader`.`UserCode` = `user`.`UserCode`
+	left join `user` `EmployeeUser` on `transactionheader`.`EmployeeCode` = `EmployeeUser`.`UserCode`
+	left join `states` on `transactionheader`.`TransactionState` = `states`.`StateCode`
+	left join `cellar` on `transactionheader`.`CellarCode` = `cellar`.`CellarCode`
+ORDER BY `transactionheader`.`TransactionDate` DESC
+;$$
+
+
+
+CREATE PROCEDURE `sp_transactionheader_add`( 
+	IN `val_UserCode` bigint(20), 
+	IN `val_EmployeeCode` bigint(20), 
+	IN `val_TransactionTicket` bigint(20), 
+	IN `val_CellarCode` bigint(20)
+)
+MODIFIES SQL DATA
+COMMENT 'Ingresa el encabezado de una transaccion. '
+INSERT INTO `transactionheader`(
+	`TransactionDate`,
+	`UserCode`, 
+	`EmployeeCode`, 
+	`TransactionTicket`, 
+	`TransactionState`,
+	`CellarCode`,
+	`Efectivo`,
+	`Tarjeta`,
+	`Total`
+) VALUES (
+	CURRENT_TIMESTAMP,
+	`val_UserCode`,
+	`val_EmployeeCode`,
+	`val_TransactionTicket`,
+	1,
+	`val_CellarCode`,
+	0,
+	0,
+	0
+)
+;$$
+
+
 CREATE PROCEDURE `sp_waitingqueuebybarber_admin_show_emp_user_where_state_another`(
 	IN val_value varchar(50),
 	IN val_waitingqueueState bigint(20)
