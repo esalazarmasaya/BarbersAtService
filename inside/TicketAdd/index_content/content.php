@@ -43,9 +43,11 @@
 	 		
 			<?php 
 				$value = '<form action="index.php" method="post" id="frm_add_new_item">
-					<div class="form-group">
-						<label for="exampleInputEmail1">Servicio:</label>
+					<div class="form-group1">
+						<label for="exampleInputEmail1">Elija Servicio:</label>
 						<select name="slct_service" id="slct_service">';
+
+
 						$tabla_servicios = fnTraerDatosServicios();
 						for ($filas = 2; $filas <= $tabla_servicios[0][0]; $filas++){
 							$value = $value . '<option value="' . $tabla_servicios[$filas][0] . '">' . $tabla_servicios[$filas][1] . '</option>';
@@ -54,10 +56,12 @@
 						$value = $value . '
 						</select>
 					</div>
+					</br>
 					
-					<div class="form-group">
-						<label for="exampleInputEmail1">Empleado:</label>
+					<div class="form-group1">
+						<label for="exampleInputEmail1">Elija Empleado:</label>
 						<select name="slct_employee" id="slct_employee">';
+
 						$tabla_empleados = fnTraerDatosEmpleados();
 						for ($filas = 2; $filas <= $tabla_empleados[0][0]; $filas++){
 							$value = $value . '<option value="' . $tabla_empleados[$filas][0] . '">' . $tabla_empleados[$filas][3] . ' ' . $tabla_empleados[$filas][5] .  '</option>';
@@ -66,8 +70,11 @@
 						$value = $value . '
 						</select>
 					</div>
-					
-					<button type="submit" class="btn btn-default" name="btn_add_new_item" form="frm_add_new_item">Agregar nuevo producto</button>
+					</br>	
+					<button type="submit" class="btn btn-default" name="btn_add_new_item" form="frm_add_new_item">Aceptar Ticket</button>
+					<a href="http://www.url.com/yourpage.php">
+					  <input type="button" class="btn btn-default" value="Cancelar" onclick="history.go(-1);" />
+					</a>					
 				</form>';
 				
 				echo $value;

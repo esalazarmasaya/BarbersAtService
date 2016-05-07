@@ -62,7 +62,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	
 	</head>
 	<body>
-		<div id="wrapper">
+		<div id="wrapper-img">
 		
 				<?php
 					include('index_content/header.php');

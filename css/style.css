@@ -32,6 +32,10 @@ body a{
 }
 div#wrapper {
     background-color: #fff;
+}
+
+div#wrapper-img {
+    background-color: #fff;
     background: url("../img/imgFONDO_wapp.png") no-repeat center;
 }
 /*-- header --*/
@@ -1338,6 +1342,20 @@ label.control-label {
     margin-top: 0.5em;
     font-family: 'Muli-Regular';
 }
+
+
+.form-group1 select{
+  border: 1px solid #E9E9E9;
+    font-size: 0.9em;
+    width: 100%;
+    outline: none;
+    padding: 0.5em 1em;
+    color: #999;
+    margin-top: 0.5em;
+    font-family: 'Muli-Regular';
+}
+
+
 .form-group1 textarea{
 	min-height: 100px;
 }
