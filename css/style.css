@@ -32,6 +32,7 @@ body a{
 }
 div#wrapper {
     background-color: #fff;
+    background: url("../img/imgFONDO_wapp.png") no-repeat center;
 }
 /*-- header --*/
 .navbar .navbar-nav li a {
