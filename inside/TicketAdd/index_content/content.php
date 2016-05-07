@@ -40,7 +40,13 @@
 	<div class="grid-form">
  		<div class="grid-form1">
 	 		<h3 id="forms-example" class="">Ticket Nuevo</h3>
-	 		
+
+			<link href='http://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'/>
+			<form name="form_reloj"> 
+				<input type="text" name="reloj" style="background-color:#333333; font-family:'Orbitron', sans-serif; font-size:40px; text-shadow:0px; 0px 1px #fff; color:#FFFFFF; text-align: center; width:100%;"> 
+			</form>	 		
+
+
 			<?php 
 				$value = '<form action="index.php" method="post" id="frm_add_new_item">
 					<div class="form-group1">
