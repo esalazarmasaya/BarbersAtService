@@ -33,9 +33,6 @@
 			$query = $query . "NULL ";
 		}
 		
-		header("Location: ../TicketsInitialized/index.php ",TRUE,301);
-		
-		
 		
 		$query = $query . ");";
 		
@@ -48,6 +45,8 @@
 		$_SESSION['msg'] = $_SESSION['msg'] . "Información editada. ";
 		
 		fnTraerDatos(); 
+		
+		header("Location: ../TicketsInitialized/index.php ",TRUE,301);
 	}
 	
 	

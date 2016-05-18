@@ -24,26 +24,90 @@
 	
 	
 	
+	function fnTraerCodigoDeBodega($idUsuario){
+		$query = "CALL `sp_employee_get_cellar_from_id`(" . $idUsuario . ");";
+		
+		$tabla = fnSelectAnyQuery(Conexion(), $query, 1);
+		
+		$tabla[1][0] = "Codigo";
+		
+		//echo $tabla[2][0];
+		
+		//$_SESSION['html'] =  fnCrearTablaHtmlDeTablaBrand($tabla, 1);
+		//$data_relation = $_SESSION['data_relation'];
+		//$_SESSION["page_table"] = $tabla;
+		//$_SESSION['html'] = fnCrearTablaHtmlDeTablaProduct();
+		
+		//$_SESSION['msg'] = $_SESSION['msg'] . "";
+		return $tabla;
+	}
+	
 	if (isset($_POST['btn_edit_data_of_table'])){
-		$query = "CALL `sp_waitingqueuebybarber_update_from_finalize_proved`(";
+		$query = "CALL `sp_transactionheader_count_if_ticket`(";
 		
 		if (isset($_POST['lbl_code']) && !empty($_POST['lbl_code'])){
-			$query = $query . "" . $_POST['lbl_code'] . "";
+			$query = $query . "" . $_POST['lbl_code'] . " ";
 		} else {
 			$query = $query . "NULL ";
 		}
 		
 		$query = $query . ");";
 		
+		$tabla = fnSelectAnyQuery(Conexion(), $query, 1);
 		
-		//$_SESSION['msg'] = $_SESSION['msg'] . $query;
-		//echo $query;
+		if ($tabla[2][0] > 0){
+			$_SESSION['msg'] = $_SESSION['msg'] . "Ya hay una transacción agregada para este ticket.  ";
+		} else {
+			
+			$query = "CALL `sp_transactionheader_add`(";
 		
-		fn_InsertQuery(Conexion(), $query);
+			if (isset($_POST['txt_user_code']) && !empty($_POST['txt_user_code'])){
+				$query = $query . "" . $_POST['txt_user_code'] . ", ";
+			} else {
+				$query = $query . ", ";
+			}
+			
+			$tablaEmpleado = fnTraerCodigoUsusario();
+			$query = $query . "" . $tablaEmpleado[2][0] . ", ";
+			
+			if (isset($_POST['lbl_code']) && !empty($_POST['lbl_code'])){
+				$query = $query . "" . $_POST['lbl_code'] . ", ";
+			} else {
+				$query = $query . "NULL, ";
+			}
+			
+			$tablaCellar = fnTraerCodigoDeBodega($tablaEmpleado[2][0]);
+			$query = $query . "" . $tablaCellar[2][0] . " ";
+			
+					
+			$query = $query . ");";
+			
+			//$_SESSION['msg'] = $_SESSION['msg'] . $query;
+			//echo $query;
+			
+			fn_InsertQuery(Conexion(), $query);
+			
+			$_SESSION['msg'] = $_SESSION['msg'] . "Transacción agregada para este ticket. Puede editarla. ";
+			
+			fnTraerDatos(); 
+			
+		}
 		
-		$_SESSION['msg'] = $_SESSION['msg'] . "Información editada. ";
 		
-		fnTraerDatos(); 
+		$query = "CALL `sp_transactionheader_get_transactionid_where_ticket`(";
+		
+		if (isset($_POST['lbl_code']) && !empty($_POST['lbl_code'])){
+			$query = $query . "" . $_POST['lbl_code'] . " ";
+		} else {
+			$query = $query . "NULL ";
+		}
+		
+		$query = $query . ");";
+		
+		$tabla = fnSelectAnyQuery(Conexion(), $query, 1);
+		
+		$_SESSION['trans_header_to_edit'] = $tabla[2][0];
+		header("Location: ../TransactionEdit/index.php ",TRUE,301);
 	}
 	
 	
@@ -542,13 +606,13 @@
 									
 									
 									
-									/*$value = $value . '
+									$value = $value . '
 										<td class="march">
 											<form action="index.php" method="post" id="frm_edit_row_' . $filas . '">
 												<input type="hidden" class="form-control" id="exampleInputEmail1" name="txt_edit_row" value="' . $filas . '" form="frm_edit_row_' . $filas . '" readonly>
 												<button type="submit" class="btn btn-default" name="btn_edit_display_row" form="frm_edit_row_' . $filas . '">Editar</button>
 											</form>
-										</td>';*/
+										</td>';
 							
 							$value = $value . '
 											</tr>
@@ -674,6 +738,16 @@
 										</td>
 										<td class="march">
 											<input type="text" class="form-control" id="exampleInputEmail1" name="' . $colNameId[7] . '" placeholder="' . $tabla[$fila][7] . '" value="' . $tabla[$fila][7] . '" form="frm_edit_data_row_' . $fila . '" readonly>
+										</td>
+									</tr>';
+									
+								$value = $value . '
+									<tr>
+										<td class="table-text">
+											<h6>' . /*$tabla[8][0]*/ "" . '</h6>
+										</td>
+										<td class="march">
+											<input type="hidden" class="form-control" id="exampleInputEmail1" name="' . $colNameId[8] . '" placeholder="' . $tabla[$fila][8] . '" value="' . $tabla[$fila][8] . '" form="frm_edit_data_row_' . $fila . '" readonly>
 										</td>
 									</tr>';
 								

@@ -1110,7 +1110,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Product_add`(
 	IN `val_ProductState` boolean,
 	IN `val_ProductSalePrice` decimal(10,2),
 	IN `val_ProdcType` bigint(20),
-	IN `val_BrandProduct` bigint(20)
+	IN `val_BrandProduct` bigint(20),
+	IN `val_BProductProvider` bigint(20)
 )
     MODIFIES SQL DATA
     COMMENT 'Agrega un producto'
@@ -1123,7 +1124,8 @@ INSERT INTO `product`(
 	`ProductState`, 
 	`ProductSalePrice`, 
 	`ProducType`, 
-	`BrandProduct`
+	`BrandProduct`,
+	`ProductProvider`
 ) VALUES (
 	`val_ProductName`, 
 	`val_Description`,
@@ -1133,7 +1135,8 @@ INSERT INTO `product`(
 	`val_ProductState`,
 	`val_ProductSalePrice`,
 	`val_ProdcType`,
-	`val_BrandProduct`
+	`val_BrandProduct`,
+	`val_BProductProvider`
 )$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Product_edit`(
@@ -1546,6 +1549,12 @@ DELIMITER ;
 
 -- --------------------------------------------------------
 
+
+
+
+
+
+
 --
 -- Estructura de tabla para la tabla `brand`
 --
@@ -1561,8 +1570,7 @@ CREATE TABLE IF NOT EXISTS `brand` (
 -- Volcado de datos para la tabla `brand`
 --
 
-INSERT INTO `brand` (`BrandCode`, `BrandName`, `Description`, `BrandState`) VALUES
-(1, 'Gallo', 'Cerveza Nacional', 1);
+
 
 -- --------------------------------------------------------
 
@@ -1582,12 +1590,7 @@ CREATE TABLE IF NOT EXISTS `cellar` (
   `timeClose` time NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
---
--- Volcado de datos para la tabla `cellar`
---
 
-INSERT INTO `cellar` (`CellarCode`, `CellarName`, `Description`, `Length`, `Latitude`, `Shopping`, `CellarState`,`timeOpen`, `timeClose`) VALUES
-(1, 'Barber', 'Tienda principal', '3x2', '10', 0, 0, '10:00:00', '20:00:00');
 
 -- --------------------------------------------------------
 
@@ -1715,14 +1718,6 @@ CREATE TABLE IF NOT EXISTS `role` (
   `RoleState` bigint(20) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
---
--- Volcado de datos para la tabla `role`
---
-
-INSERT INTO `role` (`RoleCode`, `RoleName`, `RoleDescription`, `RoleState`) VALUES
-(1, 'Administrador', 'Administrador del sistema', 1),
-(2, 'Cliente', 'Cliente de la barberia', 1),
-(3, 'Barbero', 'Barbero', 1);
 
 -- --------------------------------------------------------
 
@@ -1832,18 +1827,6 @@ CREATE TABLE IF NOT EXISTS `user` (
   `RoleCode` int(11) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
---
--- Volcado de datos para la tabla `user`
---
-
-INSERT INTO `user` (`UserCode`, `UserFirstName`, `UserSecondName`, `UserFirstLastName`, `UserSecondLastName`, `UserBornDate`, `Phone`, `UserEmail`, `CreationDate`, `Password`, `UserState`, `RoleCode`) VALUES
-(1, 'Administrador', 'Administrador', 'Administrador', 'Administrador', '0000-00-00', '12345678', 'admin@galileo.edu', '2016-04-27', '202cb962ac59075b964b07152d234b70', 1, 1),
-(2, 'Barbero', 'Barbero', 'Barbero', 'Barbero', '0000-00-00', '12345678', 'barb@galileo.edu', '2016-04-27', '202cb962ac59075b964b07152d234b70', 1, 3),
-(3, 'Edwin', '', 'Salazar', 'masaya', '0000-00-00', '12345678', 'esalazarmasaya@galileo.edu', '2016-04-27', '202cb962ac59075b964b07152d234b70', 1, 2),
-(4, 'Enrique', 'José', 'Merck', 'Cifuentes', '0000-00-00', '12345678', 'enriquemerck@galileo.edu', '2016-04-27', '202cb962ac59075b964b07152d234b70', 1, 2),
-(5, 'Alejandro', 'José', 'Echeverría', 'Valls', '0000-00-00', '12345678', 'ajeche@galileo.edu', '2016-04-27', '202cb962ac59075b964b07152d234b70', 1, 2),
-(6, 'Melvin', 'Daniel', 'Garcia', 'Garcia', '0000-00-00', '12345678', 'melvingar@galileo.edu', '2016-04-27', '202cb962ac59075b964b07152d234b70', 1, 2),
-(7, 'Pablo', 'Francisco', 'Callejas', 'Cifuentes', '0000-00-00', '12345678', 'pabcc@galileo.edu', '2016-04-27', '202cb962ac59075b964b07152d234b70', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -1875,44 +1858,6 @@ CREATE TABLE IF NOT EXISTS `webpage` (
   `WebPageDescription` varchar(500) COLLATE utf8_spanish2_ci NOT NULL,
   `WebState` bigint(20) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
---
--- Volcado de datos para la tabla `webpage`
---
-
-INSERT INTO `webpage` (`WebPageCode`, `WebPageName`, `UrlWebPage`, `WebPageDescription`, `WebState`) VALUES
-(1, 'Usuarios', '', 'Administraciòn de usuarios.', 1),
-(2, 'Roles', '', 'Administraciòn de roles de usuario.', 1),
-(3, 'Marcas', '', 'Administraciòn de marcas de producto.', 1),
-(4, 'Bodegas', '', 'Administraciòn de bodegas.', 1),
-(5, 'Permisos', '', 'Administraciòn de permisos de usuario por tipo de rol.', 1),
-(6, 'Paginas Web', '', 'Administraciòn de paginas web.', 1),
-(7, 'Productos', '', 'Administraciòn de Productos.', 1),
-(8, 'Presentacion de Producto', '', 'Presentacion de Producto.', 1),
-(9, 'Tipo de Producto', '', 'Tipo de Producto.', 1),
-(10, 'Producto nuevo', '', 'Producto nuevo.', 1),
-(11, 'Servicio nuevo', '', 'Servicio nuevo.', 1),
-(12, 'Servicios', '', 'Servicios.', 1),
-(13, 'Empleado nuevo', '', 'Empleado nuevo.', 1),
-(14, 'Empleados', '', 'Empleados.', 1),
-(15, 'Ticket nuevo', '', 'Ticket nuevo.', 1),
-(16, 'Tickets', '', 'Tickets.', 1),
-(17, 'Tiempo promedio nuevo', '', 'Tiempo promedio nuevo.', 1),
-(18, 'Tiempos promedio', '', 'Tiempos promedio.', 1),
-(19, 'Mi Ticket', '', 'Mi Ticket.', 1),
-(20, 'Tickets en Espera', '', 'Tickets en Espera.', 1),
-(21, 'Tickets Iniciados', '', 'Tickets Iniciados.', 1),
-(22, 'Tickets Finalizados', '', 'Tickets Finalizados.', 1),
-(23, 'Tickets Comprobados', '', 'Tickets Comprobados.', 1),
-(24, 'Tickets por comprobar (pagados)', '', 'Tickets por comprobar (pagados).', 1),
-(25, 'Transaccion nueva', '', 'Transaccion nueva.', 1),
-(26, 'Transacciones', '', 'Transacciones.', 1),
-(27, 'Transacciones en Espera', '', 'Transacciones en Espera.', 1),
-(28, 'Transacciones Iniciados', '', 'Transacciones Iniciados.', 1),
-(29, 'Transacciones Finalizados', '', 'Transacciones Finalizados.', 1),
-(30, 'Transacciones Comprobados', '', 'Transacciones Comprobados.', 1),
-(31, 'Transacciones por comprobar (pagados)', '', 'Transacciones por comprobar (pagados).', 1)
-;
 
 --
 -- Índices para tablas volcadas
@@ -2023,10 +1968,7 @@ ALTER TABLE `stockbycellar`
 --
 -- Indices de la tabla `transactiondetail`
 --
-ALTER TABLE `transactiondetail`
-  ADD PRIMARY KEY (`TransactionCode`,`ProductCode`,`ServiceCode`),
-  ADD KEY `fk_transactiondetail_product` (`ProductCode`),
-  ADD KEY `fk_transactiondetail_service` (`ServiceCode`);
+
 
 --
 -- Indices de la tabla `transactionheader`
@@ -2196,10 +2138,7 @@ ALTER TABLE `stockbycellar`
 --
 -- Filtros para la tabla `transactiondetail`
 --
-ALTER TABLE `transactiondetail`
-  ADD CONSTRAINT `fk_transactiondetail_product` FOREIGN KEY (`ProductCode`) REFERENCES `product` (`ProductCode`),
-  ADD CONSTRAINT `fk_transactiondetail_service` FOREIGN KEY (`ServiceCode`) REFERENCES `service` (`ServiceCode`),
-  ADD CONSTRAINT `fk_transactiondetail_transactionheader` FOREIGN KEY (`TransactionCode`) REFERENCES `transactionheader` (`TransactionCode`);
+
 
 --
 -- Filtros para la tabla `transactionheader`
@@ -2223,119 +2162,7 @@ ALTER TABLE `waitingqueuebybarber`
   ADD CONSTRAINT `fk_waitingqueuebybarber_states` FOREIGN KEY (`waitingqueueState`) REFERENCES `states` (`StateCode`),
   ADD CONSTRAINT `fk_waitingqueuebybarber_user` FOREIGN KEY (`User`) REFERENCES `user` (`UserCode`);
  
-INSERT INTO `states`(`StateName`) VALUES ('En Espera');
-INSERT INTO `states`(`StateName`) VALUES ('Iniciado');
-INSERT INTO `states`(`StateName`) VALUES ('Finalizado');
-INSERT INTO `states`(`StateName`) VALUES ('Cobrado');
-INSERT INTO `states`(`StateName`) VALUES ('Eliminado');
 
-call `sp_permission_add_by_rol`('Administrador');
-call `sp_permission_add_by_rol`('Cliente');
-call `sp_permission_add_by_rol`('Barbero');
-
-
-call `sp_employees_add`(2,'13:00:00','14:00:00','2015-01-31',1); 
-
-call `sp_service_add`('Corte de pelo',15);
-call `sp_service_add`('Corte de barba',10); 
-call `sp_service_add`('Corte de pelo y barba',20); 
-
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 1;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 2;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 3;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 4;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 5;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 6;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 7;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 8;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 9;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 10;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 11;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 12;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 13;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 14;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 15;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 16;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 17;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 18;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 19;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 20;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 21;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 22;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 23;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 24;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 1 AND `WebPageCode` = 25;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 26;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 27;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 28;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 29;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 30;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 31;
-
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 1;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 2;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 3;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 4;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 5;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 6;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 7;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 8;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 9;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 10;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 11;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 12;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 13;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 14;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 2 AND `WebPageCode` = 15;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 16;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 17;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 18;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 2 AND `WebPageCode` = 19;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 20;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 21;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 22;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 23;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 24;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 25;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 26;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 27;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 28;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 29;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 30;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 31;
-
-
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 1;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 2;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 3;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 4;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 5;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 6;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 7;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 8;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 9;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 10;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 11;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 12;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 13;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 14;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 3 AND `WebPageCode` = 15;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 16;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 17;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 18;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 3 AND `WebPageCode` = 19;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 3 AND `WebPageCode` = 20;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 3 AND `WebPageCode` = 21;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 3 AND `WebPageCode` = 22;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 3 AND `WebPageCode` = 23;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 24;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 25;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 26;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 27;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 3 AND `WebPageCode` = 28;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 3 AND `WebPageCode` = 29;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 3 AND `WebPageCode` = 30;
-UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 3 AND `WebPageCode` = 31;
 
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -4,7 +4,7 @@
 		if (!$connection) {
 			$msg = $msg .  "No se pudo conectar a la base de datos.";
 		}
-		$result = mysql_query($query) or die(mysql_error());
+		$result = @mysql_query($query) or die(mysql_error());
 		mysql_close($connection);
 		$msg = "Ingresado exitosamente.";
 		return $msg;

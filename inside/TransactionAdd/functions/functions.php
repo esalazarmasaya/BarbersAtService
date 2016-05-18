@@ -35,6 +35,19 @@
 		fn_InsertQuery(Conexion(), $query);
 		
 		$_SESSION['msg'] = $_SESSION['msg'] . "Ingresada Correctamente. ";
+		
+		
+		
+		
+		$query = "CALL `sp_transactionheader_get_tranId_where_idUser_and_idEmployee`(";
+		$query = $query . "" . $tablaEmpleado[2][0] . ", ";
+		$query = $query . "" . $_POST['slct_user'] . " ";
+		$query = $query . ");";
+		
+		$tabla = fnSelectAnyQuery(Conexion(), $query, 1);
+		
+		$_SESSION['trans_header_to_edit'] = $tabla[2][0];
+		header("Location: ../TransactionEdit/index.php ",TRUE,301);
 	
 	}
 	
