@@ -73,7 +73,7 @@
 		
 		$_SESSION['msg'] = $_SESSION['msg'] . "Información agregada. ";
 		
-		
+		header("Location: ../Products/index.php ",TRUE,301);
 	}
 	
 ?>

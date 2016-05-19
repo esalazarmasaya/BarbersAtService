@@ -1671,7 +1671,7 @@ CREATE TABLE IF NOT EXISTS `payments` (
   `PaymentCode` bigint(20) NOT NULL,
   `Date` datetime DEFAULT NULL,
   `Pay` decimal(10,2) DEFAULT NULL,
-  `NotPay` decimal(10,2) NOT NULL,
+  `NotPay` decimal(10,2) DEFAULT NULL,
   `EmployeeCode` bigint(20) DEFAULT NULL,
   `Transaction` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

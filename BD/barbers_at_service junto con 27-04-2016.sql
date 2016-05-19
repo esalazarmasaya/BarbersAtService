@@ -67,7 +67,9 @@ INSERT INTO `webpage` (`WebPageCode`, `WebPageName`, `UrlWebPage`, `WebPageDescr
 (29, 'Transacciones Finalizados', '', 'Transacciones Finalizados.', 1),
 (30, 'Transacciones Comprobados', '', 'Transacciones Comprobados.', 1),
 (31, 'Transacciones por comprobar (pagados)', '', 'Transacciones por comprobar (pagados).', 1),
-(32, 'Transacciones a editar', '', 'Transacciones por comprobar (pagados).', 1)
+(32, 'Transacciones a editar', '', 'Transacciones por comprobar (pagados).', 1),
+(33, 'Transacciones a comprobar', '', 'Transacciones por comprobar (pagados).', 1),
+(34, 'Editar transaccion a comprobar', '', 'Transacciones por comprobar (pagados).', 1)
 ;
 
 INSERT INTO `user` (`UserCode`, `UserFirstName`, `UserSecondName`, `UserFirstLastName`, `UserSecondLastName`, `UserBornDate`, `Phone`, `UserEmail`, `CreationDate`, `Password`, `UserState`, `RoleCode`) VALUES
@@ -133,7 +135,7 @@ UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCo
 UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 22;
 UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 23;
 UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 24;
-UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 1 AND `WebPageCode` = 25;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 25;
 UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 26;
 UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 27;
 UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 28;
@@ -141,6 +143,8 @@ UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCo
 UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 30;
 UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 31;
 UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 32;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 33;
+UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 1 AND `WebPageCode` = 34;
 
 UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 1;
 UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 2;
@@ -174,6 +178,8 @@ UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCo
 UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 30;
 UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 31;
 UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 32;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 33;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 2 AND `WebPageCode` = 34;
 
 
 UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 1;
@@ -208,6 +214,8 @@ UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 3 AND `WebPageCo
 UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 3 AND `WebPageCode` = 30;
 UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 3 AND `WebPageCode` = 31;
 UPDATE `permissionbyrole` SET `permission`= 1 WHERE `RoleCode`= 3 AND `WebPageCode` = 32;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 33;
+UPDATE `permissionbyrole` SET `permission`= 0 WHERE `RoleCode`= 3 AND `WebPageCode` = 34;
 
 
 
@@ -740,7 +748,39 @@ DELIMITER ;
 
 DELIMITER $$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Payment_add_by_Transaction`(
+    IN val_transactionCode bigint(20)
+)
+    MODIFIES SQL DATA
+    COMMENT 'Calcula el pago a empleados por medio de porcentajes en base al tiempo laborado y al servicio prestado'
+BEGIN
+	SET @EmployeeCode = (SELECT `EmployeeCode` FROM `transactionheader` WHERE `TransactionCode` = val_transactionCode);
+    SET @val_date = (SELECT InitialDate FROM employees WHERE UserCode = @EmployeeCode);
+    SET @Totalanos = (SELECT YEAR(CURRENT_DATE) - YEAR(@val_date));
+    
+    IF @Totalanos >= 0 AND @Totalanos <= 1 THEN
+        SET @Porcentaje = 0.37;
+    ELSEIF @Totalanos > 1 AND @Totalanos <= 2 THEN
+        SET @Porcentaje = 0.38;
+    ELSEIF @Totalanos > 2 AND @Totalanos <= 3 THEN
+        SET @Porcentaje = 0.39;
+    ELSEIF @Totalanos > 3 THEN
+        SET @Porcentaje = 0.4;
+    END IF;
+    
+SET @val_pago = (
+	SELECT IFNULL(sum(IFNULL((`Units` * `unitPrice` * @Porcentaje),0)),0)
+	FROM `transactiondetail` 
+	WHERE `ServiceCode` > 1 AND `TransactionCode` = val_transactionCode
+	GROUP BY `TransactionCode` = val_transactionCode
+	);
 
+INSERT INTO Payments (Date,NotPay,EmployeeCode,Transaction)
+Values (CURRENT_TIMESTAMP,@val_pago,@EmployeeCode,val_TransactionCode);
+
+UPDATE `transactionheader` SET `TransactionState`= 4  
+WHERE `TransactionCode`= val_transactionCode;
+END$$
 
 
 DELIMITER ;

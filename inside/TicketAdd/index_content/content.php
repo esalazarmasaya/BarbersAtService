@@ -30,7 +30,7 @@
 		<h2>
 			<a href="../main/index.html">Home</a>
 			<i class="fa fa-angle-right"></i>
-			<a href="<?php echo $pageid; ?>">Ticket Nuevo</a>
+			<a href="<?php echo $pageid; ?>">Turno Nuevo</a>
 		</h2>
 	</div>
 	
@@ -39,12 +39,9 @@
 	<!--content-->
 	<div class="grid-form">
  		<div class="grid-form1">
-	 		<h3 id="forms-example" class="">Ticket Nuevo</h3>
+	 		<h3 id="forms-example" class="">Turno Nuevo</h3>
 
-			<link href='http://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'/>
-			<form name="form_reloj"> 
-				<input type="text" name="reloj" style="background-color:#333333; font-family:'Orbitron', sans-serif; font-size:40px; text-shadow:0px; 0px 1px #fff; color:#FFFFFF; text-align: center; width:100%;"> 
-			</form>	 		
+					
 
 
 			<?php 
@@ -77,7 +74,7 @@
 						</select>
 					</div>
 					</br>	
-					<button type="submit" class="btn btn-default" name="btn_add_new_item" form="frm_add_new_item">Aceptar Ticket</button>
+					<button type="submit" class="btn btn-default" name="btn_add_new_item" form="frm_add_new_item">Aceptar Turno</button>
 					<a href="http://www.url.com/yourpage.php">
 					  <input type="button" class="btn btn-default" value="Cancelar" onclick="history.go(-1);" />
 					</a>					

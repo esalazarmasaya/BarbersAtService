@@ -8,7 +8,7 @@
 					<li>
 						<a href="../main/index.php" class=" hvr-bounce-to-right">
 								<i class="fa fa-dashboard nav_icon "></i>
-								<span class="nav-label">Home</span> 
+								<span class="nav-label">Inicio</span> 
 						</a>
 					</li>
 				';
@@ -279,7 +279,7 @@
 				<li>
 					<a href="#" class=" hvr-bounce-to-right">
 						<i class="fa fa-cog nav_icon"></i> 
-						<span class="nav-label">Ticket</span>
+						<span class="nav-label">Turno</span>
 						<span class="fa arrow"></span>
 					</a>';
 					
@@ -288,7 +288,7 @@
 							<ul class="nav nav-second-level">
 								<li>
 									<a href="../TicketAdd/index.php" class=" hvr-bounce-to-right">
-										<i class="fa fa-sign-in nav_icon"></i>Ticket nuevo
+										<i class="fa fa-sign-in nav_icon"></i>Turno nuevo
 									</a>
 								</li>
 							</ul>
@@ -302,7 +302,7 @@
 							<ul class="nav nav-second-level">
 								<li>
 									<a href="../MyTicket/index.php" class=" hvr-bounce-to-right">
-										<i class="fa fa-sign-in nav_icon"></i>Mi Ticket
+										<i class="fa fa-sign-in nav_icon"></i>Mi Turno
 									</a>
 								</li>
 							</ul>
@@ -325,7 +325,7 @@
 				<li>
 					<a href="#" class=" hvr-bounce-to-right">
 						<i class="fa fa-cog nav_icon"></i> 
-						<span class="nav-label">Ticket Admin</span>
+						<span class="nav-label">Turnos Admin</span>
 						<span class="fa arrow"></span>
 					</a>';
 					
@@ -334,7 +334,7 @@
 							<ul class="nav nav-second-level">
 								<li>
 									<a href="../Tickets/index.php" class=" hvr-bounce-to-right">
-										<i class="fa fa-sign-in nav_icon"></i>Tickets
+										<i class="fa fa-sign-in nav_icon"></i>Turnos
 									</a>
 								</li>
 							</ul>
@@ -365,7 +365,7 @@
 				<li>
 					<a href="#" class=" hvr-bounce-to-right">
 						<i class="fa fa-cog nav_icon"></i> 
-						<span class="nav-label">Ver Tickets</span>
+						<span class="nav-label">Ver Turnos</span>
 						<span class="fa arrow"></span>
 					</a>';
 					
@@ -443,6 +443,30 @@
 								<li>
 									<a href="../Transactions/index.php" class=" hvr-bounce-to-right">
 										<i class="fa fa-sign-in nav_icon"></i>Transacciones
+									</a>
+								</li>
+							</ul>
+						';
+					}
+					
+					if (isset($_SESSION['PageCode33']) && !empty($_SESSION['PageCode33'])) {
+						$left_nav = $left_nav . '
+							<ul class="nav nav-second-level">
+								<li>
+									<a href="../TransactionsToProve/index.php" class=" hvr-bounce-to-right">
+										<i class="fa fa-sign-in nav_icon"></i>Por Comprobar
+									</a>
+								</li>
+							</ul>
+						';
+					}
+					
+					if (isset($_SESSION['PageCode34']) && !empty($_SESSION['PageCode34'])) {
+						$left_nav = $left_nav . '
+							<ul class="nav nav-second-level">
+								<li>
+									<a href="../TransactionProve/index.php" class=" hvr-bounce-to-right">
+										<i class="fa fa-sign-in nav_icon"></i>Comprobar
 									</a>
 								</li>
 							</ul>
