@@ -622,8 +622,7 @@ END IF;
 IF @UnidadesProductoOServicio < 1 THEN
 	INSERT INTO `transactiondetail`(
 		`TransactionCode`, `Units`,`CourtesyProduct`,`ProductCode`,`ServiceCode`, `unitPrice`
-	)
-	VALUES(
+	)VALUES(
 		`val_TransactionCode`, `val_Units`,`val_CourtesyProduct`,`val_ProductCode`,`val_ServiceCode`, @unitPrice
 	);
 ELSEIF @UnidadesProductoOServicio >= 1 THEN
@@ -638,10 +637,11 @@ SET `Total`=(
 	FROM `transactiondetail` 
 	WHERE `TransactionCode` = val_TransactionCode AND `CourtesyProduct` = 0
 	GROUP BY `TransactionCode`
-	)
+	),
+	`TransactionState` = 2
 WHERE `TransactionCode` = val_TransactionCode;
 
-END
+END $$
 
 
 

@@ -30,7 +30,7 @@
 		<h2>
 			<a href="../main/index.html">Home</a>
 			<i class="fa fa-angle-right"></i>
-			<a href="<?php echo $pageid; ?>">Servicios</a>
+			<a href="<?php echo $pageid; ?>">Empleados</a>
 		</h2>
 	</div>
 	
@@ -39,7 +39,7 @@
 	<!--content-->
 	<div class="grid-form">
  		<div class="grid-form1">
-	 		<h3 id="forms-example" class="">Servicios</h3>
+	 		<h3 id="forms-example" class="">Empleados</h3>
 	 		
 			<?php 
 				/*$value = '<form action="index.php" method="post" id="frm_add_new_product">

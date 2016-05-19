@@ -258,18 +258,19 @@
 		$tabla = $_SESSION['tbl_services'];
 		
 		$value = '
-			<h5>Agregar servicio</h5>
+			<h4>Agregar servicio</h4>
 			<form action="index.php" method="post" id="frm_add_service">
 			<input type="hidden" class="form-control" id="txt_tran_code" name="txt_tran_code" placeholder="TransactionCode" value="' . $_SESSION["trans_header_to_edit"] . '" readonly>
 		';
 		
-		$value = $value . '<select name="slct_services">';
+		$value = $value . '<select class="form-control" name="slct_services">';
 		
 		for ($fila = 3; $fila <= $tabla[0][0]; $fila++){
 			$value = $value . '<option value="' . $tabla[$fila][0] . '">' . $tabla[$fila][1] . '</option>';
 		}
 		
 		$value = $value . '</select> 
+			<h5>Cantidad:</h5>
 			<input type="number" class="form-control" id="txt_units" name="txt_units" placeholder="Unidades" value="0">
 			Cortesia: <input type="checkbox" name="chkbx_courtesy" value="1">
 			<button type="submit" class="btn btn-default" name="sbmt_add_new_service" form="frm_add_service">Insert</button>
@@ -330,18 +331,19 @@
 		$tabla = $_SESSION['tbl_products'];
 		
 		$value = '
-			<h5>Agregar producto</h5>
+			<h4>Agregar producto</h4>
 			<form action="index.php" method="post" id="frm_add_product">
 			<input type="hidden" class="form-control" id="txt_tran_code" name="txt_tran_code" placeholder="TransactionCode" value="' . $_SESSION["trans_header_to_edit"] . '" readonly>
 		';
 		
-		$value = $value . '<select name="slct_product">';
+		$value = $value . '<select class="form-control" name="slct_product">';
 		
 		for ($fila = 3; $fila <= $tabla[0][0]; $fila++){
 			$value = $value . '<option value="' . $tabla[$fila][0] . '">' . $tabla[$fila][1] . ' - Q' . $tabla[$fila][7] . '</option>';
 		}
 		
 		$value = $value . '</select> 
+			<h5>Cantidad:</h5>
 			<input type="number" class="form-control" id="txt_units" name="txt_units" placeholder="Unidades" value="0">
 			Cortesia: <input type="checkbox" name="chkbx_courtesy" value="1">
 			<button type="submit" class="btn btn-default" name="sbmt_add_new_product" form="frm_add_product">Insert</button>
@@ -418,27 +420,29 @@
 	
 	
 	function fnTraerTransactionDetail(){
-		$query = "CALL `sp_TransactionDetail_show`(" . $_SESSION["trans_header_to_edit"]  . ");";
-		
-		
-		$tabla = fnSelectAnyQuery(Conexion(), $query, 9);
-		
-		$tabla[1][0] = "Codigo";
-		$tabla[1][1] = "Unidades";
-		$tabla[1][2] = "Cortesia";
-		$tabla[1][3] = "Codigo de Producto";
-		$tabla[1][4] = "Producto";
-		$tabla[1][5] = "Codigo de Servicio";
-		$tabla[1][6] = "Servicio";
-		$tabla[1][7] = "Precio de venta";
-		$tabla[1][8] = "Total";
-		
-		//$_SESSION['html'] =  fnCrearTablaHtmlDeTablaBrand($tabla, 1);
-		//$data_relation = $_SESSION['data_relation'];
-		$_SESSION["tbl_tranDet"] = $tabla;
-		//$_SESSION['html'] = fnCrearTablaHtmlDeTablaProduct();
-		
-		//$_SESSION['msg'] = $_SESSION['msg'] . "";
+		if (isset($_SESSION['trans_header_to_edit']) && !empty($_SESSION['trans_header_to_edit'])){
+			$query = "CALL `sp_TransactionDetail_show`(" . $_SESSION["trans_header_to_edit"]  . ");";
+			
+			
+			$tabla = fnSelectAnyQuery(Conexion(), $query, 9);
+			
+			$tabla[1][0] = "Codigo";
+			$tabla[1][1] = "Unidades";
+			$tabla[1][2] = "Cortesia";
+			$tabla[1][3] = "Codigo de Producto";
+			$tabla[1][4] = "Producto";
+			$tabla[1][5] = "Codigo de Servicio";
+			$tabla[1][6] = "Servicio";
+			$tabla[1][7] = "Precio de venta";
+			$tabla[1][8] = "Total";
+			
+			//$_SESSION['html'] =  fnCrearTablaHtmlDeTablaBrand($tabla, 1);
+			//$data_relation = $_SESSION['data_relation'];
+			$_SESSION["tbl_tranDet"] = $tabla;
+			//$_SESSION['html'] = fnCrearTablaHtmlDeTablaProduct();
+			
+			//$_SESSION['msg'] = $_SESSION['msg'] . "";
+		}
 	}
 	
 	

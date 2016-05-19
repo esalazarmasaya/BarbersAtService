@@ -74,7 +74,7 @@
 	}
 	
 	function fnTraerDatosEmpleados(){
-		$query = "CALL `sp_employee_get_info_from_user_by_id`();";
+		$query = "CALL `sp_employee_active_get_info_from_user_by_id`();";
 		
 		
 		$tabla = fnSelectAnyQuery(Conexion(), $query, 7);

@@ -43,6 +43,7 @@
 	 		
 			<?php 
 				if (isset($_SESSION['trans_header_to_edit']) && !empty($_SESSION['trans_header_to_edit'])){
+					
 					echo fnDrawServices();
 					echo fnDrawProducts();
 					echo fnDrawTranDetail();

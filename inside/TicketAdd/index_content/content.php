@@ -55,8 +55,8 @@
 
 
 						$tabla_servicios = fnTraerDatosServicios();
-						for ($filas = 2; $filas <= $tabla_servicios[0][0]; $filas++){
-							$value = $value . '<option value="' . $tabla_servicios[$filas][0] . '">' . $tabla_servicios[$filas][1] . '</option>';
+						for ($filas = 3; $filas <= $tabla_servicios[0][0]; $filas++){
+							$value = $value . '<option value="' . $tabla_servicios[$filas][0] . '">' . $tabla_servicios[$filas][1] . ' - Q' . $tabla_servicios[$filas][2] . '</option>';
 						}
 					
 						$value = $value . '

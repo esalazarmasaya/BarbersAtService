@@ -375,6 +375,7 @@
 								<tr class="table-row">
 									';
 								//$value = $value . '<td class="table-text"><h6>' . $tabla[1][0] . '</h6></td>';
+								$value = $value . '<td class="table-text"><h6>Empleado</h6></td>';
 								$value = $value . '<td class="table-text"><h6>' . $tabla[1][1] . '</h6></td>';
 								$value = $value . '<td class="table-text"><h6>' . $tabla[1][2] . '</h6></td>';
 								$value = $value . '<td class="table-text"><h6>' . $tabla[1][3] . '</h6></td>';
@@ -392,6 +393,8 @@
 						{
 							$value = $value . '
 									<tr class="table-row">';
+									$tablaDatosEmpleado = fnTraerDatosUsuario($tabla[$filas][0]);
+									$value = $value . '<td class="table-text"><h6>' . $tablaDatosEmpleado[2][1] . '</h6></td>';
 									
 									$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][1] . '</h6></td>';
 									$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][2] . '</h6></td>';
@@ -445,10 +448,15 @@
 		
 		$tabla = $_SESSION["page_table"];
 		
-		$colNameId[0] = "lbl_code";
-		$colNameId[1] = "txt_new_name";
-		$colNameId[2] = "txt_new_price";
-		$colNameId[3] = "txt_new_state";
+		$colNameId[0] = "slct_user_code";
+		$colNameId[1] = "txt_new_initial_lunchtime";
+		$colNameId[2] = "txt_new_final_lunchtime";
+		$colNameId[3] = "txt_new_initial_date";
+		$colNameId[4] = "txt_new_final_date";
+		$colNameId[5] = "txt_new_state";
+		$colNameId[6] = "slct_cellar_code";
+		
+		$tablaDatosEmpleado = fnTraerDatosUsuario($tabla[$fila][0]);
 		
 		$value = '
 			<div class="tab-pane active text-style" id="tab1">
@@ -473,33 +481,61 @@
 								$value = $value . '
 									<tr>
 										<td class="table-text">
-											<h6>' . $tabla[1][1] . ':</h6>
+											<h6>Ususario:</h6>
 										</td>
 										<td class="march">
-											<select name="slct_user_code">
-											' . fnTraerDatosUsuario() . '
-											</select>
+											'  . $tablaDatosEmpleado[2][1] . '
 										</td>
 									</tr>';
 								
+								$value = $value . '
+									<tr>
+										<td class="table-text">
+											<h6>' . $tabla[1][1] . ':</h6>
+										</td>
+										<td class="march">
+											<input type="time" class="form-control" id="exampleInputEmail1" name="' . $colNameId[1] . '" placeholder="' . $tabla[$fila][1] . '" value="' . $tabla[$fila][1] . '" form="frm_edit_data_row_' . $fila . '">
+										</td>
+									</tr>';
+									
 								$value = $value . '
 									<tr>
 										<td class="table-text">
 											<h6>' . $tabla[1][2] . ':</h6>
 										</td>
 										<td class="march">
-											<input type="number" class="form-control" id="exampleInputEmail1" name="' . $colNameId[2] . '" placeholder="' . $tabla[$fila][2] . '" value="' . $tabla[$fila][2] . '" form="frm_edit_data_row_' . $fila . '">
+											<input type="time" class="form-control" id="exampleInputEmail1" name="' . $colNameId[2] . '" placeholder="' . $tabla[$fila][2] . '" value="' . $tabla[$fila][2] . '" form="frm_edit_data_row_' . $fila . '">
+										</td>
+									</tr>';
+									
+								$value = $value . '
+									<tr>
+										<td class="table-text">
+											<h6>' . $tabla[1][3] . ':</h6>
+										</td>
+										<td class="march">
+											<input type="date" class="form-control" id="exampleInputEmail1" name="' . $colNameId[3] . '" placeholder="' . $tabla[$fila][3] . '" value="' . $tabla[$fila][3] . '" form="frm_edit_data_row_' . $fila . '">
 										</td>
 									</tr>';
 								
 								$value = $value . '
 									<tr>
 										<td class="table-text">
-											<h6>' . $tabla[1][3] . ':</h6>
+											<h6>' . $tabla[1][4] . ':</h6>
+										</td>
+										<td class="march">
+											<input type="date" class="form-control" id="exampleInputEmail1" name="' . $colNameId[4] . '" placeholder="' . $tabla[$fila][4] . '" value="' . $tabla[$fila][4] . '" form="frm_edit_data_row_' . $fila . '">
+										</td>
+									</tr>';
+								
+								$value = $value . '
+									<tr>
+										<td class="table-text">
+											<h6>' . $tabla[1][5] . ':</h6>
 										</td>
 										<td class="march">';
-											$value = $value . '<select name="' . $colNameId[3] . '">';
-												if ($tabla[$fila][3]==0){
+											$value = $value . '<select name="' . $colNameId[5] . '">';
+												if ($tabla[$fila][5]==0){
 													$value = $value . '<option value="0" selected>Inactive</option>';
 													$value = $value . '<option value="1">Active</option>';
 												}else{
@@ -576,7 +612,8 @@
 	
 	
 	function fnTraerDatosUsuario($id){
-		$query = "CALL `sp_user_get_id_where`(" . $id . ");";
+		
+		$query = "CALL `sp_user_get_where_id`(" . $id . ");";
 		
 		
 		$tabla = fnSelectAnyQuery(Conexion(), $query, 6);

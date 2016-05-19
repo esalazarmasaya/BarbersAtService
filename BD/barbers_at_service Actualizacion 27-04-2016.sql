@@ -916,6 +916,19 @@ SELECT
 	`user`.`UserSecondLastName`
 FROM `employees` left join `user` on `employees`.`UserCode` = `user`.`UserCode`$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_employee_active_get_info_from_user_by_id`(
+)
+SELECT 
+	`employees`.`UserCode`, 
+	`employees`.`CellarCode`, 
+	`user`.`UserEmail`, 
+	`user`.`UserFirstName`, 
+	`user`.`UserSecondName`, 
+	`user`.`UserFirstLastName`, 
+	`user`.`UserSecondLastName`
+FROM `employees` left join `user` on `employees`.`UserCode` = `user`.`UserCode`
+WHERE `employees`.`EmployeeState` = 1 $$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_employee_get_info_from_user_by_id_where`(
 	IN val_id bigint(20)
 )
@@ -1110,8 +1123,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Product_add`(
 	IN `val_ProductState` boolean,
 	IN `val_ProductSalePrice` decimal(10,2),
 	IN `val_ProdcType` bigint(20),
-	IN `val_BrandProduct` bigint(20),
-	IN `val_BProductProvider` bigint(20)
+	IN `val_BrandProduct` bigint(20)
 )
     MODIFIES SQL DATA
     COMMENT 'Agrega un producto'
@@ -1136,7 +1148,7 @@ INSERT INTO `product`(
 	`val_ProductSalePrice`,
 	`val_ProdcType`,
 	`val_BrandProduct`,
-	`val_BProductProvider`
+	1
 )$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Product_edit`(
@@ -1409,6 +1421,24 @@ SELECT
 	`UserSecondLastName`
 FROM `user`
 ORDER BY `UserEmail` ASC$$
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_user_get_where_id`(
+	IN `val_UserCode` bigint(20)
+)
+    MODIFIES SQL DATA
+    COMMENT 'Busca un usuario por el email'
+SELECT 
+	`UserCode`,
+	`UserEmail`,
+	`UserFirstName`, 
+	`UserSecondName`, 
+	`UserFirstLastName`, 
+	`UserSecondLastName`
+FROM `user`
+WHERE `UserCode` = `val_UserCode`
+ORDER BY `UserEmail` ASC$$
+
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_user_get_id_where`(IN `val_value` VARCHAR(100))
     MODIFIES SQL DATA

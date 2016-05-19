@@ -16,7 +16,7 @@
 	if (!isset($_SESSION['usermail']) && empty($_SESSION['usermail'])){
 		session_destroy();
 		$_SESSION = array();
-		setcookie();
+		//setcookie();
 		//session_start();
 		echo '
 			<meta http-equiv="refresh" content="0; url=../../index.php" />
