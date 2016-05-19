@@ -25,7 +25,24 @@
 	
 	
 	if (isset($_POST['btn_edit_data_of_table'])){
-		$query = "CALL `sp_service_edit`(";
+		
+		/*$tabla[1][0] = "Codigo";
+		$tabla[1][1] = "Inicio Almuerzo";
+		$tabla[1][2] = "Fin Almuerzo";
+		$tabla[1][3] = "Inicia trabajo";
+		$tabla[1][4] = "Finaliza trabajo";
+		$tabla[1][5] = "Estado";
+		$tabla[1][6] = "Bodega";
+		
+		$colNameId[0] = "slct_user_code";
+		$colNameId[1] = "txt_new_initial_lunchtime";
+		$colNameId[2] = "txt_new_final_lunchtime";
+		$colNameId[3] = "txt_new_initial_date";
+		$colNameId[4] = "txt_new_final_date";
+		$colNameId[5] = "txt_new_state";
+		$colNameId[6] = "slct_cellar_code";*/
+		
+		$query = "CALL `sp_employees_edit`(";
 		
 		if (isset($_POST['slct_user_code']) && !empty($_POST['slct_user_code'])){
 			$query = $query . "" . $_POST['slct_user_code'] . ", ";
@@ -51,12 +68,23 @@
 			$query = $query . "'', ";
 		}
 		
+		if (isset($_POST['txt_new_final_date']) && !empty($_POST['txt_new_final_date'])){
+			$query = $query . "'" . $_POST['txt_new_final_date'] . "', ";
+		} else {
+			$query = $query . "'', ";
+		}
+		
+		if (isset($_POST['txt_new_state']) && !empty($_POST['txt_new_state'])){
+			$query = $query . "" . $_POST['txt_new_state'] . ", ";
+		} else {
+			$query = $query . "NULL, ";
+		}
+		
 		if (isset($_POST['slct_cellar_code']) && !empty($_POST['slct_cellar_code'])){
 			$query = $query . "" . $_POST['slct_cellar_code'] . " ";
 		} else {
-			$query = $query . "NULL ";
+			$query = $query . "1 ";
 		}
-		
 		
 		
 		$query = $query . ");";
@@ -102,7 +130,7 @@
 	}
 	
 	function fnTraerDatosWhere($where){
-		$query = "CALL `sp_service_show_where`('%" . $where . "%');";
+		$query = "CALL `sp_employees_show_where`('%" . $where . "%');";
 		
 		
 		$tabla = fnSelectAnyQuery(Conexion(), $query, 4);

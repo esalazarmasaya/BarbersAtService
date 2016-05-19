@@ -880,7 +880,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_employees_edit`(
 	IN `val_CellarCode` bigint(20)
 )
     MODIFIES SQL DATA
-    COMMENT 'Agrega un Servicio'
+    COMMENT 'Actualiza los datos de un empleado'
 UPDATE `employees` 
 SET 
 	`InicialLunchTime`=val_InicialLunchTime,
@@ -903,6 +903,29 @@ SELECT
 	`EmployeeState`, 
 	`CellarCode` 
 FROM `employees`$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_employees_show_where`(
+	IN `val_value` varchar(50)
+)
+    MODIFIES SQL DATA
+    COMMENT 'Agrega un Servicio'
+SELECT 
+	`employees`.`UserCode`, 
+	`employees`.`InicialLunchTime`, 
+	`employees`.`FinalLunchTime`, 
+	`employees`.`InitialDate`, 
+	`employees`.`FinalDate`, 
+	`employees`.`EmployeeState`, 
+	`employees`.`CellarCode` 
+FROM `employees` inner join `user` ON `employees`.`UserCode` = `user`.`UserCode`
+WHERE 
+	`user`.`UserFirstName` LIKE `val_value` OR 
+	`user`.`UserSecondName` LIKE `val_value` OR 
+	`user`.`UserFirstLastName` LIKE `val_value` OR
+	`user`.`UserSecondLastName` LIKE `val_value` OR
+	`user`.`UserBornDate` LIKE `val_value` OR 
+	`user`.`UserEmail` LIKE `val_value`;
+$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_employee_get_info_from_user_by_id`(
 )
