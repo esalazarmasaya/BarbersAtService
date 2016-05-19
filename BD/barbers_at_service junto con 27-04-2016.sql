@@ -32,8 +32,8 @@ call `sp_productpresentation_add`('Unidad','Unidad',1);
 call `sp_provider_add`('N/A',1);
 call `sp_provider_add`('Cerveceria Centroamericana',1);
 
-call `sp_Product_add`('N/A','N/A',1,1,0,1,0,1,1,1);
-call `sp_Product_add`('Cerveza Gallo','Cerveza Gallo',1,1,1,1,1,1,1,1);
+call `sp_Product_add`('N/A','N/A',1,1,0,1,0,1,1);
+call `sp_Product_add`('Cerveza Gallo','Cerveza Gallo',1,1,1,1,1,1,1);
 
 INSERT INTO `webpage` (`WebPageCode`, `WebPageName`, `UrlWebPage`, `WebPageDescription`, `WebState`) VALUES
 (1, 'Usuarios', '', 'Administraciòn de usuarios.', 1),
@@ -381,7 +381,7 @@ WHERE `transactionheader`.`TransactionCode` = `val_TransactionCode`
 ORDER BY `transactionheader`.`TransactionDate` DESC
 ;$$
 
-CREATE PROCEDURE `sp_transactionheader_admin_show_another_where`(
+CREATE PROCEDURE `sp_transactionheader_admin_show_state_another_where`(
 	IN `val_value` varchar(50),
 	IN `val_TransactionState` bigint(20)
 )
@@ -427,6 +427,54 @@ WHERE `user`.`UserFirstName` like `val_value` AND `transactionheader`.`Transacti
 	OR `EmployeeUser`.`UserSecondLastName` like `val_value` AND `transactionheader`.`TransactionState` = `val_TransactionState`
 	OR `EmployeeUser`.`UserEmail` like `val_value` AND `transactionheader`.`TransactionState` = `val_TransactionState`
 	OR `states`.`StateName` like `val_value` AND `transactionheader`.`TransactionState` = `val_TransactionState`
+ORDER BY `transactionheader`.`TransactionDate` DESC
+;$$
+
+CREATE PROCEDURE `sp_transactionheader_admin_show_another_where`(
+	IN `val_value` varchar(50)
+)
+MODIFIES SQL DATA
+COMMENT 'Ingresa el encabezado de una transaccion. '
+SELECT 
+	`transactionheader`.`TransactionCode`, 
+	`transactionheader`.`TransactionDate`,
+	`transactionheader`.`UserCode`, 
+	`user`.`UserFirstName`, 
+	`user`.`UserSecondName`, 
+	`user`.`UserFirstLastName`, 
+	`user`.`UserSecondLastName`,
+	`user`.`UserEmail`,
+	`user`.`RoleCode`,
+	`transactionheader`.`EmployeeCode`, 
+	`EmployeeUser`.`UserFirstName`, 
+	`EmployeeUser`.`UserSecondName`, 
+	`EmployeeUser`.`UserFirstLastName`, 
+	`EmployeeUser`.`UserSecondLastName`,
+	`EmployeeUser`.`UserEmail`,
+	`EmployeeUser`.`RoleCode`,
+	`transactionheader`.`TransactionTicket`, 
+	`transactionheader`.`TransactionState`, 
+	`states`.`StateName`,
+	`transactionheader`.`CellarCode`,
+	`cellar`.`CellarName`,
+	`transactionheader`.`Efectivo`,
+	`transactionheader`.`Tarjeta`,
+	`transactionheader`.`Total`
+FROM `transactionheader` left join `user` User on `transactionheader`.`UserCode` = `user`.`UserCode`
+	left join `user` `EmployeeUser` on `transactionheader`.`EmployeeCode` = `EmployeeUser`.`UserCode`
+	left join `states` on `transactionheader`.`TransactionState` = `states`.`StateCode`
+	left join `cellar` on `transactionheader`.`CellarCode` = `cellar`.`CellarCode`
+WHERE `user`.`UserFirstName` like `val_value` 
+	OR `user`.`UserSecondName` like `val_value`
+	OR `user`.`UserFirstLastName` like `val_value`
+	OR `user`.`UserSecondLastName` like `val_value`
+	OR `user`.`UserEmail` like `val_value`
+	OR `EmployeeUser`.`UserFirstName` like `val_value`
+	OR `EmployeeUser`.`UserSecondName` like `val_value`
+	OR `EmployeeUser`.`UserFirstLastName` like `val_value`
+	OR `EmployeeUser`.`UserSecondLastName` like `val_value`
+	OR `EmployeeUser`.`UserEmail` like `val_value`
+	OR `states`.`StateName` like `val_value`
 ORDER BY `transactionheader`.`TransactionDate` DESC
 ;$$
 

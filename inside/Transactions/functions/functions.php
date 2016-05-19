@@ -22,7 +22,7 @@
 	
 	
 	if (isset($_POST['btn_edit_data_of_table'])){
-		$query = "CALL `sp_waitingqueuebybarber_update`(";
+		/*$query = "CALL `sp_waitingqueuebybarber_update`(";
 		
 		if (isset($_POST['lbl_code']) && !empty($_POST['lbl_code'])){
 			$query = $query . "" . $_POST['lbl_code'] . ", ";
@@ -72,7 +72,9 @@
 		
 		$_SESSION['msg'] = $_SESSION['msg'] . "Información editada. ";
 		
-		fnTraerDatos(); 
+		fnTraerDatos(); */
+		$_SESSION['trans_header_to_edit'] = $_POST['lbl_code_transaction'];
+		header("Location: ../TransactionEdit/index.php ",TRUE,301);
 	}
 	
 	
@@ -186,10 +188,10 @@
 	}
 	
 	function fnTraerDatosWhere($where){
-		$query = "CALL `sp_waitingqueuebybarber_show_employee_user_where`('%" . $where . "%');";
+		$query = "CALL `sp_transactionheader_admin_show_another_where`('%" . $where . "%');";
 		
 		
-		$tabla = fnSelectAnyQuery(Conexion(), $query, 4);
+		$tabla = fnSelectAnyQuery(Conexion(), $query, 24);
 		
 		$tabla[1][0] = "Código de transacción";
 		$tabla[1][1] = "Fecha";
@@ -461,30 +463,30 @@
 		';
 		
 		
-		$tabla[1][0] = "Código de transacción";
-		$tabla[1][1] = "Fecha";
-		$tabla[1][2] = "Código de cliente";
-		$tabla[1][3] = "Primer nombre del cliente";
-		$tabla[1][4] = "Segundo nombre del cliente";
-		$tabla[1][5] = "Primer apellido del cliente";
-		$tabla[1][6] = "Segundo apellido del cliente";
-		$tabla[1][7] = "Email del cliente";
-		$tabla[1][8] = "Rol del cliente";
-		$tabla[1][9] = "Código de empleado";
-		$tabla[1][10] = "Primer nombre de empleado";
-		$tabla[1][11] = "Segundo nombre de empleado";
-		$tabla[1][12] = "Primer apellido de empleado";
-		$tabla[1][13] = "Segundo apellido de empleado";
-		$tabla[1][14] = "Email de empleado";
-		$tabla[1][15] = "Rol de empleado";
-		$tabla[1][16] = "Ticket";
-		$tabla[1][17] = "Código de estado de transaccion";
-		$tabla[1][18] = "Nombre de estado";
-		$tabla[1][19] = "Codigo de tienda";
-		$tabla[1][20] = "Tienda";
-		$tabla[1][21] = "Efectivo";
-		$tabla[1][22] = "Tarjeta";
-		$tabla[1][23] = "Total";
+		$colNameId[0] = "lbl_code_transaction";
+		$colNameId[1] = "txt_date";
+		$colNameId[2] = "txt_user_code";
+		$colNameId[3] = "txt_user_first_name";
+		$colNameId[4] = "txt_user_second_name";
+		$colNameId[5] = "txt_user_first_last_name";
+		$colNameId[6] = "txt_user_second_last_name";
+		$colNameId[7] = "txt_user_email";
+		$colNameId[8] = "txt_user_rol";
+		$colNameId[9] = "txt_employee_code";
+		$colNameId[10] = "txt_employee_first_name";
+		$colNameId[11] = "txt_employee_second_name";
+		$colNameId[12] = "txt_employee_first_last_name";
+		$colNameId[13] = "txt_employee_second_last_name";
+		$colNameId[14] = "txt_employee_email";
+		$colNameId[15] = "txt_employee_rol";
+		$colNameId[16] = "txt_Ticket";
+		$colNameId[17] = "txt_state_code";
+		$colNameId[18] = "txt_state_name";
+		$colNameId[19] = "txt_cellar_code";
+		$colNameId[20] = "txt_cellar_name";
+		$colNameId[21] = "txt_cash";
+		$colNameId[22] = "txt_credit_card";
+		$colNameId[23] = "txt_Total";
 		
 		
 		
@@ -541,13 +543,13 @@
 									
 									
 									
-									/*$value = $value . '
+									$value = $value . '
 										<td class="march">
 											<form action="index.php" method="post" id="frm_edit_row_' . $filas . '">
 												<input type="hidden" class="form-control" id="exampleInputEmail1" name="txt_edit_row" value="' . $filas . '" form="frm_edit_row_' . $filas . '" readonly>
 												<button type="submit" class="btn btn-default" name="btn_edit_display_row" form="frm_edit_row_' . $filas . '">Editar</button>
 											</form>
-										</td>';*/
+										</td>';
 							
 							$value = $value . '
 											</tr>
@@ -578,32 +580,40 @@
 		
 		$tabla = $_SESSION["page_table"];
 		
-		$estados = fnTraerEstados();
-		$servicios = fnTraerServicios();
-		$tabla_empleados = fnTraerDatosEmpleados();
 		
-		$colNameId[0] = "lbl_code";
+		$colNameId[0] = "lbl_code_transaction";
 		$colNameId[1] = "txt_date";
-		$colNameId[2] = "txt_state_code";
-		$colNameId[3] = "txt_state_name";
-		$colNameId[4] = "txt_initial_hour";
-		$colNameId[5] = "txt_final_hour";
-		$colNameId[6] = "txt_service_code";
-		$colNameId[7] = "txt_service_name";
-		$colNameId[8] = "txt_user_code";
-		$colNameId[9] = "txt_user_first_name";
-		$colNameId[10] = "txt_user_second_name";
-		$colNameId[11] = "txt_user_first_lastname";
-		$colNameId[12] = "txt_user_second_lastname";
-		$colNameId[13] = "txt_user_email";
-		$colNameId[14] = "txt_user_role_code";
-		$colNameId[15] = "txt_employee_code";
-		$colNameId[16] = "txt_employee_first_name";
-		$colNameId[17] = "txt_employee_second_name";
-		$colNameId[18] = "txt_employee_first_lastname";
-		$colNameId[19] = "txt_employee_second_lastname";
-		$colNameId[20] = "txt_employee_email";
-		$colNameId[21] = "txt_employee_role_code";
+		$colNameId[2] = "txt_user_code";
+		$colNameId[3] = "txt_user_first_name";
+		$colNameId[4] = "txt_user_second_name";
+		$colNameId[5] = "txt_user_first_last_name";
+		$colNameId[6] = "txt_user_second_last_name";
+		$colNameId[7] = "txt_user_email";
+		$colNameId[8] = "txt_user_rol";
+		$colNameId[9] = "txt_employee_code";
+		$colNameId[10] = "txt_employee_first_name";
+		$colNameId[11] = "txt_employee_second_name";
+		$colNameId[12] = "txt_employee_first_last_name";
+		$colNameId[13] = "txt_employee_second_last_name";
+		$colNameId[14] = "txt_employee_email";
+		$colNameId[15] = "txt_employee_rol";
+		$colNameId[16] = "txt_Ticket";
+		$colNameId[17] = "txt_state_code";
+		$colNameId[18] = "txt_state_name";
+		$colNameId[19] = "txt_cellar_code";
+		$colNameId[20] = "txt_cellar_name";
+		$colNameId[21] = "txt_cash";
+		$colNameId[22] = "txt_credit_card";
+		$colNameId[23] = "txt_Total";
+		
+		
+		
+		/*$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][1] . '</h6></td>';
+		$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][3] . ' ' . $tabla[$filas][5] . ' (' . $tabla[$filas][7] . ')' . '</h6></td>';
+		$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][10] . ' ' . $tabla[$filas][12] . ' (' . $tabla[$filas][14] . ')' . '</h6></td>';
+		$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][16] . '</h6></td>';
+		$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][18] . '</h6></td>';
+		$value = $value . '<td class="table-text"><h6>' . $tabla[$filas][23] . '</h6></td>';*/
 		
 		$value = '
 			<div class="tab-pane active text-style" id="tab1">
@@ -634,9 +644,58 @@
 											<input type="text" class="form-control" id="exampleInputEmail1" name="' . $colNameId[1] . '" placeholder="' . $tabla[$fila][1] . '" value="' . $tabla[$fila][1] . '" form="frm_edit_data_row_' . $fila . '" readonly>
 										</td>
 									</tr>';
-								
+									
+								$value = $value . '
+									<tr>
+										<td class="table-text">
+											<h6>' . $tabla[1][3] . ':</h6>
+										</td>
+										<td class="march">
+											<input type="text" class="form-control" id="exampleInputEmail1" name="' . $colNameId[3] . '" placeholder="' . $tabla[$fila][3] . '" value="' . $tabla[$fila][3] . ' ' . $tabla[$fila][5] . ' (' . $tabla[$fila][7] . ')' . '" form="frm_edit_data_row_' . $fila . '" readonly>
+										</td>
+									</tr>';
+									
+								$value = $value . '
+									<tr>
+										<td class="table-text">
+											<h6>' . $tabla[1][10] . ':</h6>
+										</td>
+										<td class="march">
+											<input type="text" class="form-control" id="exampleInputEmail1" name="' . $colNameId[10] . '" placeholder="' . $tabla[$fila][10] . '" value="' . $tabla[$fila][10] . ' ' . $tabla[$fila][12] . ' (' . $tabla[$fila][14] . ')' . '" form="frm_edit_data_row_' . $fila . '" readonly>
+										</td>
+									</tr>';
+									
+								$value = $value . '
+									<tr>
+										<td class="table-text">
+											<h6>' . $tabla[1][16] . ':</h6>
+										</td>
+										<td class="march">
+											<input type="number" class="form-control" id="exampleInputEmail1" name="' . $colNameId[16] . '" placeholder="' . $tabla[$fila][16] . '" value="' . $tabla[$fila][16] . '" form="frm_edit_data_row_' . $fila . '" readonly>
+										</td>
+									</tr>';
 								
 								$value = $value . '
+									<tr>
+										<td class="table-text">
+											<h6>' . $tabla[1][18] . ':</h6>
+										</td>
+										<td class="march">
+											<input type="text" class="form-control" id="exampleInputEmail1" name="' . $colNameId[18] . '" placeholder="' . $tabla[$fila][18] . '" value="' . $tabla[$fila][18] . '" form="frm_edit_data_row_' . $fila . '" readonly>
+										</td>
+									</tr>';
+									
+								$value = $value . '
+									<tr>
+										<td class="table-text">
+											<h6>' . $tabla[1][23] . ':</h6>
+										</td>
+										<td class="march">
+											<input type="number" class="form-control" id="exampleInputEmail1" name="' . $colNameId[23] . '" placeholder="' . $tabla[$fila][23] . '" value="' . $tabla[$fila][23] . '" form="frm_edit_data_row_' . $fila . '" readonly>
+										</td>
+									</tr>';
+								
+								/*$value = $value . '
 									<tr>
 										<td class="table-text">
 											<h6>' . $tabla[1][2] . ':</h6>
@@ -725,7 +784,7 @@
 										
 										$value = $value . '
 										</td>
-									</tr>';
+									</tr>';*/
 								
 								
 								
