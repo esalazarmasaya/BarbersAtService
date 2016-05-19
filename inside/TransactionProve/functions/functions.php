@@ -1,5 +1,5 @@
 <?php
-	$data_relation = "transactionedit";
+	$data_relation = "transactionProve";
 	
 	
 	

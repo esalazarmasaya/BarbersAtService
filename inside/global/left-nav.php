@@ -523,6 +523,59 @@
 			
 			
 			
+			
+			
+			
+			
+			if (isset($_SESSION['PageCode25']) || isset($_SESSION['PageCode32'])) {
+				$left_nav = $left_nav . '
+				<li>
+					<a href="#" class=" hvr-bounce-to-right">
+						<i class="fa fa-cog nav_icon"></i> 
+						<span class="nav-label">Pagos</span>
+						<span class="fa arrow"></span>
+					</a>';
+				
+					
+					if (isset($_SESSION['PageCode35']) && !empty($_SESSION['PageCode35']) || isset($_SESSION['PageCode36']) && !empty($_SESSION['PageCode36'])) {
+						$left_nav = $left_nav . '
+							<ul class="nav nav-second-level">
+								<li>
+									<a href="../PaymentAdd/index.php" class=" hvr-bounce-to-right">
+										<i class="fa fa-sign-in nav_icon"></i>Pago nuevo
+									</a>
+								</li>
+							</ul>
+						';
+					}
+					
+					if (isset($_SESSION['PageCode36']) && !empty($_SESSION['PageCode36'])) {
+						$left_nav = $left_nav . '
+							<ul class="nav nav-second-level">
+								<li>
+									<a href="../PaymentAdd/index.php" class=" hvr-bounce-to-right">
+										<i class="fa fa-sign-in nav_icon"></i>Pagos
+									</a>
+								</li>
+							</ul>
+						';
+					}
+					
+				$left_nav = $left_nav . '
+				</li>';
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			echo $left_nav;
 			
 			

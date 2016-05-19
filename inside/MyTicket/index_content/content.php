@@ -30,7 +30,7 @@
 		<h2>
 			<a href="../main/index.html">Home</a>
 			<i class="fa fa-angle-right"></i>
-			<a href="<?php echo $pageid; ?>">Mi ticket</a>
+			<a href="<?php echo $pageid; ?>">Mi Turno</a>
 		</h2>
 	</div>
 	

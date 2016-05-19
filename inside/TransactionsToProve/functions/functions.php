@@ -1,5 +1,5 @@
 <?php
-	$data_relation = "transacciones";
+	$data_relation = "transaccionToProve";
 	
 	if (!isset($_SESSION['data_relation']) || empty($_SESSION['data_relation'])){
 		//echo "entro no. ";
