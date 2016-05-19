@@ -59,6 +59,7 @@
 			fn_InsertQuery(Conexion(), $query);
 			
 			$_SESSION['msg'] = $_SESSION['msg'] . "Comprobada Exitosamente. ";
+			header("Location: ../TransactionsToProve/index.php ",TRUE,301);
 		}
 		
 		

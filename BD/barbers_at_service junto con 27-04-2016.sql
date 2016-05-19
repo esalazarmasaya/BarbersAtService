@@ -33,6 +33,8 @@ call `sp_provider_add`('N/A',1);
 call `sp_provider_add`('Cerveceria Centroamericana',1);
 
 call `sp_Product_add`('N/A','N/A',1,1,0,1,0,1,1);
+call `sp_Product_add`('Agua pura','Agua Pura',1,1,1,1,1,1,1);
+call `sp_Product_add`('Coca Cola','Coca Cola',1,1,1,1,1,1,1);
 call `sp_Product_add`('Cerveza Gallo','Cerveza Gallo',1,1,1,1,1,1,1);
 
 INSERT INTO `webpage` (`WebPageCode`, `WebPageName`, `UrlWebPage`, `WebPageDescription`, `WebState`) VALUES
@@ -722,31 +724,6 @@ INNER JOIN `product` ON `transactiondetail`.`ProductCode` = `product`.`ProductCo
 WHERE `transactiondetail`.`TransactionCode` = `val_TransactionCode`
 ;$$
 
-DELIMITER ;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-DELIMITER $$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Payment_add_by_Transaction`(
     IN val_transactionCode bigint(20)
@@ -774,6 +751,8 @@ SET @val_pago = (
 	WHERE `ServiceCode` > 1 AND `TransactionCode` = val_transactionCode
 	GROUP BY `TransactionCode` = val_transactionCode
 	);
+	
+SET @val_pago = (SELECT IFNULL(@val_pago,0));
 
 INSERT INTO Payments (Date,NotPay,EmployeeCode,Transaction)
 Values (CURRENT_TIMESTAMP,@val_pago,@EmployeeCode,val_TransactionCode);
@@ -781,6 +760,58 @@ Values (CURRENT_TIMESTAMP,@val_pago,@EmployeeCode,val_TransactionCode);
 UPDATE `transactionheader` SET `TransactionState`= 4  
 WHERE `TransactionCode`= val_transactionCode;
 END$$
+
+
+CREATE PROCEDURE `sp_Payments_admin_show`()
+    MODIFIES SQL DATA
+    COMMENT 'Muestra los pagos a los empleados'
+SELECT 
+	`user`.`UserFirstName`, 
+	`user`.`UserFirstLastName`,
+	`user`.`UserEmail`,
+	`employees`.`InitialDate`, 
+	`payments`.`Date`, 
+	IFNULL(`payments`.`NotPay`,0), 
+	IFNULL(`payments`.`Pay`,0), 
+	`payments`.`Transaction` 
+FROM `payments`
+INNER JOIN `employees` ON `payments`.`EmployeeCode` = `employees`.`UserCode`
+INNER JOIN `user` ON `employees`.`UserCode` = `user`.`UserCode`
+;$$
+
+
+
+
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+DELIMITER $$
+
+
+
+
 
 
 DELIMITER ;
