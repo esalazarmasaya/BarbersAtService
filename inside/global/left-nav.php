@@ -553,7 +553,7 @@
 						$left_nav = $left_nav . '
 							<ul class="nav nav-second-level">
 								<li>
-									<a href="../PaymentAdd/index.php" class=" hvr-bounce-to-right">
+									<a href="../Payments/index.php" class=" hvr-bounce-to-right">
 										<i class="fa fa-sign-in nav_icon"></i>Pagos
 									</a>
 								</li>

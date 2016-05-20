@@ -774,20 +774,35 @@ CREATE PROCEDURE `sp_Payments_admin_show`()
     MODIFIES SQL DATA
     COMMENT 'Muestra los pagos a los empleados'
 SELECT 
+	`payments`.`PaymentCode`,
 	`user`.`UserFirstName`, 
 	`user`.`UserFirstLastName`,
 	`user`.`UserEmail`,
 	`employees`.`InitialDate`, 
 	`payments`.`Date`, 
-	IFNULL(`payments`.`NotPay`,0), 
-	IFNULL(`payments`.`Pay`,0), 
+	IFNULL(`payments`.`NotPay`,0) NotPay, 
+	IFNULL(`payments`.`Pay`,0) Pay, 
 	`payments`.`Transaction` 
 FROM `payments`
 INNER JOIN `employees` ON `payments`.`EmployeeCode` = `employees`.`UserCode`
 INNER JOIN `user` ON `employees`.`UserCode` = `user`.`UserCode`
+ORDER BY `payments`.`Date`
 ;$$
 
-
+CREATE PROCEDURE `sp_Payment_add`(
+	IN `val_Pay` decimal(10,2),
+	IN `val_EmployeeCode` bigint(20)
+)
+    MODIFIES SQL DATA
+    COMMENT 'Muestra los pagos a los empleados'
+INSERT INTO `payments`(
+	`Date`, `Pay`, `EmployeeCode`
+) VALUES (
+	CURRENT_TIMESTAMP,
+	`val_Pay`,
+	`val_EmployeeCode`
+)
+;$$
 
 
 
@@ -818,20 +833,7 @@ DELIMITER ;
 DELIMITER $$
 
 
-CREATE PROCEDURE `sp_Payment_add`(
-	IN `val_Pay` decimal(10,2),
-	IN `val_EmployeeCode` bigint(20)
-)
-    MODIFIES SQL DATA
-    COMMENT 'Muestra los pagos a los empleados'
-INSERT INTO `payments`(
-	`Date`, `Pay`, `EmployeeCode`
-) VALUES (
-	CURRENT_TIMESTAMP,
-	`val_Pay`,
-	`val_EmployeeCode`
-)
-;$$
+
 
 
 
